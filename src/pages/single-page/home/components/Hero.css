@@ -1,0 +1,138 @@
+/* HERO TEXT VISIBILITY - NUCLEAR OPTION */
+
+/* Override ALL possible CSS animations and transforms */
+.hero-container-override * {
+  animation: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: color 0.3s ease !important;
+}
+
+/* Specific text element overrides */
+.vl-hero-section-title,
+.vl-hero-section-title *,
+.vl-subtitle,
+.vl-title, 
+.vl-hero-btn,
+.header-btn1 {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  animation: none !important;
+  position: relative !important;
+  z-index: 1000 !important;
+  display: block !important;
+}
+
+/* Force text colors */
+.vl-hero-section-title .vl-subtitle {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  padding: 8px 12px !important;
+  border-radius: 50px !important;
+  display: inline-block !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+}
+
+.vl-hero-section-title .vl-title {
+  color: #ffffff !important;
+  font-size: 48px !important;
+  font-weight: bold !important;
+  line-height: 1.2 !important;
+  margin: 16px 0 !important;
+}
+
+.vl-hero-section-title p {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 18px !important;
+  line-height: 1.6 !important;
+  margin: 16px 0 !important;
+}
+
+/* Force social media links to be visible */
+.vl-hero-slider.vl-hero-bg .vl-hero-social {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateX(0px) !important;
+}
+
+/* Ensure hero slider has proper height */
+.vl-hero-slider.vl-hero-bg {
+  min-height: 100vh;
+}
+
+/* Debug styles to make text visible */
+.direct-hero-test * {
+  border: 1px solid red !important;
+  background: rgba(255, 0, 0, 0.1) !important;
+}
+
+.vl-hero-section-title {
+  background: rgba(0, 0, 0, 0.5) !important;
+  padding: 20px !important;
+  border-radius: 10px !important;
+}
+
+.vl-hero-section-title * {
+  color: #fff !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  position: relative !important;
+  z-index: 1000 !important;
+}
+
+/* Make sure text has proper contrast */
+.vl-hero-section-title .vl-subtitle {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+.vl-hero-section-title .vl-title {
+  color: #fff !important;
+}
+
+.vl-hero-section-title p {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Button styling */
+.vl-hero-btn .header-btn1 {
+  background: var(--ztc-text-text-4, #002372) !important;
+  color: white !important;
+  font-size: var(--ztc-font-size-font-s18, 18px) !important;
+  line-height: var(--ztc-specing-height18, 18px) !important;
+  font-family: var(--ztc-family-font1, inherit) !important;
+  font-weight: var(--ztc-weight-bold, bold) !important;
+  padding: 8px 8px 8px 20px !important;
+  border-radius: 50px !important;
+  display: inline-block !important;
+  text-decoration: none !important;
+  transform: translateY(0px) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: 0.3s !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.vl-hero-btn .header-btn1:hover {
+  color: #ffffff !important;
+}
+
+.vl-hero-btn .header-btn1 span {
+  background: var(--ztc-text-text-1, #fff) !important;
+  height: 36px !important;
+  width: 36px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  margin-left: 8px !important;
+  color: var(--ztc-text-text-3, #181713) !important;
+  font-size: 16px !important;
+  position: relative !important;
+  z-index: 2 !important;
+}

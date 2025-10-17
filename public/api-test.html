@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test - DivineCare</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .api-result {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+
+        .success {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .error {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .loading {
+            background: #6c757d;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🧪 DivineCare API Integration Test</h1>
+        <p>This page tests the integration between the frontend and backend for hero carousel data.</p>
+
+        <h2>Frontend API Integration Test</h2>
+        <button onclick="testFrontendAPI()">Test Frontend Hero API</button>
+        <div id="frontend-result" class="api-result"></div>
+
+        <h2>Admin API Tests</h2>
+        <button onclick="testAdminHomePageAPI()">Test Admin Home Page API</button>
+        <div id="admin-result" class="api-result"></div>
+
+        <button onclick="testAdminHeroAPI()">Test Admin Hero API</button>
+        <div id="admin-hero-result" class="api-result"></div>
+
+        <h2>Backend Direct API Test</h2>
+        <button onclick="testBackendAPI()">Test Backend API Direct</button>
+        <div id="backend-result" class="api-result"></div>
+
+        <h2>Health Check</h2>
+        <button onclick="testHealthCheck()">Test Health Check</button>
+        <div id="health-result" class="api-result"></div>
+
+        <h2>Live Hero Data Preview</h2>
+        <div id="hero-preview"></div>
+    </div>
+
+    <script>
+        // Frontend API Test
+        async function testFrontendAPI() {
+            const resultDiv = document.getElementById('frontend-result');
+            resultDiv.textContent = 'Loading...';
+            resultDiv.className = 'api-result loading';
+
+            try {
+                const response = await fetch('http://localhost:5001/api/home/68ebd3247deb89d1105fd728');
+                const data = await response.json();
+
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+                resultDiv.className = response.ok ? 'api-result success' : 'api-result error';
+
+                if (response.ok && data.success && data.data) {
+                    updateHeroPreview(data.data);
+                }
+            } catch (error) {
+                resultDiv.textContent = `Error: ${error.message}`;
+                resultDiv.className = 'api-result error';
+            }
+        }
+
+        // Admin Home Page API Test
+        async function testAdminHomePageAPI() {
+            const resultDiv = document.getElementById('admin-result');
+            resultDiv.textContent = 'Loading...';
+            resultDiv.className = 'api-result loading';
+
+            try {
+                const response = await fetch('http://localhost:5001/api/home-page/get-home-page-data', {
+                    headers: {
+                        'Authorization': 'Bearer demo-token'
+                    }
+                });
+                const data = await response.json();
+
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+                resultDiv.className = response.ok ? 'api-result success' : 'api-result error';
+            } catch (error) {
+                resultDiv.textContent = `Error: ${error.message}`;
+                resultDiv.className = 'api-result error';
+            }
+        }
+
+        // Admin Hero API Test
+        async function testAdminHeroAPI() {
+            const resultDiv = document.getElementById('admin-hero-result');
+            resultDiv.textContent = 'Loading...';
+            resultDiv.className = 'api-result loading';
+
+            try {
+                const response = await fetch('http://localhost:5001/api/home-page/get-hero-data', {
+                    headers: {
+                        'Authorization': 'Bearer demo-token'
+                    }
+                });
+                const data = await response.json();
+
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+                resultDiv.className = response.ok ? 'api-result success' : 'api-result error';
+            } catch (error) {
+                resultDiv.textContent = `Error: ${error.message}`;
+                resultDiv.className = 'api-result error';
+            }
+        }
+
+        // Backend API Test
+        async function testBackendAPI() {
+            const resultDiv = document.getElementById('backend-result');
+            resultDiv.textContent = 'Loading...';
+            resultDiv.className = 'api-result loading';
+
+            try {
+                const response = await fetch('http://localhost:5001/api/home/68ebd3247deb89d1105fd728');
+                const text = await response.text();
+
+                resultDiv.textContent = `Status: ${response.status}\\nResponse:\\n${text}`;
+                resultDiv.className = response.ok ? 'api-result success' : 'api-result error';
+            } catch (error) {
+                resultDiv.textContent = `Connection Error: ${error.message}\\n\\nPossible issues:\\n- Backend server not running on port 5001\\n- CORS issues\\n- Network connectivity`;
+                resultDiv.className = 'api-result error';
+            }
+        }
+
+        // Health Check Test
+        async function testHealthCheck() {
+            const resultDiv = document.getElementById('health-result');
+            resultDiv.textContent = 'Loading...';
+            resultDiv.className = 'api-result loading';
+
+            try {
+                const response = await fetch('http://localhost:5001/health');
+                const data = await response.json();
+
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+                resultDiv.className = response.ok ? 'api-result success' : 'api-result error';
+            } catch (error) {
+                resultDiv.textContent = `Error: ${error.message}`;
+                resultDiv.className = 'api-result error';
+            }
+        }
+
+        // Update Hero Preview
+        function updateHeroPreview(heroData) {
+            const previewDiv = document.getElementById('hero-preview');
+            previewDiv.innerHTML = `
+                <div style="border: 1px solid #ddd; border-radius: 8px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin: 15px 0;">
+                    <h3>${heroData.title || 'No Title'}</h3>
+                    <h5 style="opacity: 0.9;">${heroData.subtitle || 'No Subtitle'}</h5>
+                    <p style="margin: 15px 0;">${heroData.description || 'No Description'}</p>
+                    <button style="background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 10px 20px; border-radius: 5px;">
+                        ${heroData.buttonText || 'Default Button'}
+                    </button>
+                    <div style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">
+                        <strong>Social Links:</strong><br>
+                        Facebook: ${heroData.socialMedia?.facebook || 'Not set'}<br>
+                        Instagram: ${heroData.socialMedia?.instagram || 'Not set'}<br>
+                        Twitter: ${heroData.socialMedia?.twitter || 'Not set'}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Auto-run tests on page load
+        window.onload = function () {
+            console.log('🚀 DivineCare API Test Page Loaded');
+            testHealthCheck();
+            setTimeout(testFrontendAPI, 1000);
+            setTimeout(testAdminHomePageAPI, 2000);
+            setTimeout(testAdminHeroAPI, 3000);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+/* CRITICAL FIX: Override hero SCSS animations that hide text by default */
+/* The main SCSS file sets opacity: 0 and visibility: hidden on hero text elements */
+/* and only shows them when slides have .slick-current.slick-active classes */
+
+/* Force all hero text elements to be visible immediately */
+.vl-hero-section-title .vl-title,
+.vl-hero-section-title p,
+.vl-hero-section-title .vl-subtitle,
+.vl-hero-btn .header-btn1 {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateX(0) !important;
+  transform: translateY(0) !important;
+}
+
+/* Ensure slick carousel containers are visible */
+.slick-track,
+.slick-list,
+.slick-slider {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Force active slide styling for all slides since we're not using proper slick classes */
+.vl-hero-slider .vl-hero-section-title .vl-subtitle,
+.vl-hero-slider .vl-hero-section-title .vl-title,
+.vl-hero-slider .vl-hero-section-title p,
+.vl-hero-slider .vl-hero-section-title .vl-hero-btn .header-btn1 {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateX(0) !important;
+  transform: translateY(0) !important;
+}
+
+/* Additional text visibility override for background containers */
+.vl-hero-bg .vl-hero-section-title .vl-title,
+.vl-hero-bg .vl-hero-section-title p,
+.vl-hero-bg .vl-hero-section-title .vl-subtitle {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
