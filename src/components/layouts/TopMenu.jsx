@@ -97,25 +97,25 @@ const TopMenu = () => {
                 </ul>
             </li> */}
             <li><Link to="/pages/service">Services</Link>
-                {/* <ul className="dropdown-padding">
-                    <li><Link to="/pages/service">Our Services</Link></li>
-                    <li><Link to="/pages/team">Our Volunteers</Link></li>
-                    <li><Link to="/pages/faq">FAQ</Link></li>
-                    <li><Link to="/pages/contact">Contact</Link></li>
-                    <li><Link to="/pages/error-404">404</Link></li>
-                </ul> */}
-      </li>
-      <li><Link to="#">Careers</Link></li>
-       <li><Link to="#">Stories</Link></li>
-      <li><Link to="/pages/contact" >Contact Us</Link></li>
-            {/* <li><a href="#">Causes <FaAngleDown className="fa-solid fa-angle-down align-bottom" /></a>
-                <ul className="dropdown-padding">
-                    <li><Link to="/cause">Causes</Link></li>
-                    <li><Link to="/cause-left">Causes Left</Link></li>
-                    <li><Link to="/cause-right">Causes Right</Link></li>
-                    <li><Link to="/cause-single">Causes Single</Link></li>
-                </ul>
-            </li> */}
+                 {/* <ul className="dropdown-padding">
+                                    <li><Link to="/pages/service">Our Services</Link></li>
+                                    <li><Link to="/pages/team">Our Volunteers</Link></li>
+                                    <li><Link to="/pages/faq">FAQ</Link></li>
+                                    <li><Link to="/pages/contact">Contact</Link></li>
+                                    <li><Link to="/pages/error-404">404</Link></li>
+                                </ul>  */}
+                            </li>
+                            <li><Link to="#">Careers</Link></li>
+                            <li><Link to="/blog">Stories</Link></li>
+                            <li><Link to="/pages/contact">Contact Us</Link></li>
+                            {/* <li><a href="#">Causes <FaAngleDown className="fa-solid fa-angle-down align-bottom" /></a>
+                                <ul className="dropdown-padding">
+                                    <li><Link to="/cause">Causes</Link></li>
+                                    <li><Link to="/cause-left">Causes Left</Link></li>
+                                    <li><Link to="/cause-right">Causes Right</Link></li>
+                                    <li><Link to="/cause-single">Causes Single</Link></li>
+                                </ul>
+                            </li> */}
         </ul>;
 };
 export default TopMenu;

@@ -42,29 +42,41 @@ const Gallery = () => {
       setLoading(true);
       setError(null);
       
-      console.log('Fetching gallery data using centralized API...');
+      console.log('🖼️ [Gallery Component] Fetching gallery data using centralized API...');
       
       // Use centralized API with token management and fallback handling
       const response = await homeAPI.getGalleryData();
+      
+      // Check if using fallback data
+      if (response.fallback) {
+        console.warn('🖼️ [Gallery Component] ⚠️ USING FALLBACK DATA');
+      } else {
+        console.log('🖼️ [Gallery Component] ✅ USING REAL API DATA');
+      }
       
       // Handle both response.gallery and response.galleryData (for backwards compatibility)
       const gallery = response.gallery || response.galleryData;
       
       if (response.success && gallery) {
-        setGalleryData(prevData => ({
-          ...prevData,
-          heading: gallery.heading || prevData.heading,
-          description: gallery.description || prevData.description,
-          images: gallery.images && gallery.images.length > 0 ? gallery.images : prevData.images,
-          ctaButton: gallery.ctaButton || prevData.ctaButton,
-          isActive: gallery.isActive !== undefined ? gallery.isActive : prevData.isActive
-        }));
-        console.log('Gallery data loaded successfully:', gallery);
+        const newData = {
+          ...prevData => prevData,
+          heading: gallery.heading || galleryData.heading,
+          description: gallery.description || galleryData.description,
+          images: gallery.images && gallery.images.length > 0 ? gallery.images : galleryData.images,
+          ctaButton: gallery.ctaButton || galleryData.ctaButton,
+          isActive: gallery.isActive !== undefined ? gallery.isActive : galleryData.isActive
+        };
+        setGalleryData(newData);
+        console.log('🖼️ [Gallery Component] Data updated:', {
+          heading: newData.heading,
+          imageCount: newData.images.length,
+          isFallback: response.fallback || false
+        });
       } else {
-        console.log('Using fallback gallery data');
+        console.log('🖼️ [Gallery Component] Using default gallery data');
       }
     } catch (error) {
-      console.error('Error fetching gallery data:', error);
+      console.error('🖼️ [Gallery Component] Error fetching gallery data:', error);
       setError(error.message);
       // Keep default data on error
     } finally {

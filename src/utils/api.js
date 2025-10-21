@@ -1,5 +1,6 @@
 // API Configuration for DivineCare Frontend
 import { store } from '../store';
+import { setCredentials } from '../store/authSlice';
 
 // Determine API base URL based on environment
 const getApiBaseUrl = () => {
@@ -7,8 +8,8 @@ const getApiBaseUrl = () => {
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     return 'http://localhost:5001/api';
   }
-  // Use production backend URL (Vercel deployment)
-  return 'https://divinecarebackend.vercel.app/api';
+  // Use Render.com backend (production)
+  return 'https://divinecare-backend.onrender.com/api';
 };
 
 const API_BASE_URL = getApiBaseUrl();
@@ -30,13 +31,25 @@ const isJwtValid = (token) => {
   }
 };
 
-// Helper function to make API requests
+// Helper function to make API requests with automatic token injection
 const apiRequest = async (endpoint, options = {}) => {
   const url = `${API_BASE_URL}${endpoint}`;
+  
+  // Get token from Redux store
+  const state = store.getState();
+  const token = state?.auth?.token;
   
   const defaultHeaders = {
     'Content-Type': 'application/json',
   };
+
+  // Add Authorization header if token exists
+  if (token) {
+    defaultHeaders['Authorization'] = `Bearer ${token}`;
+    console.log('🔑 Adding token to request:', endpoint, '(first 20 chars):', token.substring(0, 20) + '...');
+  } else {
+    console.log('📭 No token available for request:', endpoint);
+  }
 
   const config = {
     ...options,
@@ -78,66 +91,86 @@ const apiRequest = async (endpoint, options = {}) => {
   }
 };
 
-// Helper function to get a token for frontend requests
+// Helper function to get a token for frontend requests from admin's Redux store
 const getFrontendToken = () => {
   try {
-    // 1. PRIORITY: Get token from Redux store (set by signin)
+    // 1. First, try to get token from frontend's own Redux store (if ever set)
     const state = store.getState();
     if (state?.auth?.token) {
       const token = state.auth.token;
       if (typeof token === 'string' && !token.startsWith('demo-token') && token.length > 0) {
-        console.log('🔑 Using token from Redux store');
+        console.log('🔑 Using token from frontend Redux store');
         return token;
       }
     }
 
-    // 2. Fallback: Check localStorage for persisted token (redux-persist)
-    const persist = localStorage.getItem('persist:root');
-    if (persist) {
+    // 2. Get token from admin's localStorage (primary source)
+    // Admin stores token in localStorage after signin
+    const adminToken = localStorage.getItem('token');
+    if (adminToken) {
       try {
-        const persistData = JSON.parse(persist);
+        // Token might be JSON stringified
+        let cleanToken = adminToken;
+        if (cleanToken.startsWith('"') || cleanToken.startsWith("'")) {
+          cleanToken = JSON.parse(cleanToken);
+        }
+        
+        if (typeof cleanToken === 'string' && !cleanToken.startsWith('demo-token') && cleanToken.length > 0) {
+          console.log('🔑 Using token from admin localStorage');
+          // Also store in frontend Redux for consistency
+          store.dispatch(setCredentials({ 
+            user: null, // We don't have user object, just token
+            token: cleanToken 
+          }));
+          return cleanToken;
+        }
+      } catch (e) {
+        console.warn('Error parsing admin token:', e);
+      }
+    }
+
+    // 3. Check admin's Redux persist storage
+    const persistRoot = localStorage.getItem('persist:root');
+    if (persistRoot) {
+      try {
+        const persistData = JSON.parse(persistRoot);
         if (persistData.auth) {
           const authData = JSON.parse(persistData.auth);
           if (authData.token) {
             const cleanToken = String(authData.token).replace(/"/g, '');
             if (!cleanToken.startsWith('demo-token') && cleanToken.length > 0) {
-              console.log('🔑 Using token from redux-persist');
+              console.log('🔑 Using token from admin Redux persist');
+              // Store in frontend Redux
+              store.dispatch(setCredentials({ 
+                user: authData.user || null,
+                token: cleanToken 
+              }));
               return cleanToken;
             }
           }
         }
       } catch (e) {
-        console.warn('Error parsing persist:root token, ignoring.', e);
+        console.warn('Error parsing persist:root:', e);
       }
     }
-    
-    // 3. For frontend public access, return null to skip auth entirely
-    console.log('🔑 No valid token found - will use fallback data only');
+
+    console.log('🔑 No valid token found - API calls will be public');
     return null;
     
   } catch (error) {
-    console.warn('Error getting token:', error);
-    console.log('🔑 Error fallback - returning null to use fallback data');
+    console.warn('Error getting token from admin:', error);
     return null;
   }
 };
 
 // Helper function for authenticated requests with graceful fallback
 const authenticatedApiRequest = async (endpoint, options = {}) => {
-  // Get token from Redux store
+  // Check if we have a token
   const token = getFrontendToken();
 
   if (!token) {
     console.log('🔑 No token available for authenticated request to:', endpoint);
     const err = new Error('No authentication token available');
-    err.status = 401;
-    throw err;
-  }
-
-  // Defensive guard: never send demo tokens
-  if (typeof token === 'string' && token.startsWith('demo-token')) {
-    console.error('🔑 Demo token detected — refusing to send Authorization header for', endpoint);
-    const err = new Error('Demo token detected');
     err.status = 401;
     throw err;
   }
@@ -151,17 +184,10 @@ const authenticatedApiRequest = async (endpoint, options = {}) => {
   }
 
   console.log('🔑 Making authenticated request to:', endpoint);
-  console.log('🔑 Using token:', token ? `${token.substring(0, 10)}...` : 'NO TOKEN');
 
   try {
-    const response = await apiRequest(endpoint, {
-      ...options,
-      headers: {
-        ...options.headers,
-        'Authorization': `Bearer ${token}`,
-      },
-    });
-
+    // apiRequest will automatically add the token from Redux
+    const response = await apiRequest(endpoint, options);
     console.log('✅ Authenticated request successful:', endpoint);
     return response;
   } catch (error) {
@@ -181,10 +207,18 @@ const authenticatedApiRequest = async (endpoint, options = {}) => {
 const apiCallWithFallback = async (apiCall, fallbackData) => {
   try {
     const result = await apiCall();
+    
+    // Log the response for debugging
+    console.log('📊 API Response:', result);
+    
     if (result && result.success) {
-      return result;
+      // Mark that this is real data, not fallback
+      console.log('✅ Using REAL data from API');
+      return { ...result, fallback: false };
     }
+    
     // If API call succeeds but returns unsuccessful data, use fallback
+    console.warn('⚠️ API returned unsuccessful response, using fallback');
     throw new Error('API returned unsuccessful response');
   } catch (error) {
     console.warn('⚠️ API call failed, using fallback data:', error.message);
@@ -202,31 +236,20 @@ const apiCallWithFallback = async (apiCall, fallbackData) => {
 export const homeAPI = {
   // Get home carousel/hero data with graceful fallback
   getHeroData: async () => {
-    // Attempt public endpoint first (works for public content).
-    // If it fails, always try the authenticated endpoint which will
-    // obtain a server token if needed.
     return apiCallWithFallback(
       async () => {
-        // Try public endpoint first
-        try {
-          const response = await apiRequest('/home/68ebd3247deb89d1105fd728');
-          console.log('🏠 Hero data fetched (public):', response);
-          if (response && response.success && response.data) {
-            return { success: true, home: response.data };
-          }
-        } catch (error) {
-          console.log('🏠 Public endpoint failed:', error.message || error);
+        // Backend route: GET /api/home (requires auth token)
+        console.log('🏠 Fetching hero data from /home');
+        const response = await apiRequest('/home');
+        console.log('🏠 Hero data raw response:', response);
+        
+        // Backend returns { success: true, home: {...} }
+        if (response && response.success && response.home) {
+          console.log('🏠 ✅ Hero data retrieved successfully');
+          return { success: true, home: response.home };
         }
-
-        // Try authenticated endpoint (this will call getOrFetchToken internally)
-        try {
-          const response = await authenticatedApiRequest('/home');
-          console.log('🏠 Hero data fetched (auth):', response);
-          return response;
-        } catch (err) {
-          console.log('🏠 Authenticated endpoint failed:', err.message || err);
-          throw err;
-        }
+        
+        throw new Error('Invalid hero data structure');
       },
       {
         home: {
@@ -250,18 +273,16 @@ export const homeAPI = {
   getAboutData: async () => {
     return apiCallWithFallback(
       async () => {
-        // Try public /about first
-        try {
-          const response = await apiRequest('/about');
-          console.log('📄 About data fetched (public):', response);
-          if (response && response.success) {
-            return response;
-          }
-        } catch (error) {
-          console.log('📄 Public about endpoint failed (401 expected until backend is redeployed):', error.message || error);
-          // Don't try authenticated request, just throw to use fallback
-          throw error;
+        console.log('📄 Fetching about data from /about...');
+        const response = await apiRequest('/about');
+        console.log('📄 About data raw response:', response);
+        
+        if (response && response.success && response.about) {
+          console.log('📄 ✅ About data retrieved successfully');
+          return response;
         }
+        
+        throw new Error('Invalid about data structure');
       },
       {
         about: {
@@ -291,18 +312,16 @@ export const homeAPI = {
   getGalleryData: async () => {
     return apiCallWithFallback(
       async () => {
-        // Try public gallery endpoint
-        try {
-          const response = await apiRequest('/gallery');
-          console.log('🖼️ Gallery data fetched (public):', response);
-          if (response && response.success && response.galleryData) {
-            return { success: true, galleryData: response.galleryData };
-          }
-        } catch (error) {
-          console.log('🖼️ Public gallery endpoint failed (401 expected until backend is redeployed):', error.message || error);
-          // Don't try authenticated request, just throw to use fallback
-          throw error;
+        console.log('🖼️ Fetching gallery data from /gallery...');
+        const response = await apiRequest('/gallery');
+        console.log('🖼️ Gallery data raw response:', response);
+        
+        if (response && response.success && response.galleryData) {
+          console.log('🖼️ ✅ Gallery data retrieved successfully');
+          return { success: true, galleryData: response.galleryData };
         }
+        
+        throw new Error('Invalid gallery data structure');
       },
       {
         galleryData: {
@@ -340,18 +359,13 @@ export const homeAPI = {
   getTeamMembers: async () => {
     return apiCallWithFallback(
       async () => {
-        // Try public team-members first
-        try {
-          const response = await apiRequest('/team-members');
-          console.log('👥 Team members data fetched (public):', response);
-          if (response && response.success && response.teamMembers) {
-            return { success: true, teamMembers: response.teamMembers };
-          }
-        } catch (error) {
-          console.log('👥 Public team members endpoint failed (401 expected until backend is redeployed):', error.message || error);
-          // Don't try authenticated request, just throw to use fallback
-          throw error;
+        // apiRequest will automatically include token if available
+        const response = await apiRequest('/team-members');
+        console.log('👥 Team members data fetched:', response);
+        if (response && response.success && response.teamMembers) {
+          return { success: true, teamMembers: response.teamMembers };
         }
+        throw new Error('Invalid response format');
       },
       {
         teamMembers: [
@@ -376,18 +390,16 @@ export const homeAPI = {
   getEventsData: async () => {
     return apiCallWithFallback(
       async () => {
-        // Try public events endpoint first
-        try {
-          const response = await apiRequest('/home/event');
-          console.log('📅 Events data fetched (public):', response);
-          if (response && response.success && response.data) {
-            return { success: true, event: response.data };
-          }
-        } catch (error) {
-          console.log('📅 Public events endpoint failed (401 expected until backend is redeployed):', error.message || error);
-          // Don't try authenticated request, just throw to use fallback
-          throw error;
+        console.log('📅 Fetching events data from /home/event...');
+        const response = await apiRequest('/home/event');
+        console.log('📅 Events data raw response:', response);
+        
+        if (response && response.success && response.data) {
+          console.log('📅 ✅ Events data retrieved successfully');
+          return { success: true, event: response.data };
         }
+        
+        throw new Error('Invalid events data structure');
       },
       {
         event: {

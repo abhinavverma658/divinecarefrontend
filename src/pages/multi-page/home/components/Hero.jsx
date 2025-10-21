@@ -20,32 +20,55 @@ const Hero = () => {
     const fetchHeroData = async () => {
       try {
         setLoading(true);
-        console.log('Fetching hero data from API...');
+        console.log('🏠 [Hero Component] Fetching hero data from API...');
         const response = await homeAPI.getHeroData();
-        console.log('API Response:', response);
+        console.log('🏠 [Hero Component] API Response:', response);
+        
+        // Check if using fallback data
+        if (response.fallback) {
+          console.warn('🏠 [Hero Component] ⚠️ USING FALLBACK DATA');
+        } else {
+          console.log('🏠 [Hero Component] ✅ USING REAL API DATA');
+        }
         
         if (response && response.success && response.home) {
           // Normalize response into predictable shape for the component
           const h = response.home;
+          
+          // Backend returns: heroTitle, heroHeading, description, heroImage, facebookUrl, instagramUrl, xUrl
           const normalized = {
-            title: h.title || h.name || h.heading || h.homeTitle || '',
-            subtitle: h.subtitle || h.subTitle || h.subtitleText || '',
-            description: h.description || h.desc || h.body || '',
-            buttonText: h.buttonText || h.ctaText || 'Contact Us',
-            buttonLink: h.buttonLink || h.ctaLink || '/pages/contact',
-            heroImage: h.heroImage || h.image || h.imageUrl || (h.images && h.images[0] && (h.images[0].url || h.images[0].image)) || '',
-            socialMedia: h.socialMedia || h.social || h.social_links || {},
+            title: h.heroHeading || h.title || h.heading || '',
+            subtitle: h.heroTitle || h.subtitle || h.subTitle || '',
+            description: h.description || h.desc || '',
+            buttonText: h.buttonText || 'Join The Relief Effort',
+            buttonLink: h.buttonLink || '/pages/contact',
+            heroImage: h.heroImage || h.image || '',
+            socialMedia: {
+              facebook: h.facebookUrl || h.socialMedia?.facebook || '#',
+              instagram: h.instagramUrl || h.socialMedia?.instagram || '#',
+              twitter: h.xUrl || h.socialMedia?.twitter || '#',
+            },
             // keep raw home so debug can inspect
-            _raw: h
+            _raw: h,
+            _isFallback: response.fallback || false
           };
 
           setHeroData(normalized);
-          console.log('Hero data loaded successfully (normalized):', normalized);
+          console.log('🏠 [Hero Component] Data loaded:', {
+            title: normalized.title,
+            subtitle: normalized.subtitle,
+            description: normalized.description?.substring(0, 50) + '...',
+            heroImage: normalized.heroImage?.substring(0, 50) + '...',
+            facebook: normalized.socialMedia.facebook,
+            instagram: normalized.socialMedia.instagram,
+            twitter: normalized.socialMedia.twitter,
+            isFallback: normalized._isFallback
+          });
         } else {
           throw new Error('Failed to fetch hero data');
         }
       } catch (err) {
-        console.error('Hero data fetch error:', err);
+        console.error('🏠 [Hero Component] Hero data fetch error:', err);
         setError(err.message);
         // Fallback to default data if API fails
         setHeroData({
@@ -59,9 +82,10 @@ const Hero = () => {
             facebook: "#",
             instagram: "#",
             twitter: "#",
-          }
+          },
+          _isFallback: true
         });
-        console.log('Using fallback hero data');
+        console.log('🏠 [Hero Component] Using hardcoded fallback hero data');
       } finally {
         setLoading(false);
       }
@@ -206,13 +230,6 @@ const Hero = () => {
       </Container>
     </div>
   );
-
-  // Debug: log when heroData changes so we can confirm component update
-  useEffect(() => {
-    if (heroData) {
-      console.log('Hero component - heroData changed:', heroData);
-    }
-  }, [heroData]);
 
   // Render hero slider with dynamic data
   return (
