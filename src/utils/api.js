@@ -1,55 +1,27 @@
 // API Configuration for DivineCare Frontend
 import { store } from '../store';
-import { setCredentials } from '../store/authSlice';
 
-// Determine API base URL based on environment
-const getApiBaseUrl = () => {
-  // Check if running locally
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    return 'http://localhost:5001/api';
-  }
-  // Use Render.com backend (production)
-  return 'https://divinecare-backend.onrender.com/api';
-};
+// API base URL (use production backend). Always use the Render deployment URL so
+// local dev doesn't try to reach a missing local backend.
+const API_BASE_URL = 'https://divinecare-backend.onrender.com/api';
 
-const API_BASE_URL = getApiBaseUrl();
+// Note: bearer-token logic removed — this file now treats GET requests as public
 
-// Token validation helper
-const isJwtValid = (token) => {
-  try {
-    if (!token || typeof token !== 'string') return false;
-    const parts = token.split('.');
-    if (parts.length < 2) return false;
-    const payload = parts[1].replace(/-/g, '+').replace(/_/g, '/');
-    const decoded = atob(payload.padEnd(payload.length + (4 - (payload.length % 4)) % 4, '='));
-    const obj = JSON.parse(decoded);
-    if (!obj.exp) return true; // no expiry claim -> assume valid
-    const now = Math.floor(Date.now() / 1000);
-    return obj.exp > now + 15; // 15s safety margin
-  } catch (e) {
-    return false;
-  }
-};
-
-// Helper function to make API requests with automatic token injection
+// Helper function to make API requests.
+// Policy: GET requests are public by default and will NOT include an Authorization header.
+// If a caller needs to include auth for a non-standard case, they should either call
+// `authenticatedApiRequest` or pass `options.includeAuth === true` together with a
+// prepared `options.headers.Authorization` value.
 const apiRequest = async (endpoint, options = {}) => {
   const url = `${API_BASE_URL}${endpoint}`;
-  
-  // Get token from Redux store
-  const state = store.getState();
-  const token = state?.auth?.token;
-  
+
+  const method = (options.method || 'GET').toString().toUpperCase();
   const defaultHeaders = {
     'Content-Type': 'application/json',
   };
 
-  // Add Authorization header if token exists
-  if (token) {
-    defaultHeaders['Authorization'] = `Bearer ${token}`;
-    console.log('🔑 Adding token to request:', endpoint, '(first 20 chars):', token.substring(0, 20) + '...');
-  } else {
-    console.log('📭 No token available for request:', endpoint);
-  }
+  // GET requests are public by design in this file; callers should not expect
+  // the Authorization header to be added automatically.
 
   const config = {
     ...options,
@@ -61,7 +33,7 @@ const apiRequest = async (endpoint, options = {}) => {
 
   try {
     const response = await fetch(url, config);
-    
+
     if (!response.ok) {
       // Try to read response body to give better debug info
       let body = null;
@@ -91,117 +63,9 @@ const apiRequest = async (endpoint, options = {}) => {
   }
 };
 
-// Helper function to get a token for frontend requests from admin's Redux store
-const getFrontendToken = () => {
-  try {
-    // 1. First, try to get token from frontend's own Redux store (if ever set)
-    const state = store.getState();
-    if (state?.auth?.token) {
-      const token = state.auth.token;
-      if (typeof token === 'string' && !token.startsWith('demo-token') && token.length > 0) {
-        console.log('🔑 Using token from frontend Redux store');
-        return token;
-      }
-    }
+// Bearer token logic removed — frontend API calls do not attempt to retrieve or sync admin tokens.
 
-    // 2. Get token from admin's localStorage (primary source)
-    // Admin stores token in localStorage after signin
-    const adminToken = localStorage.getItem('token');
-    if (adminToken) {
-      try {
-        // Token might be JSON stringified
-        let cleanToken = adminToken;
-        if (cleanToken.startsWith('"') || cleanToken.startsWith("'")) {
-          cleanToken = JSON.parse(cleanToken);
-        }
-        
-        if (typeof cleanToken === 'string' && !cleanToken.startsWith('demo-token') && cleanToken.length > 0) {
-          console.log('🔑 Using token from admin localStorage');
-          // Also store in frontend Redux for consistency
-          store.dispatch(setCredentials({ 
-            user: null, // We don't have user object, just token
-            token: cleanToken 
-          }));
-          return cleanToken;
-        }
-      } catch (e) {
-        console.warn('Error parsing admin token:', e);
-      }
-    }
-
-    // 3. Check admin's Redux persist storage
-    const persistRoot = localStorage.getItem('persist:root');
-    if (persistRoot) {
-      try {
-        const persistData = JSON.parse(persistRoot);
-        if (persistData.auth) {
-          const authData = JSON.parse(persistData.auth);
-          if (authData.token) {
-            const cleanToken = String(authData.token).replace(/"/g, '');
-            if (!cleanToken.startsWith('demo-token') && cleanToken.length > 0) {
-              console.log('🔑 Using token from admin Redux persist');
-              // Store in frontend Redux
-              store.dispatch(setCredentials({ 
-                user: authData.user || null,
-                token: cleanToken 
-              }));
-              return cleanToken;
-            }
-          }
-        }
-      } catch (e) {
-        console.warn('Error parsing persist:root:', e);
-      }
-    }
-
-    console.log('🔑 No valid token found - API calls will be public');
-    return null;
-    
-  } catch (error) {
-    console.warn('Error getting token from admin:', error);
-    return null;
-  }
-};
-
-// Helper function for authenticated requests with graceful fallback
-const authenticatedApiRequest = async (endpoint, options = {}) => {
-  // Check if we have a token
-  const token = getFrontendToken();
-
-  if (!token) {
-    console.log('🔑 No token available for authenticated request to:', endpoint);
-    const err = new Error('No authentication token available');
-    err.status = 401;
-    throw err;
-  }
-
-  // Validate token before using
-  if (!isJwtValid(token)) {
-    console.error('🔑 Token is expired or invalid');
-    const err = new Error('Token is expired or invalid');
-    err.status = 401;
-    throw err;
-  }
-
-  console.log('🔑 Making authenticated request to:', endpoint);
-
-  try {
-    // apiRequest will automatically add the token from Redux
-    const response = await apiRequest(endpoint, options);
-    console.log('✅ Authenticated request successful:', endpoint);
-    return response;
-  } catch (error) {
-    console.error('❌ Authenticated request failed:', endpoint, error);
-
-    // If it's a 401 error, provide helpful debugging info
-    if (error && (error.status === 401 || (error.message && error.message.includes('401')))) {
-      console.error('🚨 401 Unauthorized - Token issue detected');
-      console.error('💡 Suggestion: Please sign in again to get a new token');
-    }
-
-    throw error;
-  }
-};
+// Bearer-token authenticated helper removed — all authentication is handled elsewhere (if needed).
 
 // Helper function that tries API call and falls back gracefully
 const apiCallWithFallback = async (apiCall, fallbackData) => {
@@ -316,40 +180,36 @@ export const homeAPI = {
         const response = await apiRequest('/gallery');
         console.log('🖼️ Gallery data raw response:', response);
         
-        if (response && response.success && response.galleryData) {
+        if (response && response.success && response.gallery) {
           console.log('🖼️ ✅ Gallery data retrieved successfully');
-          return { success: true, galleryData: response.galleryData };
+          return { success: true, gallery: response.gallery };
         }
         
         throw new Error('Invalid gallery data structure');
       },
       {
-        galleryData: {
+        gallery: {
+          _id: 'fallback-gallery',
           heading: 'The Frontlines of Relief',
           description: 'These titles aim to convey emotion and meaning while showcasing the importance of our work through visuals.',
           images: [
             {
-              id: 1,
+              _id: 'fallback-1',
               url: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-              public_id: 'gallery/image1'
+              public_id: 'gallery/fallback1'
             },
             {
-              id: 2,
+              _id: 'fallback-2',
               url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-              public_id: 'gallery/image2'
+              public_id: 'gallery/fallback2'
             },
             {
-              id: 3,
+              _id: 'fallback-3',
               url: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-              public_id: 'gallery/image3'
+              public_id: 'gallery/fallback3'
             }
           ],
-          ctaButton: {
-            text: 'View Full Gallery',
-            link: '/gallery',
-            style: 'primary'
-          },
-          isActive: true
+          updatedAt: new Date().toISOString()
         }
       }
     );
@@ -359,29 +219,38 @@ export const homeAPI = {
   getTeamMembers: async () => {
     return apiCallWithFallback(
       async () => {
-        // apiRequest will automatically include token if available
+        console.log('👥 Fetching team members data from /team-members...');
         const response = await apiRequest('/team-members');
-        console.log('👥 Team members data fetched:', response);
-        if (response && response.success && response.teamMembers) {
-          return { success: true, teamMembers: response.teamMembers };
+        console.log('👥 Team members data raw response:', response);
+        
+        if (response && response.success && response.section) {
+          console.log('👥 ✅ Team members data retrieved successfully');
+          return { success: true, section: response.section };
         }
-        throw new Error('Invalid response format');
+        
+        throw new Error('Invalid team members data structure');
       },
       {
-        teamMembers: [
-          {
-            _id: 'demo1',
-            picture: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face',
-            name: 'John Doe',
-            designation: 'General Manager'
-          },
-          {
-            _id: 'demo2',
-            picture: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face',
-            name: 'Jane Smith',
-            designation: 'Community Coordinator'
-          }
-        ]
+        section: {
+          _id: 'fallback-team-section',
+          heading: 'Meet our Volunteer members',
+          description: 'Provide tips, articles, or expert advice on maintaining a healthy work-life balance, managing, Workshops or seminars organizational.',
+          members: [
+            {
+              _id: 'fallback-member-1',
+              image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face',
+              fullName: 'John Doe',
+              designation: 'General Manager'
+            },
+            {
+              _id: 'fallback-member-2',
+              image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face',
+              fullName: 'Jane Smith',
+              designation: 'Community Coordinator'
+            }
+          ],
+          updatedAt: new Date().toISOString()
+        }
       }
     );
   },
@@ -454,7 +323,8 @@ export const blogAPI = {
   // Get all published blogs
   getBlogs: async () => {
     try {
-      const response = await authenticatedApiRequest('/blog/get-blogs');
+      // Public GET: do not attach bearer token
+      const response = await apiRequest('/blog/get-blogs');
       console.log('📝 Blogs fetched:', response);
       return response;
     } catch (error) {
@@ -469,7 +339,8 @@ export const blogAPI = {
   // Get blog by ID
   getBlogById: async (id) => {
     try {
-      const response = await authenticatedApiRequest(`/blog/get-blog/${id}`);
+      // Public GET: do not attach bearer token
+      const response = await apiRequest(`/blog/get-blog/${id}`);
       console.log('📝 Blog fetched:', response);
       return response;
     } catch (error) {
@@ -484,7 +355,7 @@ export const servicesAPI = {
   // Get all services
   getServices: async () => {
     try {
-      const response = await authenticatedApiRequest('/services/get-services');
+      const response = await apiRequest('/services');
       console.log('🛠️ Services fetched:', response);
       return response;
     } catch (error) {
@@ -494,6 +365,18 @@ export const servicesAPI = {
         services: []
       };
     }
+  },
+  
+  // Get service by ID
+  getServiceById: async (id) => {
+    try {
+      const response = await apiRequest(`/services/${id}`);
+      console.log('🛠️ Service fetched:', response);
+      return response;
+    } catch (error) {
+      console.error('Failed to fetch service:', error);
+      return null;
+    }
   }
 };
 
@@ -502,7 +385,8 @@ export const eventsAPI = {
   // Get all events
   getEvents: async () => {
     try {
-      const response = await authenticatedApiRequest('/events/get-events');
+      // Public GET: do not attach bearer token
+      const response = await apiRequest('/events');
       console.log('📅 Events list fetched:', response);
       return response;
     } catch (error) {
@@ -517,7 +401,8 @@ export const eventsAPI = {
   // Get event by ID
   getEventById: async (id) => {
     try {
-      const response = await authenticatedApiRequest(`/events/get-event/${id}`);
+      // Public GET: do not attach bearer token
+      const response = await apiRequest(`/events/${id}`);
       console.log('📅 Event fetched:', response);
       return response;
     } catch (error) {
@@ -529,19 +414,78 @@ export const eventsAPI = {
 
 // Testimonials API endpoints
 export const testimonialsAPI = {
-  // Get all testimonials
+  // Get all testimonials (public)
   getTestimonials: async () => {
-    try {
-      const response = await authenticatedApiRequest('/testimonial/get-testimonials');
-      console.log('💬 Testimonials fetched:', response);
-      return response;
-    } catch (error) {
-      console.error('Failed to fetch testimonials:', error);
-      return {
-        success: true,
-        testimonials: []
-      };
-    }
+    return apiCallWithFallback(
+      async () => {
+        console.log('💬 Fetching testimonials data from /testimonials...');
+        const response = await apiRequest('/testimonials');
+        console.log('💬 Testimonials data raw response:', response);
+        
+        if (response && response.success && response.section) {
+          console.log('💬 ✅ Testimonials data retrieved successfully');
+          return { success: true, section: response.section };
+        }
+        
+        throw new Error('Invalid testimonials data structure');
+      },
+      {
+        section: {
+          _id: 'fallback-testimonials',
+          sectionHeading: 'Stories from the Heart',
+          sectionDescription: 'Long-term recovery requires sustainable livelihoods. We support individuals & families in rebuilding.',
+          testimonials: [
+            {
+              _id: 'fallback-1',
+              rating: 5,
+              content: 'The support we received after the disaster was nothing short of life-changing. When everything we had was lost, the kindness and quick response from this organization gave us hope.',
+              name: 'Johnnie Lind',
+              designation: 'Volunteer',
+              image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face'
+            },
+            {
+              _id: 'fallback-2',
+              rating: 5,
+              content: 'DivineCare provided exceptional support during a difficult time. Their dedication to helping communities rebuild is truly inspiring.',
+              name: 'Sarah Johnson',
+              designation: 'Community Leader',
+              image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face'
+            },
+            {
+              _id: 'fallback-3',
+              rating: 4,
+              content: 'The team is dedicated and caring. Their work in disaster relief has made a real difference in our community.',
+              name: 'Michael Chen',
+              designation: 'Local Coordinator',
+              image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face'
+            }
+          ]
+        }
+      }
+    );
+  },
+
+  // Create a testimonial (admin)
+  createTestimonial: async (formData) => {
+    return apiRequest('/testimonials', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+    });
+  },
+
+  // Update testimonial by ID (admin)
+  updateTestimonialById: async (id, formData) => {
+    return apiRequest(`/testimonials/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(formData),
+    });
+  },
+
+  // Delete testimonial by ID (admin)
+  deleteTestimonialById: async (id) => {
+    return apiRequest(`/testimonials/${id}`, {
+      method: 'DELETE',
+    });
   }
 };
 
@@ -550,7 +494,8 @@ export const storiesAPI = {
   // Get all published stories
   getStories: async () => {
     try {
-      const response = await authenticatedApiRequest('/stories/get-stories');
+      // Public GET: do not attach bearer token
+      const response = await apiRequest('/stories/get-stories');
       console.log('📖 Stories fetched:', response);
       return response;
     } catch (error) {
@@ -565,7 +510,8 @@ export const storiesAPI = {
   // Get story by ID
   getStoryById: async (id) => {
     try {
-      const response = await authenticatedApiRequest(`/stories/get-story/${id}`);
+      // Public GET: do not attach bearer token
+      const response = await apiRequest(`/stories/get-story/${id}`);
       console.log('📖 Story fetched:', response);
       return response;
     } catch (error) {
@@ -626,98 +572,4 @@ export default {
 // Dev helper: expose a small debug function to the window so you can call it from
 // the browser console: window.debugGetFrontendToken()
 // Returns an object with token (if any) and the detected source.
-export const debugGetFrontendToken = () => {
-  try {
-    // Re-run the same token discovery logic but capture source information
-    const result = {
-      token: null,
-      source: null,
-    };
-
-    const frontendToken = localStorage.getItem('frontend-token');
-    if (frontendToken) {
-      if (typeof frontendToken === 'string' && frontendToken.startsWith('demo-token')) {
-        result.source = 'frontend-token (demo - ignored)';
-      } else {
-        result.token = frontendToken;
-        result.source = 'frontend-token';
-        // expose and return early
-        window.debugLastTokenResult = result;
-        return result;
-      }
-    }
-
-    const persist = localStorage.getItem('persist:root');
-    if (persist) {
-      try {
-        const persistData = JSON.parse(persist);
-        if (persistData.auth) {
-          const authData = JSON.parse(persistData.auth);
-          if (authData.token) {
-            const cleanToken = String(authData.token).replace(/"/g, '');
-            if (cleanToken.startsWith('demo-token')) {
-              result.source = 'persist:root.auth.token (demo - ignored)';
-            } else {
-              result.token = cleanToken;
-              result.source = 'persist:root.auth.token';
-              window.debugLastTokenResult = result;
-              return result;
-            }
-          }
-        }
-      } catch (e) {
-        // ignore parse errors
-      }
-    }
-
-    const directToken = localStorage.getItem('token');
-    if (directToken) {
-      try {
-        let cleanToken = directToken;
-        if (cleanToken.startsWith('"') || cleanToken.startsWith("'")) {
-          try { cleanToken = JSON.parse(cleanToken); } catch (e) { cleanToken = cleanToken.replace(/^['"]|['"]$/g, ''); }
-        }
-        if (cleanToken && typeof cleanToken === 'object' && cleanToken.token) {
-          cleanToken = String(cleanToken.token);
-        }
-        cleanToken = String(cleanToken);
-        if (cleanToken.startsWith('demo-token')) {
-          result.source = 'token (demo - ignored)';
-        } else {
-          result.token = cleanToken;
-          result.source = 'token';
-          window.debugLastTokenResult = result;
-          return result;
-        }
-      } catch (e) {
-        // ignore
-      }
-    }
-
-    // nothing found
-    window.debugLastTokenResult = result;
-    return result;
-  } catch (e) {
-    return { error: e.message };
-  }
-};
-
-// Attach to window in dev so it's easy to call from console
-try { if (typeof window !== 'undefined') window.debugGetFrontendToken = debugGetFrontendToken; } catch (e) {}
-
-// Dev helper: decode a JWT (returns payload or error). Use in console:
-// window.debugDecodeJWT(<token>)
-export const debugDecodeJWT = (token) => {
-  try {
-    if (!token) return { error: 'no token provided' };
-    const parts = token.split('.');
-    if (parts.length < 2) return { error: 'invalid token format' };
-    const payload = parts[1].replace(/-/g, '+').replace(/_/g, '/');
-    const decoded = atob(payload.padEnd(payload.length + (4 - (payload.length % 4)) % 4, '='));
-    return JSON.parse(decoded);
-  } catch (e) {
-    return { error: e.message };
-  }
-};
-
-try { if (typeof window !== 'undefined') window.debugDecodeJWT = debugDecodeJWT; } catch (e) {}
+// Token debug helpers removed

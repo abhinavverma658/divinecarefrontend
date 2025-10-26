@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaGithub } from "react-icons/fa";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa6";
-import { teamData } from '../data';
 import { homeAPI } from '../../../../utils/api';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
@@ -10,7 +9,12 @@ import { Link } from "react-router";
 import arrowLeft from "@/assets/img/icons/vl-arrow-left-1.1.svg";
 import angleRight from "@/assets/img/icons/vl-angle-right-1.2.svg";
 const Team = () => {
-  const [teamMembers, setTeamMembers] = useState([]);
+  const [teamData, setTeamData] = useState({
+    heading: 'Meet our Volunteer members',
+    description: 'Provide tips, articles, or expert advice on maintaining a healthy work-life balance, managing, Workshops or seminars organizational.',
+    members: []
+  });
+  
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -23,90 +27,106 @@ const Team = () => {
       setLoading(true);
       setError(null);
       
-      console.log('Fetching team members using centralized API...');
+      console.log('👥 [Team Component] Fetching team members using centralized API...');
       
       // Use centralized API with token management and fallback handling
       const response = await homeAPI.getTeamMembers();
       
-      if (response.success && response.teamMembers && Array.isArray(response.teamMembers)) {
-        console.log('Processing team members:', response.teamMembers.length, 'members found');
+      // Check if using fallback data
+      if (response.fallback) {
+        console.warn('👥 [Team Component] ⚠️ USING FALLBACK DATA');
+      } else {
+        console.log('👥 [Team Component] ✅ USING REAL API DATA');
+      }
+      
+      // Handle the correct response structure: response.section
+      const section = response.section;
+      
+      if (response.success && section) {
+        console.log('👥 [Team Component] Processing team members:', section.members.length, 'members found');
         
         // Convert backend data to frontend format
-        const convertedMembers = response.teamMembers
-          .filter(member => {
-            console.log('Checking member:', member.name || member.fullName, 'isActive:', member.isActive);
-            return member.isActive !== false; // Only show active members
-          })
-          .map(member => {
-            const converted = {
-              id: member.id,
-              name: member.name || member.fullName,
-              role: member.designation || member.title,
-              image: member.picture || member.image,
-              // Add social links if available
-              social: {
-                facebook: member.socialLinks?.facebook || '#',
-                twitter: member.socialLinks?.twitter || '#',
-                instagram: member.socialLinks?.instagram || '#',
-                github: member.socialLinks?.github || '#'
-              }
-            };
-            console.log('Converted member:', converted);
-            return converted;
-          });
+        const convertedMembers = section.members.map((member, index) => ({
+          id: member._id || index,
+          name: member.fullName,
+          role: member.designation,
+          image: member.image,
+          // Add default social links since they're not in the backend structure
+          social: {
+            facebook: '#',
+            twitter: '#',
+            instagram: '#',
+            github: '#'
+          }
+        }));
         
-        console.log('Final converted members:', convertedMembers.length, 'active members');
+        const newData = {
+          _id: section._id,
+          heading: section.heading || teamData.heading,
+          description: section.description || teamData.description,
+          members: convertedMembers,
+          updatedAt: section.updatedAt
+        };
         
-        if (convertedMembers.length > 0) {
-          setTeamMembers(convertedMembers);
-          console.log('✅ Using dynamic team members from API');
-        } else {
-          console.log('⚠️ No active members found, using static data');
-          setTeamMembers(teamData);
-        }
-      } else {
-        // Fallback to static data if API response is empty
-        console.log('📝 No team members from API or invalid response, using static data');
-        console.log('API response details:', { 
-          success: response.success, 
-          hasTeamMembers: !!response.teamMembers,
-          isArray: Array.isArray(response.teamMembers),
-          count: response.teamMembers?.length 
+        setTeamData(newData);
+        console.log('👥 [Team Component] Data updated:', {
+          heading: newData.heading,
+          membersCount: newData.members.length,
+          isFallback: response.fallback || false,
+          sectionId: newData._id
         });
-        setTeamMembers(teamData);
+      } else {
+        console.log('👥 [Team Component] Using default team data');
       }
     } catch (error) {
-      console.error('Error fetching team members:', error);
+      console.error('👥 [Team Component] Error fetching team members:', error);
       setError(error.message);
-      
-      // Fallback to static data on error
-      console.log('Using fallback static team data');
-      setTeamMembers(teamData);
+      // Keep default data on error
     } finally {
       setLoading(false);
     }
   };
 
-  // Use dynamic data if available, otherwise fallback to static data
-  const displayTeamMembers = teamMembers.length > 0 ? teamMembers : teamData;
-  
-  console.log('🎯 Display decision:', {
-    teamMembersCount: teamMembers.length,
-    displayMembersCount: displayTeamMembers.length,
-    usingDynamic: teamMembers.length > 0,
-    loading,
-    error
-  });
+  // Don't render if no team members available
+  if (!teamData.members || teamData.members.length === 0) {
+    return (
+      <section className="vl-team-bg-1 sp1">
+        <Container>
+          <div className="vl-team-section-title mb-60 text-center">
+            <div className="vl-section-title-1">
+              <h5 className="subtitle" data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>Meet our Volunteer</h5>
+              <h2 className="title text-anime-style-3">{teamData.heading}</h2>
+              <p data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>
+                {teamData.description}
+              </p>
+              {loading && (
+                <div className="text-center mt-3">
+                  <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Loading team members...</span>
+                  </div>
+                  <small className="text-muted d-block mt-2">Loading team members...</small>
+                </div>
+              )}
+              {!loading && (
+                <div className="text-center mt-3">
+                  <small className="text-muted">No team members available at the moment.</small>
+                </div>
+              )}
+            </div>
+          </div>
+        </Container>
+      </section>
+    );
+  }
   return <section className="vl-team-bg-1 sp1">
             <Container>
                 <div className="vl-team-section-title mb-60 text-center">
                     <div className="vl-section-title-1">
-                        <h5 className="subtitle" data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>Meet
-                            our Volunteer</h5>
-                        <h2 className="title text-anime-style-3">Our Tem</h2>
-                        <p data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>Provide tips, articles, or
-                            expert advice on maintaining a healthy work- <br />life balance, managing, Workshops or
-                            seminars </p>
+                        <h5 className="subtitle" data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>Meet our Volunteer</h5>
+                        <h2 className="title text-anime-style-3">{teamData.heading}</h2>
+                        <p data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>
+                          {teamData.description}
+                        </p>
                         {loading && (
                           <div className="text-center mt-3">
                             <small className="text-muted">Loading team members...</small>
@@ -142,36 +162,31 @@ const Team = () => {
             spaceBetween: 30
           } // Desktops
         }} spaceBetween={30}>
-                        {displayTeamMembers?.map((item, idx) => <SwiperSlide className="vl-team-parent" key={item.id || idx}>
+                        {teamData.members?.map((item, idx) => <SwiperSlide className="vl-team-parent" key={item._id || idx}>
                                 <div className="vl-team-thumb">
                                     <img 
                                       width={301} 
-                                      height={357} 
-                                      className="w-100" 
+                                      height={287} 
                                       src={item.image} 
                                       alt={`${item.name} - ${item.role}`}
                                       onError={(e) => {
                                         console.log('Image load error for:', item.image);
-                                        // You can set a default image here if needed
-                                        // e.target.src = '/path/to/default-avatar.jpg';
+                                        // Set a placeholder image on error
+                                        e.target.src = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face';
                                       }}
-                                    style={{objectFit: "cover"}}
                                     />
-                                </div>
-                                <div className="vl-team-content text-center">
-                                    <Link to="/pages/team" className="title">{item.name}</Link>
-                                    <span>{item.role}</span>
+                                    <div className="vl-team-content">
+                                        <h4 className="title">
+                                            <Link to="/page/team">{item.name}</Link>
+                                        </h4>
+                                        <p>{item.role}</p>
+                                    </div>
                                 </div>
                             </SwiperSlide>)}
                     </Swiper>
-                    <div className='owl-nav'>
-                        <button className="owl-prev swiper-button-prev">
-                            <img src={arrowLeft} alt="arrowLeft" />
-                        </button>
-
-                        <button className="owl-next swiper-button-next">
-                            <img src={angleRight} alt="angleRight" />
-                        </button>
+                    <div className="vl-swiper-button">
+                        <div className="swiper-button-next" />
+                        <div className="swiper-button-prev" />
                     </div>
                 </Row>
             </Container>
