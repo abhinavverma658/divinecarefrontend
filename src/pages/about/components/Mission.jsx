@@ -1,48 +1,69 @@
+import React, { useEffect, useState } from 'react';
+
 import missionThumbImg from '@/assets/img/about/vl-about-mission-thumb.png';
+import { missionAPI } from '@/utils/About/missionApi';
 import { FaCheck } from "react-icons/fa6";
 import { Col, Container, Row } from 'react-bootstrap';
 const Mission = () => {
-  return <section className="vl-about-mission-bg sp2">
-            <Container>
-                <Row>
-                    <Col lg={10} className="mx-auto">
-                        <Row className="align-items-center">
-                            <Col lg={6}>
-                                <div className="mision-thumb mb-30">
-                                    <img className="w-100" src={missionThumbImg} alt='missionThumbImg' />
+    const [mission, setMission] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchMission = async () => {
+            try {
+                setLoading(true);
+                const data = await missionAPI.getMission();
+                setMission(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchMission();
+    }, []);
+
+    if (loading) {
+        return <section className="vl-about-mission-bg sp2"><Container><div className="text-center py-5"><div className="spinner-border" role="status"><span className="visually-hidden">Loading...</span></div></div></Container></section>;
+    }
+    if (error || !mission) {
+        return <section className="vl-about-mission-bg sp2"><Container><div className="alert alert-warning" role="alert">Unable to load mission section.<br/>{error}</div></Container></section>;
+    }
+
+    const missionImage = mission.image || missionThumbImg;
+
+    return <section className="vl-about-mission-bg sp2">
+        <Container>
+            <Row>
+                <Col lg={10} className="mx-auto">
+                    <Row className="align-items-center">
+                        <Col lg={6}>
+                            <div className="mision-thumb mb-30">
+                                <img className="w-100" src={missionImage} alt='missionThumbImg' />
+                            </div>
+                        </Col>
+                        <Col lg={6}>
+                            <div className="mission-content ml-20 mb-30">
+                                <h2 className="title pb-20">{mission.heading || 'Our Mission'}</h2>
+                                <p className="para pb-16">{mission.description}</p>
+                                <div className="icon-list-box pt-20">
+                                    <ul>
+                                        {mission.points && mission.points.length > 0 ? (
+                                            mission.points.map((point, idx) => (
+                                                <li key={idx}><span><FaCheck className="fa-solid fa-check" /></span>{point}</li>
+                                            ))
+                                        ) : (
+                                            <li><span><FaCheck className="fa-solid fa-check" /></span>No mission points available.</li>
+                                        )}
+                                    </ul>
                                 </div>
-                            </Col>
-                            <Col lg={6}>
-                                <div className="mission-content ml-20 mb-30">
-                                    <h2 className="title pb-20">Our Mission</h2>
-                                    <p className="para pb-16">We are dedicated to addressing urgent needs such as clean
-                                        water, education, healthcare, and food security, ensuring that every person has
-                                        the foundation.</p>
-                                    <p className="para">Through targeted programs, sustainable initiatives, &amp; the
-                                        collective power of compassionate supporters, we strive to make a real and
-                                        lasting impact. </p>
-                                    <div className="icon-list-box pt-20">
-                                        <ul>
-                                            <li><span><FaCheck className="fa-solid fa-check" /></span>Client-Focused
-                                                Solutions and Results
-                                            </li>
-                                            <li><span><FaCheck className="fa-solid fa-check" /></span>Flexible, Value
-                                                Driven Approach
-                                            </li>
-                                            <li><span><FaCheck className="fa-solid fa-check" /></span>Warning of updated
-                                                legal risks for customers
-                                            </li>
-                                            <li><span><FaCheck className="fa-solid fa-check" /></span>A team of
-                                                experienced and highly specialized
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
-            </Container>
-        </section>;
+                            </div>
+                        </Col>
+                    </Row>
+                </Col>
+            </Row>
+        </Container>
+    </section>;
 };
 export default Mission;

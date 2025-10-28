@@ -2,55 +2,25 @@
 import { store } from '../store';
 import { setCredentials } from '../store/authSlice';
 
-// Determine API base URL based on environment
+// Determine API base URL from .env or fallback (Vite style)
 const getApiBaseUrl = () => {
-  // Check if running locally
+  if (import.meta.env && import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL.replace(/\/$/, '');
+  }
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     return 'http://localhost:5001/api';
   }
-  // Use Render.com backend (production)
   return 'https://divinecare-backend.onrender.com/api';
 };
 
 const API_BASE_URL = getApiBaseUrl();
 
-// Token validation helper
-const isJwtValid = (token) => {
-  try {
-    if (!token || typeof token !== 'string') return false;
-    const parts = token.split('.');
-    if (parts.length < 2) return false;
-    const payload = parts[1].replace(/-/g, '+').replace(/_/g, '/');
-    const decoded = atob(payload.padEnd(payload.length + (4 - (payload.length % 4)) % 4, '='));
-    const obj = JSON.parse(decoded);
-    if (!obj.exp) return true; // no expiry claim -> assume valid
-    const now = Math.floor(Date.now() / 1000);
-    return obj.exp > now + 15; // 15s safety margin
-  } catch (e) {
-    return false;
-  }
-};
-
-// Helper function to make API requests with automatic token injection
-const apiRequest = async (endpoint, options = {}) => {
+// Simple public API request helper
+export const apiRequest = async (endpoint, options = {}) => {
   const url = `${API_BASE_URL}${endpoint}`;
-  
-  // Get token from Redux store
-  const state = store.getState();
-  const token = state?.auth?.token;
-  
   const defaultHeaders = {
     'Content-Type': 'application/json',
   };
-
-  // Add Authorization header if token exists
-  if (token) {
-    defaultHeaders['Authorization'] = `Bearer ${token}`;
-    console.log('🔑 Adding token to request:', endpoint, '(first 20 chars):', token.substring(0, 20) + '...');
-  } else {
-    console.log('📭 No token available for request:', endpoint);
-  }
-
   const config = {
     ...options,
     headers: {
@@ -58,12 +28,9 @@ const apiRequest = async (endpoint, options = {}) => {
       ...options.headers,
     },
   };
-
   try {
     const response = await fetch(url, config);
-    
     if (!response.ok) {
-      // Try to read response body to give better debug info
       let body = null;
       try {
         const text = await response.text();
@@ -71,17 +38,14 @@ const apiRequest = async (endpoint, options = {}) => {
       } catch (e) {
         body = null;
       }
-
       const err = new Error(`HTTP error! status: ${response.status}`);
       err.status = response.status;
       err.body = body;
       throw err;
     }
-
     const data = await response.json();
     return data;
   } catch (error) {
-    // Surface any backend message if available
     if (error && error.body) {
       console.error('API request failed:', error.message, 'status:', error.status, 'body:', error.body);
     } else {
@@ -574,7 +538,6 @@ export const storiesAPI = {
     }
   }
 };
-
 // Connection test function
 export const testConnection = async () => {
   console.log('🔄 Testing API connection...');

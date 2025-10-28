@@ -1,71 +1,73 @@
+import React, { useEffect, useState } from 'react';
+
 import vision2 from '@/assets/img/about/vl-vission2.png';
+import { visionAPI } from '@/utils/About/visionApi';
 import { Col, Container, Nav, NavItem, NavLink, Row, TabContainer, TabContent, TabPane } from 'react-bootstrap';
 const Vision = () => {
-  return <section className="vl-about-vission-bg sp2">
-            <Container>
-                <Row>
-                    <Col lg={6}>
-                        <div className="vission-thumb mb-30">
-                            <img className="w-100" src={vision2} alt='vision2' />
+    const [vision, setVision] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchVision = async () => {
+            try {
+                setLoading(true);
+                const data = await visionAPI.getVision();
+                setVision(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchVision();
+    }, []);
+
+    if (loading) {
+        return <section className="vl-about-vission-bg sp2"><Container><div className="text-center py-5"><div className="spinner-border" role="status"><span className="visually-hidden">Loading...</span></div></div></Container></section>;
+    }
+    if (error || !vision) {
+        return <section className="vl-about-vission-bg sp2"><Container><div className="alert alert-warning" role="alert">Unable to load vision section.<br/>{error}</div></Container></section>;
+    }
+
+    const visionImage = vision.image || vision2;
+
+    return <section className="vl-about-vission-bg sp2">
+        <Container>
+            <Row>
+                <Col lg={6}>
+                    <div className="vission-thumb mb-30">
+                        <img className="w-100" src={visionImage} alt='vision' />
+                    </div>
+                </Col>
+                <Col lg={6}>
+                    <div className="vl-vission-content ml-50 mb-30">
+                        <div className="vl-section-title-1">
+                            <h5 className="subtitle">{vision.heading || 'Our Mission & Vision'}</h5>
+                            <p>{vision.description}</p>
                         </div>
-                    </Col>
-                    <Col lg={6}>
-                        <div className="vl-vission-content ml-50 mb-30">
-                            <div className="vl-section-title-1">
-                                <h5 className="subtitle">Our Mission &amp; Vision</h5>
-                                <h2 className="title">Our Purpose: Mission and Vision for a Better </h2>
-                                <p>Our mission to bring hope, resources, &amp; opportunitie communities <br /> in need,
-                                    empowering individuals to build brighter, sustainable <br /> futures we are committed
-                                    to tackling critical challenges.</p>
-                            </div>
-                            <div className="vl-vission-tab2">
-                                <TabContainer defaultActiveKey={'pills-home'}>
-                                    <Nav className=" nav-pills" id="pills-tab" role="tablist">
-                                        <NavItem role="presentation">
-                                            <NavLink eventKey="pills-home" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Our
-                                                Mission</NavLink>
+                        <div className="vl-vission-tab2">
+                            <TabContainer defaultActiveKey={vision.tabs && vision.tabs[0] ? `tab-${0}` : ''}>
+                                <Nav className="nav-pills" id="pills-tab" role="tablist">
+                                    {vision.tabs && vision.tabs.map((tab, idx) => (
+                                        <NavItem role="presentation" key={idx}>
+                                            <NavLink eventKey={`tab-${idx}`} data-bs-toggle="pill" type="button" role="tab" aria-selected={idx === 0}>{tab.title}</NavLink>
                                         </NavItem>
-                                        <NavItem role="presentation">
-                                            <NavLink eventKey="pills-profile" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Our
-                                                Vission </NavLink>
-                                        </NavItem>
-                                        <NavItem role="presentation">
-                                            <NavLink eventKey="pills-contact" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Charity
-                                                History</NavLink>
-                                        </NavItem>
-                                    </Nav>
-                                    <TabContent>
-                                        <TabPane className="fade" eventKey="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabIndex={0}>
-                                            <p className="para">Our vision is a world where everyone has the
-                                                opportunity <br /> to thrive, with access the resources and support
-                                                necessary <br /> for lasting change guided by compassion, integrity.</p>
-                                            <p className="para pt-20">Guided by compassion, integrity, and community, we
-                                                work <br /> tirelessly to make this vision a reality. Together, with
-                                                our <br /> supporters, partners, and volunteers, we are creating.</p>
+                                    ))}
+                                </Nav>
+                                <TabContent>
+                                    {vision.tabs && vision.tabs.map((tab, idx) => (
+                                        <TabPane className="fade" eventKey={`tab-${idx}`} key={idx}>
+                                            <p className="para">{tab.content}</p>
                                         </TabPane>
-                                        <TabPane className="fade" eventKey="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabIndex={0}>
-                                            <p className="para">Our vision is a world where everyone has the
-                                                opportunity <br /> to thrive, with access the resources and support
-                                                necessary <br /> for lasting change guided by compassion, integrity.</p>
-                                            <p className="para pt-20">Guided by compassion, integrity, and community, we
-                                                work <br /> tirelessly to make this vision a reality. Together, with
-                                                our <br /> supporters, partners, and volunteers, we are creating.</p>
-                                        </TabPane>
-                                        <TabPane className="fade" eventKey="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabIndex={0}>
-                                            <p className="para">Our vision is a world where everyone has the
-                                                opportunity <br /> to thrive, with access the resources and support
-                                                necessary <br /> for lasting change guided by compassion, integrity.</p>
-                                            <p className="para pt-20">Guided by compassion, integrity, and community, we
-                                                work <br /> tirelessly to make this vision a reality. Together, with
-                                                our <br /> supporters, partners, and volunteers, we are creating.</p>
-                                        </TabPane>
-                                    </TabContent>
-                                </TabContainer>
-                            </div>
+                                    ))}
+                                </TabContent>
+                            </TabContainer>
                         </div>
-                    </Col>
-                </Row>
-            </Container>
-        </section>;
+                    </div>
+                </Col>
+            </Row>
+        </Container>
+    </section>;
 };
 export default Vision;

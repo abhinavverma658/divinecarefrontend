@@ -1,33 +1,102 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { eventData } from '../data';
+import { eventsAPI } from '@/utils/eventsApi';
 import { FaAngleLeft, FaAngleRight, FaArrowRight } from "react-icons/fa6";
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from "react-router";
+
 const Event = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        setLoading(true);
+        const response = await eventsAPI.getEvents();
+        if (response && response.success && response.events) {
+          setEvents(response.events);
+        } else {
+          setEvents(eventData);
+        }
+      } catch (err) {
+        console.error('Error fetching events:', err);
+        setError(err.message);
+        setEvents(eventData);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  const formatEventDate = (dateString) => {
+    const date = new Date(dateString);
+    return {
+      date: date.getDate().toString().padStart(2, '0'),
+      month: date.toLocaleDateString('en-US', { month: 'short' }),
+      year: date.getFullYear()
+    };
+  };
+
+  if (loading) {
+    return (
+      <section className="vl-singlevent-iner sp1">
+        <Container>
+          <div className="text-center py-5">
+            <div className="spinner-border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </Container>
+      </section>
+    );
+  }
   return <section className="vl-singlevent-iner sp1">
             <Container>
+                {error && (
+                  <Row>
+                    <Col>
+                      <div className="alert alert-info mb-4">
+                        Using fallback data due to API error: {error}
+                      </div>
+                    </Col>
+                  </Row>
+                )}
                 <Row>
-                    {eventData.map((item, idx) => <Col lg={12} className="mb-50" key={idx}>
-                                <div className={`event-bg-flex ${hoveredIndex === idx ? 'active' : ''}`} onMouseEnter={() => setHoveredIndex(idx)} onMouseLeave={() => setHoveredIndex(null)}>
-                                    <div className="event-date">
-                                        <h3 className="title">{item.date}</h3>
-                                        <p className="year">{item.month} <br /> {item.year}</p>
-                                    </div>
-                                    <div className="event-content">
-                                        <div className="event-meta">
-                                            <p className="para">{item.meta}</p>
-                                        </div>
-                                        <Link to="/event-single" className="title">{item.title}</Link>
-                                        <p className="para">{item.location}</p>
-                                        <Link to="/event-single" className="details">Event
-                                            Details <span><FaArrowRight /></span></Link>
-                                    </div>
-                                    <div className="event-thumb">
-                                        <img className="w-100" src={item.image} alt='image' />
-                                    </div>
-                                </div>
-                            </Col>)}
+                    {events.map((item, idx) => {
+                      const dateInfo = item.startDate ? formatEventDate(item.startDate) : {
+                        date: item.date || '01',
+                        month: item.month || 'Jan',
+                        year: item.year || '2025'
+                      };
+                      
+                      return (
+                        <Col lg={12} className="mb-50" key={item._id || idx}>
+                          <div className={`event-bg-flex ${hoveredIndex === idx ? 'active' : ''}`} onMouseEnter={() => setHoveredIndex(idx)} onMouseLeave={() => setHoveredIndex(null)}>
+                            <div className="event-date">
+                              <h3 className="title">{dateInfo.date}</h3>
+                              <p className="year">{dateInfo.month} <br /> {dateInfo.year}</p>
+                            </div>
+                            <div className="event-content">
+                              <div className="event-meta">
+                                <p className="para">{item.shortDescription || item.meta || 'Event Details'}</p>
+                              </div>
+                              <Link to={`/event-single/${item._id || ''}`} className="title">{item.title}</Link>
+                              <p className="para">{item.location}</p>
+                              <Link to={`/event-single/${item._id || ''}`} className="details">Event
+                                Details <span><FaArrowRight /></span></Link>
+                            </div>
+                            <div className="event-thumb">
+                              <img className="w-100" src={item.image || item.images?.[0] || '/placeholder-event.jpg'} alt='event' />
+                            </div>
+                          </div>
+                        </Col>
+                      );
+                    })}
                 </Row>
                 <Row>
                     <Col xs={12} className="m-auto">
