@@ -1,4 +1,4 @@
-import ctaImg1 from '@/assets/img/cta/vl-cta-1.1.png';
+import ctaImg1 from '@/assets/img/cta/Subscribe.jpg';
 import arrowImg from '@/assets/img/shape/vl-arow-shap-1.1.png';
 import shapeImg1 from '@/assets/img/shape/vl-cta-1.1.png';
 import shapeImg2 from '@/assets/img/shape/vl-cta-1.2.png';
@@ -18,9 +18,8 @@ const CtaArea = () => {
                     <Row>
                         <Col lg={12}>
                             <div className="vl-cta-content text-center">
-                                <h2 className="title">Your Help Can Change Lives</h2>
-                                <p>Every action, no matter how small, can make a world of difference in <br /> the lives
-                                    of those affected by disaster. Whether it’s a donation.</p>
+                                <h2 className="title">Your Care Can Transform Lives</h2>
+                                <p>Every act of kindness, no matter how small, brings hope and strength to individuals in need of support. Together, we can make a lasting difference.</p>
                                 <div className="vl-cta-form text-center mx-auto">
                                     <form action="#">
                                         <input type="email" placeholder="Enter Your Email.." />

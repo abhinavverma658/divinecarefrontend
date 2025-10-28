@@ -159,35 +159,48 @@ const EventArea = () => {
                 <Row>
                     <Col lg={5}>
                         <div className="vl-blog-lar-thumb-bg mb-30" style={{
+            position: 'relative',
             backgroundImage: `url(${eventData.backgroundImage})`
           }}>
+                            {/* Overlay */}
+                            <div style={{
+                              position: 'absolute',
+                              top: 0,
+                              left: 0,
+                              width: '100%',
+                              height: '100%',
+                              background: 'rgba(0,0,0,0.5)',
+                              zIndex: 1
+                            }} />
                             <div className="vl-section-title-1">
-                                <h5 className="subtitle" data-aos="fade-right" data-aos-duration={800} data-aos-delay={300}>Events &amp; programs</h5>
-                                {sectionLoading ? (
-                                  <div className="text-center py-4">
-                                    <div className="spinner-border text-light" role="status">
-                                      <span className="visually-hidden">Loading...</span>
+                                <div style={{ position: 'relative', zIndex: 2 }}>
+                                  <h5 className="subtitle" data-aos="fade-right" data-aos-duration={800} data-aos-delay={300}>Events &amp; Programs</h5>
+                                  {sectionLoading ? (
+                                    <div className="text-center py-4">
+                                      <div className="spinner-border text-light" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                      </div>
+                                      <p className="text-light mt-2">Loading event section...</p>
                                     </div>
-                                    <p className="text-light mt-2">Loading event section...</p>
-                                  </div>
-                                ) : (
-                                  <>
-                                    <h2 className="title text-anime-style-3">{eventData.heading}</h2>
-                                    <p className="pb-32" data-aos="fade-right" data-aos-duration={800} data-aos-delay={300}>
-                                      {eventData.description}
-                                    </p>
-                                    <div className="btn-area" data-aos="fade-right" data-aos-duration={800} data-aos-delay={300}>
-                                        <Link to="/event" className="header-btn1">
-                                          Events & Programs <span><FaArrowRight /></span>
-                                        </Link>
+                                  ) : (
+                                    <>
+                                      <h2 className="title text-anime-style-3">{eventData.heading}</h2>
+                                      <p className="pb-32" data-aos="fade-right" data-aos-duration={800} data-aos-delay={300}>
+                                        {eventData.description}
+                                      </p>
+                                      <div className="btn-area" data-aos="fade-right" data-aos-duration={800} data-aos-delay={300}>
+                                          <Link to="/event" className="header-btn1">
+                                            Events & Programs <span><FaArrowRight /></span>
+                                          </Link>
+                                      </div>
+                                    </>
+                                  )}
+                                  {loading && (
+                                    <div className="text-center mt-3">
+                                      <small className="text-muted">Loading latest content...</small>
                                     </div>
-                                  </>
-                                )}
-                                {loading && (
-                                  <div className="text-center mt-3">
-                                    <small className="text-muted">Loading latest content...</small>
-                                  </div>
-                                )}
+                                  )}
+                                </div>
                             </div>
                         </div>
                     </Col>

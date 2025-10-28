@@ -38,7 +38,7 @@ const Footer = () => {
                   <li><Link to="/">Home Page</Link></li>
                   <li><Link to="/about">About Us</Link></li>
                   <li><Link to="/event">Events</Link></li>
-                <li><a href="#">Career</a></li>
+                <li><a href="/career">Career</a></li>
                 <li><a href="#">Stories</a></li>
                   <li><a href="#">Contact Us</a></li>
                 </ul>
@@ -47,14 +47,14 @@ const Footer = () => {
           </Col>
           <Col lg={3} md={6}>
             <div className="vl-footer-widget-2 pl-30 mb-30">
-              <h3 className="title">Our services</h3>
+              <h3 className="title">Our Services</h3>
               <div className="vl-footer-menu">
                 <ul>
-                  <li><a href="#">Donation Online</a></li>
-                  <li><a href="#">Donor Centres</a></li>
-                  <li><Link to="#">Volunteering</Link></li>
-                  <li><a href="#">Your Philanthropy</a></li>
-                  <li><a href="#">Senior Care</a></li>
+                  <li><a href="#">Community Living</a></li>
+                  <li><a href="#">Community Development Services</a></li>
+                  <li><Link to="#">Personal Supports</Link></li>
+                  <li><a href="#">Supported Living</a></li>
+                  <li><a href="#">Respite Care</a></li>
                 </ul>
               </div>
             </div>
