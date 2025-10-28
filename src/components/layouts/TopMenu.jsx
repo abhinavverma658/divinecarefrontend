@@ -9,7 +9,7 @@ import { Col, Row } from 'react-bootstrap';
 const TopMenu = () => {
   return <ul>
             <li>
-                <a href="https://divinecarewebsite.vercel.app/">Home</a>
+                <Link to="/">Home</Link>
                 {/* <div className="tp-submenu">
                     <Row>
                         <Col lg={12}>
