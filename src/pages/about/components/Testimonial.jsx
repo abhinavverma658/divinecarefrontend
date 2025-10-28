@@ -8,6 +8,7 @@ import uparrow4 from '@/assets/img/icons/vl-uparrow4.svg';
 import { Col, Container, Row } from 'react-bootstrap';
 import { FaAngleLeft, FaAngleRight, FaArrowRight } from 'react-icons/fa6';
 import Slider from "react-slick";
+
 const Testimonial = () => {
     const [nav1, setNav1] = useState();
     const [nav2, setNav2] = useState();
@@ -57,70 +58,54 @@ const Testimonial = () => {
         { number: '12+', label: 'Years of Experience' }
     ];
 
-    return <section className="vl-testimonial4 vl-testimonial-inner sp2">
+    // Get testimonials data or use fallback
+    const testimonials = about.testimonials && about.testimonials.length > 0 ? about.testimonials : [
+        {
+            image: thumbSmImg,
+            rating: 5,
+            content: "Through their words, we're reminded that a legacy isn't just something you leave behind it's something you create every day inspiring all generations to follow in their footsteps.",
+            name: "Sharon McClure",
+            title: "Volunteer"
+        }
+    ];
+
+    return (
+        <section className="vl-testimonial4 vl-testimonial-inner sp2">
             <Container>
                 <Row className="align-items-center">
                     <Col lg={6}>
                         <div className="testimonial-slides-wrap">
                             <Slider asNavFor={nav2} ref={sliderRef1} slidesToShow={1} slidesToScroll={1} arrows={false} fade={true} className="slider-thumb slider-for1">
-                                <div className="single-thumb">
-                                    <img className="w-100" src={thumbImg} alt='thumbImg' />
-                                </div>
-
-                                <div className="single-thumb">
-                                    <img className="w-100" src={thumbImg} alt='thumbImg' />
-                                </div>
+                                {testimonials.map((testimonial, index) => (
+                                    <div className="single-thumb" key={index}>
+                                        <img className="w-100" src={testimonial.image || thumbImg} alt={`testimonial-${index}`} />
+                                    </div>
+                                ))}
                             </Slider>
 
                             <div className="content-box-2">
                                 <Slider asNavFor={nav1} ref={sliderRef2} slidesToShow={1} slidesToScroll={1} arrows={false} focusOnSelect={true} className="slider-sm slider-nav1 p-relative">
-                                    <div className="slider-content-box content-box2">
-                                        <div className="icon">
-                                            <ul>
-                                                <li><span><img src={reviewIcon} alt='reviewIcon' /></span></li>
-                                                <li><span><img src={reviewIcon} alt='reviewIcon' /></span></li>
-                                                <li><span><img src={reviewIcon} alt='reviewIcon' /></span></li>
-                                                <li><span><img src={reviewIcon} alt='reviewIcon' /></span></li>
-                                                <li><span><img src={reviewIcon} alt='reviewIcon' /></span></li>
-                                            </ul>
-                                        </div>
-                                        <p className="para">“Through their words, we’re reminded that a legacy isn’t
-                                            just something you leave behind it’s something you create every day
-                                            inspiring all generations to follow in their footsteps.”</p>
-                                        <div className="slider-flex">
-                                            <div className="user">
-                                                <img src={thumbSmImg} alt='thumbSmImg' />
+                                    {testimonials.map((testimonial, index) => (
+                                        <div className="slider-content-box content-box2" key={index}>
+                                            <div className="icon">
+                                                <ul>
+                                                    {[...Array(testimonial.rating || 5)].map((_, i) => (
+                                                        <li key={i}><span><img src={reviewIcon} alt='reviewIcon' /></span></li>
+                                                    ))}
+                                                </ul>
                                             </div>
-                                            <div className="content">
-                                                <a href="#" className="title">Sharon McClure</a>
-                                                <span>Volunteer</span>
+                                            <p className="para">"{testimonial.content || 'No testimonial content available.'}"</p>
+                                            <div className="slider-flex">
+                                                <div className="user">
+                                                    <img src={testimonial.image || thumbSmImg} alt={testimonial.name || 'User'} />
+                                                </div>
+                                                <div className="content">
+                                                    <a href="#" className="title">{testimonial.name || 'Anonymous'}</a>
+                                                    <span>{testimonial.title || 'User'}</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div className="slider-content-box content-box2">
-                                        <div className="icon">
-                                            <ul>
-                                                <li><span><img src={reviewIcon} alt='reviewIcon' /></span></li>
-                                                <li><span><img src={reviewIcon} alt='reviewIcon' /></span></li>
-                                                <li><span><img src={reviewIcon} alt='reviewIcon' /></span></li>
-                                                <li><span><img src={reviewIcon} alt='reviewIcon' /></span></li>
-                                                <li><span><img src={reviewIcon} alt='reviewIcon' /></span></li>
-                                            </ul>
-                                        </div>
-                                        <p className="para">“Through their words, we’re reminded that a legacy isn’t
-                                            just something you leave behind it’s something you create every day
-                                            inspiring all generations to follow in their footsteps.”</p>
-                                        <div className="slider-flex">
-                                            <div className="user">
-                                                <img src={thumbSmImg} alt='thumbSmImg' />
-                                            </div>
-                                            <div className="content">
-                                                <a href="#" className="title">Sharon McClure</a>
-                                                <span>Volunteer</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    ))}
                                 </Slider>
 
                                 <div className="slider-sm slider-nav1 p-relative">
@@ -161,6 +146,8 @@ const Testimonial = () => {
                     </Col>
                 </Row>
             </Container>
-        </section>;
+        </section>
+    );
 };
+
 export default Testimonial;
