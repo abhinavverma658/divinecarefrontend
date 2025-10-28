@@ -106,7 +106,7 @@ const About = () => {
                 </p>
               </div>
               <div className="vl-about-grid">
-                {aboutData.keyPointers.map((pointer, index) => {
+                {(aboutData.keyPointers || []).slice(0, 2).map((pointer, index) => {
                   const IconComponent = getIconComponent(pointer.icon);
                   return (
                     <div key={index} className="vl-about-icon-box mb-30">
