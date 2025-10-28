@@ -50,6 +50,9 @@ const singlePageRoutes = [{
 }, {
     path: '/water-aid', name: 'single-page-water-aid', element: <SinglePageWaterAid/>
 }];
+// ...existing code...
+import CareersPage from '@/pages/career';
+
 const otherRoutes = [{
     path: '/about', name: 'about', element: <About/>
 }, {
@@ -86,6 +89,8 @@ const otherRoutes = [{
     path: '/pages/service', name: 'pages-service', element: <Service/>
 }, {
     path: '/pages/team', name: 'pages-team', element: <Team/>
+}, {
+    path: '/career', name: 'career', element: <CareersPage/>
 }];
 const landingRoutes = [...multiPageRoutes, ...singlePageRoutes];
 export {landingRoutes, otherRoutes};

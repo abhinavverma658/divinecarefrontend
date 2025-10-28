@@ -135,9 +135,9 @@ const Gallery = () => {
                                       e.target.src = 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80';
                                     }}
                                   />
-                                  <a href={image.url} className="glightbox search-ic">
+                                  {/* <a href={image.url} className="glightbox search-ic">
                                       <span><img src={gallerySearch} alt='gallerySearch' /></span>
-                                  </a>
+                                  </a> */}
                               </div>
                           </Col>
                         ))}

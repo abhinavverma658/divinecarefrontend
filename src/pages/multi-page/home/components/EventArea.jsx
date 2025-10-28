@@ -8,8 +8,8 @@ import { FaArrowRight } from 'react-icons/fa6';
 
 const EventArea = () => {
   const [eventData, setEventData] = useState({
-    heading: 'Heroes in Action Disaster Relief Fundraiser',
-    description: 'Our events are more than just gatherings they powerful opportunities to bring communities together, raise awareness, and generate.',
+    heading: '',
+    description: '',
     backgroundImage: blogThmb,
     ctaButton: {
       text: 'Vineyard Venues',
@@ -20,6 +20,7 @@ const EventArea = () => {
   
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sectionLoading, setSectionLoading] = useState(true);
   const [eventsByDate, setEventsByDate] = useState({});
 
   useEffect(() => {
@@ -29,27 +30,32 @@ const EventArea = () => {
 
   const fetchEventData = async () => {
     try {
-      console.log('Fetching event section data using centralized API...');
+      setSectionLoading(true);
+      console.log('Fetching event section data from API...');
       
-      // Use centralized API with token management and fallback handling
       const response = await homeAPI.getEventsData();
       
+      console.log('Event section API response:', response);
+      
       if (response.success && response.event) {
-        setEventData(prevData => ({
-          ...prevData,
-          heading: response.event.heading || prevData.heading,
-          description: response.event.description || prevData.description,
-          backgroundImage: response.event.backgroundImage || prevData.backgroundImage,
-          ctaButton: response.event.ctaButton || prevData.ctaButton,
-          isActive: response.event.isActive !== undefined ? response.event.isActive : prevData.isActive
-        }));
+        setEventData({
+          heading: response.event.heading || '',
+          description: response.event.description || '',
+          backgroundImage: response.event.image || blogThmb,
+          ctaButton: {
+            text: 'Vineyard Venues',
+            link: '/event-single'
+          },
+          isActive: true
+        });
         console.log('Event section data loaded successfully:', response.event);
       } else {
-        console.log('Using fallback event section data');
+        console.error('Invalid API response format:', response);
       }
     } catch (error) {
       console.error('Error fetching event section data:', error);
-      // Keep default data on error
+    } finally {
+      setSectionLoading(false);
     }
   };
 
@@ -157,15 +163,26 @@ const EventArea = () => {
           }}>
                             <div className="vl-section-title-1">
                                 <h5 className="subtitle" data-aos="fade-right" data-aos-duration={800} data-aos-delay={300}>Events &amp; programs</h5>
-                                <h2 className="title text-anime-style-3">{eventData.heading}</h2>
-                                <p className="pb-32" data-aos="fade-right" data-aos-duration={800} data-aos-delay={300}>
-                                  {eventData.description}
-                                </p>
-                                <div className="btn-area" data-aos="fade-right" data-aos-duration={800} data-aos-delay={300}>
-                                    <Link to="/event" className="header-btn1">
-                                      Events <span><FaArrowRight /></span>
-                                    </Link>
-                                </div>
+                                {sectionLoading ? (
+                                  <div className="text-center py-4">
+                                    <div className="spinner-border text-light" role="status">
+                                      <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                    <p className="text-light mt-2">Loading event section...</p>
+                                  </div>
+                                ) : (
+                                  <>
+                                    <h2 className="title text-anime-style-3">{eventData.heading}</h2>
+                                    <p className="pb-32" data-aos="fade-right" data-aos-duration={800} data-aos-delay={300}>
+                                      {eventData.description}
+                                    </p>
+                                    <div className="btn-area" data-aos="fade-right" data-aos-duration={800} data-aos-delay={300}>
+                                        <Link to="/event" className="header-btn1">
+                                          Events & Programs <span><FaArrowRight /></span>
+                                        </Link>
+                                    </div>
+                                  </>
+                                )}
                                 {loading && (
                                   <div className="text-center mt-3">
                                     <small className="text-muted">Loading latest content...</small>

@@ -255,34 +255,23 @@ export const homeAPI = {
     );
   },
   
-  // Get events data with graceful fallback
+  // Get events data - no fallback
   getEventsData: async () => {
-    return apiCallWithFallback(
-      async () => {
-        console.log('📅 Fetching events data from /home/event...');
-        const response = await apiRequest('/home/event');
-        console.log('📅 Events data raw response:', response);
-        
-        if (response && response.success && response.data) {
-          console.log('📅 ✅ Events data retrieved successfully');
-          return { success: true, event: response.data };
-        }
-        
-        throw new Error('Invalid events data structure');
-      },
-      {
-        event: {
-          heading: 'Heroes in Action Disaster Relief Fundraiser',
-          description: 'Join us for a special event to support disaster relief efforts and make a difference in our community.',
-          backgroundImage: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-          ctaButton: {
-            text: 'Vineyard Venues',
-            link: '/events'
-          },
-          isActive: true
-        }
+    try {
+      console.log('📅 Fetching events data from /home/event...');
+      const response = await apiRequest('/home/event');
+      console.log('📅 Events data raw response:', response);
+      
+      if (response && response.success && response.event) {
+        console.log('📅 ✅ Events data retrieved successfully');
+        return { success: true, event: response.event };
       }
-    );
+      
+      throw new Error('Invalid events data structure');
+    } catch (error) {
+      console.error('Failed to fetch events data:', error);
+      throw error; // Throw error instead of returning fallback
+    }
   },
   
   // Health check
@@ -495,7 +484,7 @@ export const storiesAPI = {
   getStories: async () => {
     try {
       // Public GET: do not attach bearer token
-      const response = await apiRequest('/stories/get-stories');
+      const response = await apiRequest('/stories');
       console.log('📖 Stories fetched:', response);
       return response;
     } catch (error) {

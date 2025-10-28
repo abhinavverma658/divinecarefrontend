@@ -145,7 +145,7 @@ const About = () => {
               <p>{aboutData.topRightDescription}</p>
               <div className="btn-area">
                 <Link to="/about" className="header-btn1">
-                  Know More <span><FaArrowRight /></span>
+                  About Us <span><FaArrowRight /></span>
                 </Link>
               </div>
               <div className="vl-about-sm-thumb d-none d-md-block">

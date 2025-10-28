@@ -164,8 +164,9 @@ const Testimonial = () => {
                                                 <div className="vl-testimonial-box-auth">
                                                     <div className="vl-auth-desc">
                                                         <div className="auth-img">
-                                                            <img 
-                                                              src={item.image} 
+                                                            <img
+                                                              style={{ width: "50px", height: "50px", borderRadius: "100%", objectFit: "cover" }}
+                                                              src={item.image}
                                                               alt={`${item.name} testimonial`}
                                                               onError={(e) => {
                                                                 console.log('Image load error for:', item.image);
