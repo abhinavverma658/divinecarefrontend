@@ -112,7 +112,7 @@ const About = () => {
                     <div key={index} className="vl-about-icon-box mb-30">
                       <div className="vl-about-icon">
                         <span>
-                          <IconComponent size={40} color="#e74c3c" />
+                          <IconComponent size={40} color="#002372" />
                         </span>
                       </div>
                       <div className="vl-icon-content">
