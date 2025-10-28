@@ -52,6 +52,7 @@ const Service = () => {
 
     fetchServices();
   }, []);
+
   return <section className="vl-services2 service-inner-page sp2">
             <Container>
                 {loading ? (

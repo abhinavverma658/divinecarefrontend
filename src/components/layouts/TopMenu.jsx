@@ -105,7 +105,7 @@ const TopMenu = () => {
                                     <li><Link to="/pages/error-404">404</Link></li>
                                 </ul>  */}
                             </li>
-                            <li><Link to="#">Careers</Link></li>
+                            <li><Link to="/career">Careers</Link></li>
                             <li><Link to="/blog">Stories</Link></li>
                             <li><Link to="/pages/contact">Contact Us</Link></li>
                             {/* <li><a href="#">Causes <FaAngleDown className="fa-solid fa-angle-down align-bottom" /></a>

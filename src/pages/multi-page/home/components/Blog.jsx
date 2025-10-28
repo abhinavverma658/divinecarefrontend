@@ -1,93 +1,83 @@
-import Blog1 from '@/assets/img/blog/vl-blg-1.1.png';
-import Blog2 from '@/assets/img/blog/vl-blg-1.2.png';
-import Blog3 from '@/assets/img/blog/vl-blg-1.3.png';
-import calender1 from '@/assets/img/icons/vl-calender-1.1.svg';
-import user1 from '@/assets/img/icons/vl-user-1.1.svg';
+import { useEffect, useState } from 'react';
 import { Link } from "react-router";
 import { Col, Container, Row } from 'react-bootstrap';
 import { FaArrowRight } from 'react-icons/fa6';
+import { storiesAPI } from '@/utils/api';
+
 const Blog = () => {
-  return <section className="vl-blg sp2">
+    const [stories, setStories] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchStories = async () => {
+            setLoading(true);
+            try {
+                const res = await storiesAPI.getStories();
+                if (res && res.success && Array.isArray(res.stories)) {
+                    setStories(res.stories);
+                } else {
+                    setStories([]);
+                }
+            } catch (err) {
+                setStories([]);
+            }
+            setLoading(false);
+        };
+        fetchStories();
+    }, []);
+
+    return (
+        <section className="vl-blg sp2">
             <Container>
                 <div className="vl-section-title-1 mb-60 text-center">
-                    <h5 className="subtitle" data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>Our
-                        Blog</h5>
+                    <h5 className="subtitle" data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>Stories</h5>
                     <h2 className="title text-anime-style-3">Stories of Relief and Recovery</h2>
-                    <p data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>Ever wondered how your
-                        contributions make an impact? This blog dives into <br /> the tangible ways that donations big or
-                        small help provide food.</p>
+                    <p data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>
+                        Ever wondered how your contributions make an impact? This blog dives into <br /> the tangible ways that donations big or small help provide food.
+                    </p>
                 </div>
                 <Row>
-                    <Col lg={4} md={6}>
-                        <div className="vl-single-blg-item mb-30" data-aos="fade-right" data-aos-duration={1200} data-aos-delay={300}>
-                            <div className="vl-blg-thumb">
-                                <Link to="/blog-single"><img className="w-100" src={Blog1} alt='Blog1' /></Link>
-                            </div>
-                            <div className="vl-meta">
-                                <ul>
-                                    <li><a href="#"><span className="top-minus"> <img src={calender1} alt='calender1' /></span> 16
-                                        October 2023</a></li>
-                                    <li><a href="#"><span className="top-minus"> <img src={user1} alt='user1' /></span> Dawid
-                                        Malan</a></li>
-                                </ul>
-                            </div>
-                            <div className="vl-blg-content">
-                                <h3 className="title"><Link to="/blog-single">Stories from the Field:
-                                    Firsthand <br /> Accounts of Disaster Relief</Link></h3>
-                                <p>Get inside look at the real-life experiences of teams our teams ground from
-                                    response.</p>
-                                <Link to="/blog-single" className="read-more">Read
-                                    More <span><FaArrowRight /></span></Link>
-                            </div>
-                        </div>
-                    </Col>
-                    <Col lg={4} md={6}>
-                        <div className="vl-single-blg-item mb-30" data-aos="fade-up" data-aos-duration={1000} data-aos-delay={300}>
-                            <div className="vl-blg-thumb">
-                                <Link to="/blog-single"><img className="w-100" src={Blog2} alt='Blog2' /></Link>
-                            </div>
-                            <div className="vl-meta">
-                                <ul>
-                                    <li><a href="#"><span className="top-minus"> <img src={calender1} alt='calender1' /></span> 16
-                                        October 2023</a></li>
-                                    <li><a href="#"><span className="top-minus"> <img src={user1} alt='user1' /></span> Dawid
-                                        Malan</a></li>
-                                </ul>
-                            </div>
-                            <div className="vl-blg-content">
-                                <h3 className="title"><Link to="/blog-single">Tips for Disaster Preparedness:
-                                    How <br /> to Stay Safe and Ready</Link></h3>
-                                <p>Disasters strike unexpectedly you prepared? Explore practical tips and guides to
-                                    protect.</p>
-                                <Link to="/blog-single" className="read-more">Read
-                                    More <span><FaArrowRight /></span></Link>
-                            </div>
-                        </div>
-                    </Col>
-                    <Col lg={4} md={6}>
-                        <div className="vl-single-blg-item mb-30" data-aos="fade-left" data-aos-duration={800} data-aos-delay={300}>
-                            <div className="vl-blg-thumb">
-                                <Link to="/blog-single"><img className="w-100" src={Blog3} alt='Blog3' /></Link>
-                            </div>
-                            <div className="vl-meta">
-                                <ul>
-                                    <li><a href="#"><span className="top-minus"> <img src={calender1} alt='calender1' /></span> 16
-                                        October 2023</a></li>
-                                    <li><a href="#"><span className="top-minus"> <img src={user1} alt='user1' /></span> Dawid
-                                        Malan</a></li>
-                                </ul>
-                            </div>
-                            <div className="vl-blg-content">
-                                <h3 className="title"><a href="#">Partnering for Good: The Role of Collaboration in
-                                    Crisis Relief</a></h3>
-                                <p>Relief effort most effective we organization governments, &amp; communities work
-                                    together.</p>
-                                <a href="#" className="read-more">Read More <span><FaArrowRight /></span></a>
-                            </div>
-                        </div>
-                    </Col>
+                    {loading ? (
+                        <Col lg={12} className="text-center">
+                            <div>Loading stories...</div>
+                        </Col>
+                    ) : stories.length === 0 ? (
+                        <Col lg={12} className="text-center">
+                            <div>No stories found.</div>
+                        </Col>
+                    ) : (
+                        stories.map((story, idx) => (
+                            <Col lg={4} md={6} key={story._id || idx}>
+                                <div className="vl-single-blg-item mb-30" data-aos="fade-up" data-aos-duration={1000 + idx * 200} data-aos-delay={300}>
+                                    <div className="vl-blg-thumb">
+                                        {story.image ? (
+                                            <Link to={`/stories/${story._id}`}><img className="w-100" src={story.image} alt={story.title || 'Story'} /></Link>
+                                        ) : null}
+                                    </div>
+                                    <div className="vl-meta">
+                                        <ul>
+                                            <li>
+                                                <span className="top-minus">{story.date ? story.date : ''}</span>
+                                            </li>
+                                            <li>
+                                                <span className="top-minus">{story.author ? story.author : ''}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div className="vl-blg-content">
+                                        <h3 className="title">
+                                            <Link to={`/stories/${story._id}`}>{story.title || 'Untitled Story'}</Link>
+                                        </h3>
+                                        <p>{story.description || story.content || ''}</p>
+                                        <Link to={`/stories/${story._id}`} className="read-more">Read More <span><FaArrowRight /></span></Link>
+                                    </div>
+                                </div>
+                            </Col>
+                        ))
+                    )}
                 </Row>
             </Container>
-        </section>;
+        </section>
+    );
 };
 export default Blog;
