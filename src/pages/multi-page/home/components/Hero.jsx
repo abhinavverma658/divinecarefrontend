@@ -5,7 +5,6 @@ import titleIcon from '@/assets/img/icons/vl-sub-title-icon.svg';
 import { FaAngleLeft, FaAngleRight, FaArrowRight, FaFacebookF, FaInstagram, FaTwitter, FaSpinner } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa";
 import { Col, Container, Row } from 'react-bootstrap';
-import Slider from 'react-slick';
 import { homeAPI } from '@/utils/api';
 import './HeroFix.css';
 
@@ -94,40 +93,16 @@ const Hero = () => {
   fetchHeroData();
     
     // Optional: Set up periodic refresh to catch admin updates
-    const intervalId = setInterval(fetchHeroData, 30000); // Refresh every 30 seconds
+    // const intervalId = setInterval(fetchHeroData, 30000); // Refresh every 30 seconds
     
-    return () => clearInterval(intervalId);
+    // return () => clearInterval(intervalId);
   }, []);
 
-  const settings = {
-    draggable: true,
-    autoplay: true,
-    autoplaySpeed: 4000,
-    infinite: true,
-    speed: 800,
-    slidesToShow: 1,
-    fade: true,
-    cssEase: 'ease-in-out',
-    touchThreshold: 100,
-    arrows: false,
-    dots: false,
-    accessibility: true,
-    focusOnSelect: false,
-    pauseOnFocus: false,
-    pauseOnHover: true
-  };
-  
-  const sliderRef = useRef(null);
 
   // Loading state
   if (loading) {
     return (
-      <div className="vl-banner p-relative fix d-flex align-items-center justify-content-center" style={{ minHeight: '600px', backgroundColor: '#f8f9fa' }}>
-        <div className="text-center">
-          <FaSpinner className="fa-spin fs-2 text-primary mb-3" />
-          <p className="text-muted">Loading hero content...</p>
-        </div>
-      </div>
+      <div className="vl-banner p-relative fix" style={{ minHeight: '600px', backgroundColor: '#f8f9fa' }}></div>
     );
   }
 
@@ -234,36 +209,7 @@ const Hero = () => {
   // Render hero slider with dynamic data
   return (
     <div className="vl-banner p-relative fix">
-      <Slider ref={sliderRef} {...settings} className="slider-active-1">
-        <div key="slide-1">
-          <SlideContent slideIndex={1} />
-        </div>
-        <div key="slide-2">
-          <SlideContent slideIndex={2} />
-        </div>
-      </Slider>
-
-      {/* Navigation arrows */}
-      <div className="vl-arrow">
-        <button 
-          className="prev-arow slick-arrow" 
-          onClick={() => sliderRef.current?.slickPrev()}
-          aria-label="Previous slide"
-          type="button"
-          style={{ outline: 'none', border: 'none', background: 'white', padding:'20px', borderRadius:'47%'}}
-        >
-          <FaAngleLeft />
-        </button>
-        <button 
-          className="next-arow slick-arrow" 
-          onClick={() => sliderRef.current?.slickNext()}
-          aria-label="Next slide"
-          type="button"
-          style={{ outline: 'none', border: 'none', background: 'white', padding:'20px', borderRadius:'47%' }}
-        >
-          <FaAngleRight />
-        </button>
-      </div>
+      <SlideContent slideIndex={1} />
     </div>
   );
 };
