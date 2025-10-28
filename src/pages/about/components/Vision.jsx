@@ -43,8 +43,13 @@ const Vision = () => {
                 <Col lg={6}>
                     <div className="vl-vission-content ml-50 mb-30">
                         <div className="vl-section-title-1">
-                            <h5 className="subtitle">{vision.heading || 'Our Mission & Vision'}</h5>
-                            <p>{vision.description}</p>
+                            <h5 className="subtitle">{'Our Mission & Vision'}</h5>
+                            <h2 className="title pb-10">{vision.heading }</h2>
+                            <div>
+                                {vision.description && vision.description.split('\n').filter(para => para.trim()).map((paragraph, index) => (
+                                    <p key={index}>{paragraph.trim()}</p>
+                                ))}
+                            </div>
                         </div>
                         <div className="vl-vission-tab2">
                             <TabContainer defaultActiveKey={vision.tabs && vision.tabs[0] ? `tab-${0}` : ''}>
