@@ -1,1 +1,0 @@
-const s="/assets/vl-about-1.1-D1BwZALb.svg",t="/assets/vl-about-1.2-eFM_-DLv.svg",a="/assets/vl-team-1.1-CAw_fj-5.png",e="/assets/vl-team-1.2-kDLf5QfD.png",o="/assets/vl-team-1.3-CmIxPuJU.png",n="/assets/vl-team-1.4-DXkMzCXe.png";export{s as a,t as b,e as c,o as d,n as e,a as t};
