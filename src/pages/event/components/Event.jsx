@@ -10,6 +10,8 @@ const Event = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [eventsPerPage] = useState(5); // Number of events per page
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -83,15 +85,48 @@ const Event = () => {
                             </div>
                             <div className="event-content">
                               <div className="event-meta">
-                                <p className="para">{item.shortDescription || item.meta || 'Event Details'}</p>
+                                {item.startDate && item.endDate ? (
+                                  <p className="para">
+                                    {new Date(item.startDate).toLocaleDateString('en-US', { 
+                                      month: 'long', 
+                                      day: 'numeric', 
+                                      year: 'numeric'
+                                    })} - {new Date(item.endDate).toLocaleDateString('en-US', { 
+                                      month: 'long', 
+                                      day: 'numeric', 
+                                      year: 'numeric'
+                                    })}
+                                  </p>
+                                ) : item.startDate ? (
+                                  <p className="para">
+                                    {new Date(item.startDate).toLocaleDateString('en-US', { 
+                                      month: 'long', 
+                                      day: 'numeric', 
+                                      year: 'numeric'
+                                    })}
+                                  </p>
+                                ) : (
+                                  <p className="para">Event Date TBD</p>
+                                )}
                               </div>
                               <Link to={`/event-single/${item._id || ''}`} className="title">{item.title}</Link>
-                              <p className="para">{item.location}</p>
+                              <p className="para">{item.shortDescription}</p>
                               <Link to={`/event-single/${item._id || ''}`} className="details">Event
                                 Details <span><FaArrowRight /></span></Link>
                             </div>
                             <div className="event-thumb">
-                              <img className="w-100" src={item.image || item.images?.[0] || '/placeholder-event.jpg'} alt='event' />
+                              <img 
+                                src={item.image || item.images?.[0] || '/placeholder-event.jpg'} 
+                                alt='event'
+                                style={{
+                                  width: '370px',
+                                  height: '200px',
+                                  objectFit: 'cover',
+                                  objectPosition: 'center',
+                                  borderRadius: '8px',
+                                  display: 'block'
+                                }}
+                              />
                             </div>
                           </div>
                         </Col>
