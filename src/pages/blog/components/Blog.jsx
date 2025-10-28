@@ -127,7 +127,8 @@ const Blog = () => {
                                 </div>
                             </Col>)}
                 </Row>
-                <Row>
+                {stories && stories.length >= 9 && (
+                  <Row>
                     <Col xs={12} className="m-auto">
                         <div className="theme-pagination thme-pagination-mt text-center mt-18">
                             <ul>
@@ -140,7 +141,8 @@ const Blog = () => {
                             </ul>
                         </div>
                     </Col>
-                </Row>
+                  </Row>
+                )}
             </Container>
         </section>;
 };

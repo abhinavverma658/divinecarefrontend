@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from "react-router";
 import { Col, Container, Row } from 'react-bootstrap';
 import { FaArrowRight } from 'react-icons/fa6';
-import { storiesAPI } from '@/utils/api';
+import { apiRequest } from '@/utils/api';
 
 const Blog = () => {
     const [stories, setStories] = useState([]);
@@ -12,8 +12,12 @@ const Blog = () => {
         const fetchStories = async () => {
             setLoading(true);
             try {
-                const res = await storiesAPI.getStories();
-                if (res && res.success && Array.isArray(res.stories)) {
+                // Fetch from /api/stories endpoint
+                const res = await apiRequest('/stories', { method: 'GET' });
+                // If response is an array, use it directly
+                if (Array.isArray(res)) {
+                    setStories(res);
+                } else if (res && Array.isArray(res.stories)) {
                     setStories(res.stories);
                 } else {
                     setStories([]);
@@ -56,9 +60,9 @@ const Blog = () => {
                                     </div>
                                     <div className="vl-meta">
                                         <ul>
-                                            <li>
+                                            {/* <li>
                                                 <span className="top-minus">{story.date ? story.date : ''}</span>
-                                            </li>
+                                            </li> */}
                                             <li>
                                                 <span className="top-minus">{story.author ? story.author : ''}</span>
                                             </li>

@@ -176,12 +176,7 @@ const EventArea = () => {
                                 <div style={{ position: 'relative', zIndex: 2 }}>
                                   <h5 className="subtitle" data-aos="fade-right" data-aos-duration={800} data-aos-delay={300}>Events &amp; Programs</h5>
                                   {sectionLoading ? (
-                                    <div className="text-center py-4">
-                                      <div className="spinner-border text-light" role="status">
-                                        <span className="visually-hidden">Loading...</span>
-                                      </div>
-                                      <p className="text-light mt-2">Loading event section...</p>
-                                    </div>
+                                    <div style={{ minHeight: '1px' }}></div>
                                   ) : (
                                     <>
                                       <h2 className="title text-anime-style-3">{eventData.heading}</h2>
@@ -196,9 +191,7 @@ const EventArea = () => {
                                     </>
                                   )}
                                   {loading && (
-                                    <div className="text-center mt-3">
-                                      <small className="text-muted">Loading latest content...</small>
-                                    </div>
+                                    <div style={{ minHeight: '1px' }}></div>
                                   )}
                                 </div>
                             </div>

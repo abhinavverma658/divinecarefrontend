@@ -1,4 +1,4 @@
-import blogBg from '@/assets/img/breadcrumb/vl-blog-bg.png';
+import blogBg from '@/assets/img/breadcrumb/stories.png';
 import shapeImg1 from '@/assets/img/breadcrumb/breadcrumb-shape-1.1.png';
 import shapeImg2 from '@/assets/img/breadcrumb/breadcrumb-shape-1.2.png';
 import shapeImg3 from '@/assets/img/breadcrumb/breadcrumb-shape-1.3.png';

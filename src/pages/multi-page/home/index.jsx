@@ -11,20 +11,23 @@ import CtaArea from "@/components/layouts/CtaArea.jsx";
 import Footer from "@/components/layouts/Footer";
 import BackToTop from "@/components/BackToTop.jsx";
 import './components/HeroFix.css';
+import { useState } from 'react';
+
 const HomePage = () => {
+  const [isHeroLoading, setHeroLoading] = useState(true);
   return <>
-            <TopBanner />
-            <TopBar />
-            <Hero />
-            <About />
-            <EventArea />
-            <Testimonial />
-            <Gallery />
-            <Team />
-            <Blog />
-            <CtaArea />
-            <Footer />
-            <BackToTop />
-        </>;
+    <TopBanner />
+    <TopBar isHeroLoading={isHeroLoading} />
+    <Hero setHeroLoading={setHeroLoading} />
+    <About />
+    <EventArea />
+    <Testimonial />
+    <Gallery />
+    <Team />
+    <Blog />
+    <CtaArea />
+    <Footer />
+    <BackToTop />
+  </>;
 };
 export default HomePage;

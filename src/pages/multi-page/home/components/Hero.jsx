@@ -8,7 +8,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { homeAPI } from '@/utils/api';
 import './HeroFix.css';
 
-const Hero = () => {
+const Hero = ({ setHeroLoading }) => {
   // State for hero data and loading
   const [heroData, setHeroData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -87,6 +87,7 @@ const Hero = () => {
         console.log('🏠 [Hero Component] Using hardcoded fallback hero data');
       } finally {
         setLoading(false);
+        if (setHeroLoading) setHeroLoading(false);
       }
     };
 
@@ -117,7 +118,7 @@ const Hero = () => {
     );
   }
 
-  // Create slide content component to avoid duplication
+  // SlideContent component
   const SlideContent = ({ slideIndex }) => (
     <div 
       className="vl-hero-slider"
@@ -141,7 +142,6 @@ const Hero = () => {
       <div className="vl-hero-shape shape-2" style={{ position: 'absolute', zIndex: 2 }}>
         <img src={hero2} alt='' aria-hidden="true" />
       </div>
-      
       {/* Social media links */}
       <div className="vl-hero-social d-none d-lg-block" style={{ position: 'absolute', zIndex: 3 }}>
         <h4 className="title text-white">Follow Us:</h4>
@@ -171,7 +171,6 @@ const Hero = () => {
           </ul>
         </div>
       </div>
-      
       {/* Main content */}
       <Container style={{ position: 'relative', zIndex: 3 }}>
         <Row>

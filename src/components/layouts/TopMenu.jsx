@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { FaAngleDown, FaArrowRight } from 'react-icons/fa6';
 import demo1Img from '@/assets/img/demo/vl-demo1.1.png';
 import demo2Img from '@/assets/img/demo/vl-demo-1.2.png';
@@ -7,9 +7,18 @@ import demo4Img from '@/assets/img/demo/vl-demo-1.4.png';
 import demo5Img from '@/assets/img/demo/vl-demo-1.5.png';
 import { Col, Row } from 'react-bootstrap';
 const TopMenu = () => {
-  return <ul>
+        const location = useLocation();
+        const currentPath = location.pathname;
+        return <>
+            <style>{`
+                .active-menu {
+                    color: #ffbe2c !important;
+                    font-weight: 600;
+                }
+            `}</style>
+            <ul>
             <li>
-                <Link to="/">Home</Link>
+                <Link to="/" className={currentPath === '/' ? 'active-menu' : ''}>Home</Link>
                 {/* <div className="tp-submenu">
                     <Row>
                         <Col lg={12}>
@@ -79,8 +88,8 @@ const TopMenu = () => {
                     </Row>
                 </div> */}
             </li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/event">Events</Link>
+            <li><Link to="/about" className={currentPath === '/about' ? 'active-menu' : ''}>About Us</Link></li>
+            <li><Link to="/event" className={currentPath === '/event' ? 'active-menu' : ''}>Events</Link>
                 {/* <ul className="dropdown-padding">
                     <li><Link to="/event">Events</Link></li>
                     <li><Link to="/event-left">Events Left</Link></li>
@@ -96,7 +105,7 @@ const TopMenu = () => {
                     <li><Link to="/blog-single">Blog Single</Link></li>
                 </ul>
             </li> */}
-            <li><Link to="/pages/service">Services</Link>
+            <li><Link to="/pages/service" className={currentPath === '/pages/service' ? 'active-menu' : ''}>Services</Link>
                  {/* <ul className="dropdown-padding">
                                     <li><Link to="/pages/service">Our Services</Link></li>
                                     <li><Link to="/pages/team">Our Volunteers</Link></li>
@@ -105,9 +114,9 @@ const TopMenu = () => {
                                     <li><Link to="/pages/error-404">404</Link></li>
                                 </ul>  */}
                             </li>
-                            <li><Link to="/career">Careers</Link></li>
-                            <li><Link to="/blog">Stories</Link></li>
-                            <li><Link to="/pages/contact">Contact Us</Link></li>
+            <li><Link to="/career" className={currentPath === '/career' ? 'active-menu' : ''}>Careers</Link></li>
+            <li><Link to="/blog" className={currentPath === '/blog' ? 'active-menu' : ''}>Stories</Link></li>
+            <li><Link to="/pages/contact" className={currentPath === '/pages/contact' ? 'active-menu' : ''}>Contact Us</Link></li>
                             {/* <li><a href="#">Causes <FaAngleDown className="fa-solid fa-angle-down align-bottom" /></a>
                                 <ul className="dropdown-padding">
                                     <li><Link to="/cause">Causes</Link></li>
@@ -116,6 +125,7 @@ const TopMenu = () => {
                                     <li><Link to="/cause-single">Causes Single</Link></li>
                                 </ul>
                             </li> */}
-        </ul>;
+            </ul>
+        </>;
 };
 export default TopMenu;

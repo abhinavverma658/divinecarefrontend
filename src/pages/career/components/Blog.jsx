@@ -2,7 +2,7 @@ import React from 'react';
 
 const JobCard = () => {
     return (
-        <div className="card h-100 border-0 shadow-sm" style={{ borderRadius: '30px' }}>
+        <div className="card h-100 border-0 " style={{ borderRadius: '30px' }}>
       <div className="card-body p-4">
         <div className="d-flex justify-content-between align-items-start mb-3">
           <div>
@@ -69,10 +69,6 @@ const JobCard = () => {
 const JobOpportunitiesPage = () => {
   return (
     <>
-      <link 
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
-        rel="stylesheet"
-      />
       <div className="container py-5">
         <h1 className="text-center fw-bold mb-5" style={{fontSize: '2.5rem'}}>Jobs Opportunities</h1>
         

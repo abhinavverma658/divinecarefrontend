@@ -1,5 +1,5 @@
 
-import aboutImg from '@/assets/img/breadcrumb/vl-abuot-breadcrumb.png';
+import aboutImg from '@/assets/img/breadcrumb/about.png';
 import shape1Img from '@/assets/img/breadcrumb/breadcrumb-shape-1.1.png';
 import shape2Img from '@/assets/img/breadcrumb/breadcrumb-shape-1.2.png';
 import shape3Img from '@/assets/img/breadcrumb/breadcrumb-shape-1.3.png';

@@ -92,12 +92,7 @@ const Testimonial = () => {
               {testimonialsData.sectionDescription}
             </p>
             {loading && (
-              <div className="text-center mt-3">
-                <div className="spinner-border text-light" role="status">
-                  <span className="visually-hidden">Loading testimonials...</span>
-                </div>
-                <small className="text-light d-block mt-2">Loading latest testimonials...</small>
-              </div>
+              <div style={{ minHeight: '1px' }}></div>
             )}
             {!loading && (
               <div className="text-center mt-3">
@@ -118,9 +113,7 @@ const Testimonial = () => {
                       {testimonialsData.sectionDescription}
                     </p>
                     {loading && (
-                      <div className="text-center mt-3">
-                        <small className="text-light">Loading latest testimonials...</small>
-                      </div>
+                      <div style={{ minHeight: '1px' }}></div>
                     )}
                     {error && (
                       <div className="text-center mt-3">
