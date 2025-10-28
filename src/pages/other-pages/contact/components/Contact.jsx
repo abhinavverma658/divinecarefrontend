@@ -7,6 +7,7 @@ const Contact = () => {
   const [contactPageData, setContactPageData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [emailError, setEmailError] = useState(null);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -40,6 +41,18 @@ const Contact = () => {
     const { name, value, type, checked } = e.target;
     const newValue = type === 'checkbox' ? checked : value;
     console.log(`Field changed: ${name} = ${newValue}`);
+
+        // Inline validation for email field
+        if (name === 'email') {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!newValue.trim()) {
+            setEmailError('Email is required.');
+          } else if (!emailRegex.test(newValue)) {
+            setEmailError('Please enter a valid email address.');
+          } else {
+            setEmailError(null);
+          }
+        }
     setFormData(prev => ({
       ...prev,
       [name]: newValue
@@ -66,6 +79,13 @@ const Contact = () => {
     if (!emailRegex.test(formData.email)) {
       console.log('Email validation failed');
       setSubmitStatus({ type: 'error', message: 'Please enter a valid email address.' });
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Prevent submit if inline validation has flagged the email
+    if (emailError) {
+      setSubmitStatus({ type: 'error', message: emailError });
       setIsSubmitting(false);
       return;
     }
@@ -190,6 +210,11 @@ const Contact = () => {
                                                 onChange={handleInputChange}
                                                 disabled={isSubmitting}
                                             />
+                      {emailError && (
+                        <div className="text-danger" style={{ marginTop: '6px', fontSize: '14px' }} role="alert">
+                          {emailError}
+                        </div>
+                      )}
                                         </Col>
                                         <Col lg={12}>
                                             <input 
@@ -242,12 +267,12 @@ const Contact = () => {
                                             <div className="btn-area">
                                                 <button 
                                                     type="submit" 
-                                                    className="header-btn1"
-                                                    disabled={isSubmitting}
-                                                    style={{ opacity: isSubmitting ? 0.7 : 1 }}
+                                                    className="header-btn1 px-4 py-3"
+                          disabled={isSubmitting || !!emailError}
+                          style={{ opacity: (isSubmitting || !!emailError) ? 0.7 : 1 }}
                                                 >
-                                                    {isSubmitting ? 'Sending...' : 'Send Message'} 
-                                                    <span><FaArrowRight /></span>
+                                                    {isSubmitting ? 'Sending...' : 'Send Message '} 
+                                                    <span className="arrow-icon"><FaArrowRight /></span>
                                                 </button>
                                             </div>
                                         </Col>
