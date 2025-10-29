@@ -95,7 +95,11 @@ const Blog = () => {
                                         <h3 className="title">
                                             <Link to={`/stories/${story._id}`}>{story.title || 'Untitled Story'}</Link>
                                         </h3>
-                                        <p>{story.description || story.content || ''}</p>
+                                                                                <p>{
+                                                                                    ((story.description || story.content || '').length > 120)
+                                                                                        ? (story.description || story.content || '').slice(0, 120) + '..' 
+                                                                                        : (story.description || story.content || '')
+                                                                                }</p>
                                         <Link to={`/stories/${story._id}`} className="read-more">Read More <span><FaArrowRight /></span></Link>
                                     </div>
                                 </div>
