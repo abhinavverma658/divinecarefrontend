@@ -80,6 +80,7 @@ const About = () => {
         <Container>
           <Row>
             <Col lg={12} className="text-center py-5">
+              <div>Loading...</div>
             </Col>
           </Row>
         </Container>
