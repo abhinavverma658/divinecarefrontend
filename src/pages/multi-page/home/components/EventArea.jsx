@@ -10,7 +10,7 @@ const EventArea = () => {
   const [eventData, setEventData] = useState({
     heading: '',
     description: '',
-    backgroundImage: blogThmb,
+    backgroundImage: '',
     ctaButton: {
       text: 'Vineyard Venues',
       link: '/event-single'
@@ -146,6 +146,19 @@ const EventArea = () => {
     return { day, month, year };
   };
 
+  // Show white area until event section data is fetched
+  if (sectionLoading) {
+    return (
+      <section className="vl-blog sp2">
+        <Container>
+          <Row>
+            <Col lg={5} style={{ background: '#fff', minHeight: '400px' }}></Col>
+            <Col lg={7} style={{ background: '#fff', minHeight: '400px' }}></Col>
+          </Row>
+        </Container>
+      </section>
+    );
+  }
   // Don't render if not active
   if (!eventData.isActive) {
     return null;
