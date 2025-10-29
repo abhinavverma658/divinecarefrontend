@@ -101,10 +101,6 @@ const Team = () => {
               </p>
               {loading && (
                 <div className="text-center mt-3">
-                  <div className="spinner-border text-primary" role="status">
-                    <span className="visually-hidden">Loading team members...</span>
-                  </div>
-                  <small className="text-muted d-block mt-2">Loading team members...</small>
                 </div>
               )}
               {!loading && (
