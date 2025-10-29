@@ -37,9 +37,9 @@ const Footer = () => {
                   <li><Link to="/">Home Page</Link></li>
                   <li><Link to="/about">About Us</Link></li>
                   <li><Link to="/event">Events</Link></li>
-                <li><a href="/career">Career</a></li>
-                <li><a href="#">Stories</a></li>
-                  <li><a href="#">Contact Us</a></li>
+                <li><Link to="/career">Career</Link></li>
+                <li><Link to="/blog">Stories</Link></li>
+                  <li><Link to="/pages/contact">Contact Us</Link></li>
                 </ul>
               </div>
             </div>
@@ -92,13 +92,13 @@ Germantown, Maryland 20874</a>
         <div className="vl-copyright copyright-border-1">
           <Row>
             <Col md={6}>
-              <p className="vl-copyright-text">© 2025 Developed By <Link to="https://quantumitinnovation.com/">Quantum IT Innovation</Link></p>
+              <p className="vl-copyright-text underline">© 2025 Developed By <Link to="https://quantumitinnovation.com/" style={{ textDecoration: 'underline', fontWeight: 'bold', color: 'inherit' }}>Quantum IT Innovation</Link></p>
             </Col>
             <Col md={6}>
               <div className="vl-copyright-menu">
                 <ul>
-                  <li><a href="#">Privacy Policy </a></li>
-                  <li><a href="#">Terms &amp; Conditions</a></li>
+                  <li><a href="#"style={{ textDecoration: 'underline', fontWeight: 'bold', color: 'inherit' }}>Privacy Policy </a></li>
+                  <li><a href="#"style={{ textDecoration: 'underline', fontWeight: 'bold', color: 'inherit' }}>Terms &amp; Conditions</a></li>
                 </ul>
               </div>
             </Col>

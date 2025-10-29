@@ -3,10 +3,23 @@ import { Link } from "react-router";
 import { Col, Container, Row } from 'react-bootstrap';
 import { FaArrowRight } from 'react-icons/fa6';
 import { apiRequest } from '@/utils/api';
+import calenderImg from '@/assets/img/icons/vl-calender-1.1.svg';
+import userImg from '@/assets/img/icons/vl-user-1.1.svg';
 
 const Blog = () => {
     const [stories, setStories] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    // Format date utility function
+    const formatDate = (dateString) => {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', { 
+            day: 'numeric',
+            month: 'long', 
+            year: 'numeric'
+        });
+    };
 
     useEffect(() => {
         const fetchStories = async () => {
@@ -60,11 +73,21 @@ const Blog = () => {
                                     </div>
                                     <div className="vl-meta">
                                         <ul>
-                                            {/* <li>
-                                                <span className="top-minus">{story.date ? story.date : ''}</span>
-                                            </li> */}
                                             <li>
-                                                <span className="top-minus">{story.author ? story.author : ''}</span>
+                                                <a href="#">
+                                                    <span className="top-minus">
+                                                        <img src={calenderImg} alt='calenderImg' />
+                                                    </span> 
+                                                    {formatDate(story.date)}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <span className="top-minus">
+                                                        <img src={userImg} alt='userImg' />
+                                                    </span>
+                                                    {story.author || 'Anonymous'}
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
@@ -72,7 +95,10 @@ const Blog = () => {
                                         <h3 className="title">
                                             <Link to={`/stories/${story._id}`}>{story.title || 'Untitled Story'}</Link>
                                         </h3>
-                                        <p>{story.description || story.content || ''}</p>
+                                        <p>{(story.description || story.content || '').length > 120 
+                                            ? (story.description || story.content || '').substring(0, 120) + '...'
+                                            : (story.description || story.content || '')
+                                        }</p>
                                         <Link to={`/stories/${story._id}`} className="read-more">Read More <span><FaArrowRight /></span></Link>
                                     </div>
                                 </div>
