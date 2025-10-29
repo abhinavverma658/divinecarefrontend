@@ -59,5 +59,38 @@ export const storiesAPI = {
         ]
       };
     }
+  },
+
+  // Get single story by ID
+  getStoryById: async (id) => {
+    try {
+      console.log(`📖 Fetching story data from /stories/${id}...`);
+      const response = await apiRequest(`/stories/${id}`);
+      console.log('📖 Story data response:', response);
+      
+      if (response) {
+        console.log('📖 ✅ Story data retrieved successfully');
+        return {
+          success: true,
+          story: response
+        };
+      }
+      
+      throw new Error('Story not found');
+    } catch (error) {
+      console.error('Failed to fetch story data:', error);
+      // Return fallback data
+      return {
+        success: false,
+        story: {
+          "_id": id,
+          "title": "Sample Story",
+          "image": "https://res.cloudinary.com/your-cloud/image/upload/v1234567890/story.jpg",
+          "author": "Anonymous",
+          "content": "This is a sample story content. The actual story could not be loaded at this time.",
+          "date": "2025-10-22T00:00:00.000Z"
+        }
+      };
+    }
   }
 };

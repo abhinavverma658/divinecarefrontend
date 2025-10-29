@@ -3,37 +3,108 @@ import thumb1 from '@/assets/img/blog/vl-blog-large-thumb-1.1.png';
 import tags from '@/assets/img/icons/vl-tags.svg';
 import chatting from '@/assets/img/icons/vl-chatting-icon.svg';
 import { Col, Container, Row } from 'react-bootstrap';
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
+import { useState, useEffect } from 'react';
+import { storiesAPI } from '@/utils/storiesApi';
 const SideBar = () => {
+  const { id } = useParams();
+  const [story, setStory] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Format date utility function
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      day: 'numeric',
+      month: 'long', 
+      year: 'numeric'
+    });
+  };
+
+  useEffect(() => {
+    const fetchStory = async () => {
+      if (!id) {
+        setError('No story ID provided');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setError(null);
+        const response = await storiesAPI.getStoryById(id);
+        
+        if (response.success && response.story) {
+          setStory(response.story);
+        } else {
+          throw new Error('Failed to load story');
+        }
+      } catch (err) {
+        console.error('Error fetching story:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStory();
+  }, [id]);
+
+  if (loading) {
+    return <div className="vl-sidebar-area sp2">
+      <Container>
+        <Row>
+          <Col lg={8} className="mx-auto">
+            <div className="text-center py-5">
+              <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+              <p className="mt-3">Loading story...</p>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </div>;
+  }
+
+  if (error || !story) {
+    return <div className="vl-sidebar-area sp2">
+      <Container>
+        <Row>
+          <Col lg={8} className="mx-auto">
+            <div className="alert alert-warning text-center">
+              <h4>Story Not Found</h4>
+              <p>The requested story could not be loaded.</p>
+              <Link to="/blog" className="btn btn-primary">Back to Stories</Link>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </div>;
+  }
+
   return <div className="vl-sidebar-area sp2">
             <Container>
                 <Row>
                     <Col lg={8} className="mx-auto">
                         <div className="vl-event-content-area">
                             <div className="vl-large-thumb">
-                                <img className="w-100 img-fluid" src={thumb1} alt='thumb1' />
+                                <img className="w-100 img-fluid" src={story.image || thumb1} alt={story.title || 'Story'} />
                             </div>
                             <div className="vl-blog-meta-box mt-32">
                                 <ul>
-                                    <li><a href="#"> <span><img src={thumb1} alt='thumb1' /></span>Adil Rashid</a></li>
-                                    <li><a href="#"> <span className="icon"><img className="mt-4-" src={calenderImg} alt='calenderImg' /></span> 8/10/2025</a>
+                                    <li><a href="#"> <span><img src={story.image || thumb1} alt='author' /></span>{story.author || 'Anonymous'}</a></li>
+                                    <li><a href="#"> <span className="icon"><img className="mt-4-" src={calenderImg} alt='calenderImg' /></span> {formatDate(story.date)}</a>
                                     </li>
-                                    <li><a href="#"> <span className="icon"><img className="mt-4-" src={tags} alt='tags' /></span> Business And
-                                        Finance</a></li>
-                                    <li><a href="#"> <span className="icon"><img className="mt-4-" src={chatting} alt='chatting' /></span>2 comments</a>
+                                    <li><a href="#"> <span className="icon"><img className="mt-4-" src={tags} alt='tags' /></span> Stories</a></li>
+                                    <li><a href="#"> <span className="icon"><img className="mt-4-" src={chatting} alt='chatting' /></span>Comments</a>
                                     </li>
                                 </ul>
                             </div>
                             <div className="vl-event-content vl-blg-content">
-                                <h2 className="title">Tips for Disaster Preparedness: How <br /> to Stay Safe and Ready
-                                </h2>
-                                <p className="para pb-16">Our blog is a space where we share the heart of our mission,
-                                    offering an inside look at the incredible work being done and the lives being
-                                    transformed through your support. Each post features real stories from the field,
-                                    updates on our current projects. </p>
-                                <p className="para pb-32">Whether you&#39;re learning about a new initiative,
-                                    discovering how your donations are making an impact, or finding inspiration to get
-                                    involved, our blog is here to connect.</p>
+                                <h2 className="title">{story.title}</h2>
+                                <div className="para pb-16" dangerouslySetInnerHTML={{ __html: story.content }} />
                             </div>
                             <div className="vl-blg-icon-box">
                                 <Row>
@@ -53,7 +124,7 @@ const SideBar = () => {
                                     </Col>
                                 </Row>
                             </div>
-                            <div className="event-content-area">
+                            {/*<div className="event-content-area">
                                 <h2 className="title">Join Us in Making a Difference</h2>
                                 <p className="para">We invite you to join us, meet like-minded individuals, and become
                                     part of a movement that makes real, lasting change. Whether you attend, volunteer,
@@ -80,7 +151,7 @@ const SideBar = () => {
                                     involvement is invaluable. Explore our upcoming events, find ways to get involved,
                                     and help us create brighter futures for those in need. Together, we can make an
                                     extraordinary impact!</p>
-                            </div>
+                            </div>*/}
                         </div>
                     </Col>
                 </Row>

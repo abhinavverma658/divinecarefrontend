@@ -4506,6 +4506,11 @@ span.tooltipp-2 {
   transition: all 0.4s;
   color: #ffbe2c !important;
 }
+.homepage1-body .header-area.homepage1 .header-elements .main-menu ul li a.active {
+  color: #002372 !important;
+  font-weight: var(--ztc-weight-bold);
+  transition: all 0.4s;
+}
 .homepage1-body .header-area.homepage1 .header-elements .main-menu ul li .tp-submenu {
   visibility: hidden;
   opacity: 0;

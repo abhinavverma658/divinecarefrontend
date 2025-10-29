@@ -70,7 +70,7 @@ const otherRoutes = [{
 }, {
     path: '/blog-right', name: 'blog-right', element: <BlogRight/>
 }, {
-    path: '/blog-single', name: 'blog-single', element: <BlogSingle/>
+    path: '/blog-single/:id', name: 'blog-single', element: <BlogSingle/>
 }, {
     path: '/cause', name: 'cause', element: <Cause/>
 }, {

@@ -1,6 +1,6 @@
 import logo1Img from '@/assets/img/logo/vl-logo-1.1.png';
 import useScrollEvent from '@/hooks/useScrollEvent';
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import SingleMobileMenu from './SingleMobileMenu';
 import { FaArrowRight } from 'react-icons/fa6';
 import { Col, Container, Row } from 'react-bootstrap';

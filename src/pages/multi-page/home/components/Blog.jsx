@@ -68,7 +68,7 @@ const Blog = () => {
                                 <div className="vl-single-blg-item mb-30" data-aos="fade-up" data-aos-duration={1000 + idx * 200} data-aos-delay={300}>
                                     <div className="vl-blg-thumb">
                                         {story.image ? (
-                                            <Link to={`/stories/${story._id}`}><img className="w-100" src={story.image} alt={story.title || 'Story'} /></Link>
+                                            <Link to={`/blog-single/${story._id}`}><img className="w-100" src={story.image} alt={story.title || 'Story'} /></Link>
                                         ) : null}
                                     </div>
                                     <div className="vl-meta">
@@ -93,13 +93,13 @@ const Blog = () => {
                                     </div>
                                     <div className="vl-blg-content">
                                         <h3 className="title">
-                                            <Link to={`/stories/${story._id}`}>{story.title || 'Untitled Story'}</Link>
+                                            <Link to={`/blog-single/${story._id}`}>{story.title || 'Untitled Story'}</Link>
                                         </h3>
                                         <p>{(story.description || story.content || '').length > 120 
                                             ? (story.description || story.content || '').substring(0, 120) + '...'
                                             : (story.description || story.content || '')
                                         }</p>
-                                        <Link to={`/stories/${story._id}`} className="read-more">Read More <span><FaArrowRight /></span></Link>
+                                        <Link to={`/blog-single/${story._id}`} className="read-more">Read More <span><FaArrowRight /></span></Link>
                                     </div>
                                 </div>
                             </Col>

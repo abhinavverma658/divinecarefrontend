@@ -87,7 +87,7 @@ const Blog = () => {
                     {stories?.map((item, idx) => <Col lg={4} md={6} key={item._id || idx}>
                                 <div className="vl-single-blg-item mb-30">
                                     <div className="vl-blg-thumb">
-                                        <Link to="/blog-single">
+                                        <Link to={`/blog-single/${item._id}`}>
                                             <img 
                                                 className="w-100" 
                                                 src={item.image} 
@@ -117,10 +117,10 @@ const Blog = () => {
                                     </div>
                                     <div className="vl-blg-content">
                                         <h3 className="title">
-                                            <Link to="/blog-single">{item.title}</Link>
+                                            <Link to={`/blog-single/${item._id}`}>{item.title}</Link>
                                         </h3>
                                         <p>{item.excerpt}</p>
-                                        <Link to="/blog-single" className="read-more">
+                                        <Link to={`/blog-single/${item._id}`} className="read-more">
                                             Read More <span><FaArrowRight /></span>
                                         </Link>
                                     </div>
