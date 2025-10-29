@@ -108,6 +108,26 @@
             &.active{
                 background: var(--ztc-text-text-4);
                 transition: .3s;
+                & .title{
+                    color: white !important;
+                    transition: .3s;
+                }
+                & span{
+                    color: white !important;
+                    transition: .3s;
+                }
+            }
+            &:hover{
+                background: var(--ztc-text-text-4);
+                transition: .3s;
+                & .title{
+                    color: white !important;
+                    transition: .3s;
+                }
+                & span{
+                    color: white !important;
+                    transition: .3s;
+                }
             }
         }
     }

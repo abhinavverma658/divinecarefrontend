@@ -5,9 +5,13 @@ import Footer from "@/components/layouts/Footer";
 import BackToTop from "@/components/BackToTop.jsx";
 import { Suspense } from "react";
 import Loader from "@/components/Loader.jsx";
+import useScrollToTop from "@/hooks/useScrollToTop.js";
 const MainLayout = ({
   children
 }) => {
+  // Auto scroll to top on route changes
+  useScrollToTop();
+  
   return <>
             <Suspense fallback={<Loader />}>
                 <TopBanner />

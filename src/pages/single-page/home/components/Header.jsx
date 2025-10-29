@@ -20,7 +20,7 @@ const Header = () => {
                                     </div>
                                     <div className="main-menu">
                                         <ul>
-                                            <li><a href="#about">About</a></li>
+                                            <li><a href="#about">About Us</a></li>
                                             <li><a href="#cause">Cause</a></li>
                                             <li><a href="#event">Event</a></li>
                                             <li><a href="#testimonial">Testimonial</a></li>

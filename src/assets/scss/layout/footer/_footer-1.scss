@@ -201,9 +201,17 @@
                             color:var(--ztc-text-text-8);
                             transition:.3s;
                             &:hover{
-                                color:var(--ztc-text-text-1);
+                                color: white !important;
                                 background:var(--ztc-text-text-10);
                                 transition:.3s;
+                                svg {
+                                    color: white !important;
+                                    filter: brightness(0) invert(1) !important;
+                                }
+                                .fa-brands, .fa-facebook-f, .fa-instagram, .fa-twitter {
+                                    color: white !important;
+                                    filter: brightness(0) invert(1) !important;
+                                }
                             }
                         }
                     }
