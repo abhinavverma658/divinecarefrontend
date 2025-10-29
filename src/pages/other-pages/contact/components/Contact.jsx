@@ -211,7 +211,7 @@ const Contact = () => {
                                                 disabled={isSubmitting}
                                             />
                       {emailError && (
-                        <div className="text-danger" style={{ marginTop: '6px', fontSize: '14px' }} role="alert">
+                        <div className="text-danger" style={{fontSize: '13px' }} role="alert">
                           {emailError}
                         </div>
                       )}

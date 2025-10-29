@@ -918,6 +918,14 @@
                 &.active {
                     background: var(--ztc-text-text-4);
                     transition: .3s;
+
+                    & .title {
+                        color: white;
+                    }
+
+                    & span {
+                        color: white;
+                    }
                 }
 
                 & .icon {
@@ -933,11 +941,11 @@
                 }
 
                 & .title {
-                    color: var(--ztc-text-text-3);
+                    color: white;
                 }
 
                 & span {
-                    color: var(--ztc-text-text-3);
+                    color: white;
                 }
             }
         }
