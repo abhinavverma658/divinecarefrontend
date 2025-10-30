@@ -154,6 +154,10 @@ const EventArea = () => {
   // Check if we have any events to display
   const hasEvents = events.length > 0;
   const tabKeys = Object.keys(eventsByDate);
+  
+  // Don't show fallback content while loading
+  const showContent = !loading;
+  
   return <section className="vl-blog sp2">
             <Container>
                 <Row>
@@ -198,7 +202,7 @@ const EventArea = () => {
                         </div>
                     </Col>
                     
-                    {hasEvents ? (
+                    {showContent && hasEvents ? (
                       <TabContainer defaultActiveKey={tabKeys[0] || 'tab1'}>
                         <Col lg={2} data-aos="zoom-in-up" data-aos-duration={1000} data-aos-delay={300}>
                             <div className="event-tabs">
@@ -269,7 +273,7 @@ const EventArea = () => {
                             </TabContent>
                         </Col>
                       </TabContainer>
-                    ) : (
+                    ) : showContent ? (
                       <Col lg={7}>
                           <div className="vl-single-blog-box-content d-flex align-items-center justify-content-center" style={{ minHeight: '400px' }}>
                               <div className="text-center">
@@ -292,7 +296,7 @@ const EventArea = () => {
                               </div>
                           </div>
                       </Col>
-                    )}
+                    ) : null}
                 </Row>
             </Container>
         </section>;

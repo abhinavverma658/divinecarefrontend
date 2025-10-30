@@ -63,7 +63,7 @@ const Vision = () => {
                                 <TabContent>
                                     {vision.tabs && vision.tabs.map((tab, idx) => (
                                         <TabPane className="fade" eventKey={`tab-${idx}`} key={idx}>
-                                            <p className="para">{tab.content}</p>
+                                            <div className="para" dangerouslySetInnerHTML={{ __html: tab.content }} />
                                         </TabPane>
                                     ))}
                                 </TabContent>
