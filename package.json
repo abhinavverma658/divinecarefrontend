@@ -21,6 +21,7 @@
     "glightbox": "^3.3.1",
     "gsap": "^3.12.7",
     "path": "^0.12.7",
+    "quill": "^2.0.3",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-countup": "^6.5.3",

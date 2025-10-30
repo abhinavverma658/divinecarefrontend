@@ -283,28 +283,32 @@ const EventArea = () => {
                         </Col>
                       </TabContainer>
                     ) : (
-                      <Col lg={7}>
-                          <div className="vl-single-blog-box-content d-flex align-items-center justify-content-center" style={{ minHeight: '400px' }}>
-                              <div className="text-center">
-                                  <img 
-                                      src={calendarImg} 
-                                      alt="Calendar" 
-                                      style={{ 
-                                          width: '200px', 
-                                          height: '200px',
-                                          marginBottom: '20px'
-                                      }}
-                                  />
-                                  <p className="text-muted mb-0" style={{ fontSize: '28px', fontWeight: '800' }}>
-                                      No upcoming events.
-                                      <br/>
-                                      <span className='fs-6'>
-                                          Stay tuned for further updates.
-                                      </span>
-                                  </p>
-                              </div>
+                      loading ? (
+                        <Col lg={7} style={{ background: '#fff', minHeight: '400px' }}></Col>
+                      ) : (
+                        <Col lg={7} className="d-flex align-items-center justify-content-center" style={{ minHeight: '400px' }}>
+                          <div className="w-100 d-flex align-items-center justify-content-center" style={{ minHeight: '400px' }}>
+                            <div className="text-center w-100">
+                              <img 
+                                src={calendarImg} 
+                                alt="Calendar" 
+                                style={{ 
+                                  width: '200px', 
+                                  height: '200px',
+                                  marginBottom: '20px'
+                                }}
+                              />
+                              <p className="text-muted mb-0" style={{ fontSize: '28px', fontWeight: '800' }}>
+                                No upcoming events.
+                                <br/>
+                                <span className='fs-6'>
+                                  Stay tuned for further updates.
+                                </span>
+                              </p>
+                            </div>
                           </div>
-                      </Col>
+                        </Col>
+                      )
                     )}
                 </Row>
             </Container>

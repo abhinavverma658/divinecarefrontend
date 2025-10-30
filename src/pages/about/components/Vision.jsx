@@ -37,7 +37,7 @@ const Vision = () => {
             <Row>
                 <Col lg={6}>
                     <div className="vission-thumb mb-30">
-                        <img className="w-100" src={visionImage} alt='vision' />
+                        <img className="w-100" style={{ height: "660px" }} src={visionImage} alt='vision' />
                     </div>
                 </Col>
                 <Col lg={6}>
@@ -63,7 +63,7 @@ const Vision = () => {
                                 <TabContent>
                                     {vision.tabs && vision.tabs.map((tab, idx) => (
                                         <TabPane className="fade" eventKey={`tab-${idx}`} key={idx}>
-                                            <p className="para">{tab.content}</p>
+                                            <div className="para" dangerouslySetInnerHTML={{ __html: tab.content }} />
                                         </TabPane>
                                     ))}
                                 </TabContent>
