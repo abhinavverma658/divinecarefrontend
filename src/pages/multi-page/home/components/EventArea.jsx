@@ -10,7 +10,7 @@ const EventArea = () => {
   const [eventData, setEventData] = useState({
     heading: '',
     description: '',
-    backgroundImage: blogThmb,
+    backgroundImage: '',
     ctaButton: {
       text: 'Vineyard Venues',
       link: '/event-single'
@@ -146,6 +146,19 @@ const EventArea = () => {
     return { day, month, year };
   };
 
+  // Show white area until event section data is fetched
+  if (sectionLoading) {
+    return (
+      <section className="vl-blog sp2">
+        <Container>
+          <Row>
+            <Col lg={5} style={{ background: '#fff', minHeight: '400px' }}></Col>
+            <Col lg={7} style={{ background: '#fff', minHeight: '400px' }}></Col>
+          </Row>
+        </Container>
+      </section>
+    );
+  }
   // Don't render if not active
   if (!eventData.isActive) {
     return null;
@@ -154,10 +167,6 @@ const EventArea = () => {
   // Check if we have any events to display
   const hasEvents = events.length > 0;
   const tabKeys = Object.keys(eventsByDate);
-  
-  // Don't show fallback content while loading
-  const showContent = !loading;
-  
   return <section className="vl-blog sp2">
             <Container>
                 <Row>
@@ -202,7 +211,7 @@ const EventArea = () => {
                         </div>
                     </Col>
                     
-                    {showContent && hasEvents ? (
+                    {hasEvents ? (
                       <TabContainer defaultActiveKey={tabKeys[0] || 'tab1'}>
                         <Col lg={2} data-aos="zoom-in-up" data-aos-duration={1000} data-aos-delay={300}>
                             <div className="event-tabs">
@@ -273,30 +282,34 @@ const EventArea = () => {
                             </TabContent>
                         </Col>
                       </TabContainer>
-                    ) : showContent ? (
-                      <Col lg={7}>
-                          <div className="vl-single-blog-box-content d-flex align-items-center justify-content-center" style={{ minHeight: '400px' }}>
-                              <div className="text-center">
-                                  <img 
-                                      src={calendarImg} 
-                                      alt="Calendar" 
-                                      style={{ 
-                                          width: '200px', 
-                                          height: '200px',
-                                          marginBottom: '20px'
-                                      }}
-                                  />
-                                  <p className="text-muted mb-0" style={{ fontSize: '28px', fontWeight: '800' }}>
-                                      No upcoming events.
-                                      <br/>
-                                      <span className='fs-6'>
-                                          Stay tuned for further updates.
-                                      </span>
-                                  </p>
-                              </div>
+                    ) : (
+                      loading ? (
+                        <Col lg={7} style={{ background: '#fff', minHeight: '400px' }}></Col>
+                      ) : (
+                        <Col lg={7} className="d-flex align-items-center justify-content-center" style={{ minHeight: '400px' }}>
+                          <div className="w-100 d-flex align-items-center justify-content-center" style={{ minHeight: '400px' }}>
+                            <div className="text-center w-100">
+                              <img 
+                                src={calendarImg} 
+                                alt="Calendar" 
+                                style={{ 
+                                  width: '200px', 
+                                  height: '200px',
+                                  marginBottom: '20px'
+                                }}
+                              />
+                              <p className="text-muted mb-0" style={{ fontSize: '28px', fontWeight: '800' }}>
+                                No upcoming events.
+                                <br/>
+                                <span className='fs-6'>
+                                  Stay tuned for further updates.
+                                </span>
+                              </p>
+                            </div>
                           </div>
-                      </Col>
-                    ) : null}
+                        </Col>
+                      )
+                    )}
                 </Row>
             </Container>
         </section>;
