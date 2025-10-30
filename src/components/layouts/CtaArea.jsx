@@ -19,7 +19,7 @@ const CtaArea = () => {
                         <Col lg={12}>
                             <div className="vl-cta-content text-center">
                                 <h2 className="title">Your Care Can Transform Lives</h2>
-                                <p>Every act of kindness, no matter how small, brings hope and strength to individuals in need of support. Together, we can make a lasting difference.</p>
+                                <p>Every act of kindness, no matter how small, brings hope and strength to individuals in need of support.< br/> Together, we can make a lasting difference.</p>
                                 <div className="vl-cta-form text-center mx-auto">
                                     <form action="#">
                                         <input type="email" placeholder="Enter Your Email.." />

@@ -37,7 +37,7 @@ const Vision = () => {
             <Row>
                 <Col lg={6}>
                     <div className="vission-thumb mb-30">
-                        <img className="w-100" src={visionImage} alt='vision' />
+                        <img className="w-100" style={{ height: "660px" }} src={visionImage} alt='vision' />
                     </div>
                 </Col>
                 <Col lg={6}>

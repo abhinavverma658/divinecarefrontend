@@ -89,7 +89,7 @@ const About = () => {
   }
 
   return (
-    <section className="vl-about-section sp2">
+    <section className="vl-about-section sp2" style={{ marginBottom: "0px" }}>
       <Container>
         <Row>
           <Col lg={6}>
@@ -127,12 +127,13 @@ const About = () => {
               </div>
             </div>
           </Col>
-          <Col lg={4} md={6} className="mb-30">
+          <Col lg={4} md={6} className="mb-0">
             <div className="vl-about-large-thumb reveal">
               <img 
-                className="w-100" 
-                src={aboutData.centerImage} 
+                className="w-100"
+                src={aboutData.centerImage}
                 alt="About us center image"
+                style={{ height: '560px', objectFit: 'cover' }}
                 onError={(e) => {
                   // Fallback to default image if API image fails to load
                   e.target.src = about1;
@@ -153,6 +154,7 @@ const About = () => {
                   className="w-100" 
                   src={aboutData.rightImage} 
                   alt="About us right image"
+                  style={{ height: '290px', objectFit: 'cover' }}
                   onError={(e) => {
                     // Fallback to default image if API image fails to load
                     e.target.src = about2;

@@ -48,8 +48,8 @@ const IconArea = () => {
       title: contactPageData.callUs?.serviceSubtitle || 'Call Us Today',
       contacts: [
         contactPageData.callUs?.phoneNumber1 || '+00 123 456 789',
-        contactPageData.callUs?.phoneNumber2 || '+00 987 654 321'
-      ]
+        contactPageData.callUs?.phoneNumber2
+      ].filter(Boolean)
     },
     {
       icon: iconsBoxData[1]?.icon || '/default-email-icon.png',
@@ -57,8 +57,8 @@ const IconArea = () => {
       title: contactPageData.mailInfo?.emailSubtitle || 'Mail Information',
       contacts: [
         contactPageData.mailInfo?.emailAddress1 || 'info@charity.com',
-        contactPageData.mailInfo?.emailAddress2 || 'infocharity@gmail.com'
-      ]
+        contactPageData.mailInfo?.emailAddress2
+      ].filter(Boolean)
     },
     {
       icon: iconsBoxData[2]?.icon || '/default-location-icon.png',
@@ -66,7 +66,7 @@ const IconArea = () => {
       title: contactPageData.location?.addressSubtitle || 'Our Location',
       contacts: [
         contactPageData.location?.fullAddress || '123 Main Street, City, Country'
-      ]
+      ].filter(Boolean)
     }
   ] : iconsBoxData;
 
