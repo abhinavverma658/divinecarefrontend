@@ -21,12 +21,19 @@ const Blog = () => {
     });
   };
 
-  // Create excerpt from content
+  // Create excerpt from content (handle HTML content)
   const createExcerpt = (content, maxLength = 120) => {
     if (!content) return 'No content available';
-    return content.length > maxLength 
-      ? content.substring(0, maxLength) + '...' 
-      : content;
+    
+    // Strip HTML tags for length calculation and excerpt creation
+    const textContent = content.replace(/<[^>]*>/g, '');
+    
+    if (textContent.length > maxLength) {
+      const truncatedText = textContent.substring(0, maxLength) + '...';
+      return `<p>${truncatedText}</p>`;
+    }
+    
+    return content;
   };
 
   useEffect(() => {
@@ -116,7 +123,7 @@ const Blog = () => {
                                     </div>
                                     <div className="vl-blg-content">
                                         <h3 className="title"><Link to={`/blog-single/${item._id}`}>{item.title}</Link></h3>
-                                        <p>{item.excerpt}</p>
+                                        <div dangerouslySetInnerHTML={{ __html: item.excerpt }} />
                                         <Link to={`/blog-single/${item._id}`} className="read-more">Read
                                             More <span><FaArrowRight /></span></Link>
                                     </div>
