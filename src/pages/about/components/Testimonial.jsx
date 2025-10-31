@@ -78,7 +78,7 @@ const Testimonial = () => {
                             <Slider asNavFor={nav2} ref={sliderRef1} slidesToShow={1} slidesToScroll={1} arrows={false} fade={true} className="slider-thumb slider-for1">
                                 {testimonials.map((testimonial, index) => (
                                     <div className="single-thumb" key={index}>
-                                        <img className="w-100" src={testimonial.image || thumbImg} alt={`testimonial-${index}`} />
+                                        <img className="w-100" src={about.sectionImage || thumbImg} alt={`testimonial-${index}`} />
                                     </div>
                                 ))}
                             </Slider>
@@ -123,8 +123,9 @@ const Testimonial = () => {
                     <Col lg={6}>
                         <div className="vl-testimonial-content">
                             <div className="vl-section-title4">
-                                <h5 className="subtitle">{about.sectionHeading || 'Testimonials'}</h5>
-                                <h2 className="title">{about.sectionDescription || 'Hear from our volunteers and clients.'}</h2>
+                                <h5 className="subtitle">{'Testimonials'}</h5>
+                                <h2 className="title">{about.sectionHeading || 'Hear from our volunteers and clients.'}</h2>
+                                <p className="para pb-32">{about.sectionDescription || 'We value the feedback from our community.'}</p>
                                 <div className="btn-area pb-48">
                                     <a href="#" className="header-btn1">Learn More <span><FaArrowRight /></span></a>
                                 </div>
