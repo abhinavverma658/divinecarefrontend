@@ -62,7 +62,7 @@ const otherRoutes = [{
 }, {
     path: '/event-right', name: 'event-right', element: <EventRight/>
 }, {
-    path: '/event-single', name: 'event-single', element: <EventSingle/>
+    path: '/event-single/:eventId', name: 'event-single', element: <EventSingle/>
 }, {
     path: '/blog', name: 'blog', element: <Blog/>
 }, {

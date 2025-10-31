@@ -90,40 +90,38 @@ const Breadcrumb = () => {
                                         <p className="para pb-16">
                                             {eventDetail?.shortDescription || 'Our events bring people together to make a difference, uniting communities in support of meaningful causes. Each event—whether a fundraiser, awareness campaign, or volunteer day—serves as an opportunity to create real impact.'}
                                         </p>
-                                        <p className="para pb-32">
-                                            {eventDetail?.description || 'Through activities, guest speakers, and interactive sessions, we provide a platform for supporters to learn, connect, and contribute. Every event is designed not only to raise.'}
-                                        </p>
+                                        <div className="para pb-32" dangerouslySetInnerHTML={{ __html: eventDetail.description }} />
                                     </div>
                                 </>
                             )}
                             <div className="vl-event-box-bg">
-                                <Row>
+                                <Row className="g-4">
                                     <Col lg={6} md={6}>
-                                        <div className="icon-box mb-30">
+                                        <div className="icon-box mb-30 h-100 d-flex">
                                             <div className="icon">
                                                 <span><img src={eventDate1} alt='eventDate1' /></span>
                                             </div>
-                                            <div className="content">
+                                            <div className="content flex-grow-1">
                                                 <h4 className="title text-white">Events Date</h4>
                                                 <p className="para text-white">
                                                     {eventDetail?.startDate 
                                                         ? `${formatEventDate(eventDetail.startDate).full}` 
-                                                        : 'January 1, 2025'
+                                                        : ''
                                                     } <br /> 
                                                     {eventDetail?.startDate 
                                                         ? formatEventDate(eventDetail.startDate).time 
-                                                        : '5:00 pm'
+                                                        : ''
                                                     }
                                                 </p>
                                             </div>
                                         </div>
                                     </Col>
                                     <Col lg={6} md={6}>
-                                        <div className="icon-box mb-30">
+                                        <div className="icon-box mb-30 h-100 d-flex">
                                             <div className="icon">
                                                 <span><img src={eventImg} alt='eventImg' /></span>
                                             </div>
-                                            <div className="content">
+                                            <div className="content flex-grow-1">
                                                 <h4 className="title text-white">Events Location</h4>
                                                 <p className="para text-white">
                                                     {eventDetail?.location || 'Vineyard Venues 5396'} <br /> 
@@ -134,17 +132,7 @@ const Breadcrumb = () => {
                                     </Col>
                                 </Row>
                             </div>
-                            <div className="event-content-area">
-                                <h2 className="title">Event Details</h2>
-                                {eventDetail?.description ? (
-                                    <p className="para">{eventDetail.description}</p>
-                                ) : (
-                                    <p className="para">We invite you to join us, meet like-minded individuals, and become
-                                        part of a movement that makes real, lasting change. Whether you attend, volunteer,
-                                        or help spread the word, your involvement is invaluable. Explore our upcoming
-                                        events.</p>
-                                )}
-                            </div>
+                            
                         </div>
                     </Col>
                 </Row>

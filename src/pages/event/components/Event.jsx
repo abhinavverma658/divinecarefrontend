@@ -110,7 +110,7 @@ const Event = () => {
                                 )}
                               </div>
                               <Link to={`/event-single/${item._id || ''}`} className="title">{item.title}</Link>
-                              <p className="para">{item.shortDescription}</p>
+                              <p className="para">{item.venueDetails}</p>
                               <Link to={`/event-single/${item._id || ''}`} className="details">Event
                                 Details <span><FaArrowRight /></span></Link>
                             </div>
