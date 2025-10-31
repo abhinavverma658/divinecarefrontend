@@ -84,48 +84,50 @@ const Blog = () => {
                 ) : null}
                 
                 <Row>
-                    {stories?.map((item, idx) => <Col lg={4} md={6} key={item._id || idx}>
-                                <div className="vl-single-blg-item mb-30">
-                                    <div className="vl-blg-thumb">
-                                        <Link to={`/blog-single/${item._id}`}>
-                                            <img 
-                                                className="w-100" 
-                                                src={item.image} 
-                                                alt={item.title || 'Story'} 
-                                            />
-                                        </Link>
-                                    </div>
-                                    <div className="vl-meta">
-                                        <ul>
-                                            <li>
-                                                <a href="#">
-                                                    <span className="top-minus">
-                                                        <img src={calenderImg} alt='calenderImg' />
-                                                    </span> 
-                                                    {item.date}
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <span className="top-minus">
-                                                        <img src={userImg} alt='userImg' />
-                                                    </span>
-                                                    {item.author || 'Anonymous'}
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="vl-blg-content">
-                                        <h3 className="title">
-                                            <Link to={`/blog-single/${item._id}`}>{item.title}</Link>
-                                        </h3>
-                                        <p>{item.excerpt}</p>
-                                        <Link to={`/blog-single/${item._id}`} className="read-more">
-                                            Read More <span><FaArrowRight /></span>
-                                        </Link>
-                                    </div>
-                                </div>
-                            </Col>)}
+                                        {stories?.map((item, idx) => (
+                                            <Col lg={4} md={6} key={item._id || idx}>
+                                                <div className="vl-single-blg-item mb-30">
+                                                    <div className="vl-blg-thumb">
+                                                        <Link to={`/blog-single/${item._id}`}>
+                                                            <img 
+                                                                className="w-100" 
+                                                                src={item.image} 
+                                                                alt={item.title || 'Story'} 
+                                                            />
+                                                        </Link>
+                                                    </div>
+                                                    <div className="vl-meta">
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">
+                                                                    <span className="top-minus">
+                                                                        <img src={calenderImg} alt='calenderImg' />
+                                                                    </span> 
+                                                                    {item.date}
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">
+                                                                    <span className="top-minus">
+                                                                        <img src={userImg} alt='userImg' />
+                                                                    </span>
+                                                                    {item.author || 'Anonymous'}
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div className="vl-blg-content">
+                                                        <h3 className="title">
+                                                            <Link to={`/blog-single/${item._id}`}>{item.title}</Link>
+                                                        </h3>
+                                                        <p dangerouslySetInnerHTML={{ __html: item.excerpt }} />
+                                                        <Link to={`/blog-single/${item._id}`} className="read-more">
+                                                            Read More <span><FaArrowRight /></span>
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            </Col>
+                                        ))}
                 </Row>
                 {stories && stories.length >= 9 && (
                   <Row>

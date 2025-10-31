@@ -63,47 +63,47 @@ const Blog = () => {
                             <div>No stories found.</div>
                         </Col>
                     ) : (
-                        stories.map((story, idx) => (
-                            <Col lg={4} md={6} key={story._id || idx}>
-                                <div className="vl-single-blg-item mb-30" data-aos="fade-up" data-aos-duration={1000 + idx * 200} data-aos-delay={300}>
-                                    <div className="vl-blg-thumb">
-                                        {story.image ? (
-                                            <Link to={`/blog-single/${story._id}`}><img className="w-100" src={story.image} alt={story.title || 'Story'} /></Link>
-                                        ) : null}
-                                    </div>
-                                    <div className="vl-meta">
-                                        <ul>
-                                            <li>
-                                                <a href="#">
-                                                    <span className="top-minus">
-                                                        <img src={calenderImg} alt='calenderImg' />
-                                                    </span> 
-                                                    {formatDate(story.date)}
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <span className="top-minus">
-                                                        <img src={userImg} alt='userImg' />
-                                                    </span>
-                                                    {story.author || 'Anonymous'}
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="vl-blg-content">
-                                        <h3 className="title">
-                                            <Link to={`/blog-single/${story._id}`}>{story.title || 'Untitled Story'}</Link>
-                                        </h3>
-                                        <p>{(story.description || story.content || '').length > 120 
-                                            ? (story.description || story.content || '').substring(0, 120) + '...'
-                                            : (story.description || story.content || '')
-                                        }</p>
-                                        <Link to={`/blog-single/${story._id}`} className="read-more">Read More <span><FaArrowRight /></span></Link>
-                                    </div>
-                                </div>
-                            </Col>
-                        ))
+                                                stories.map((story, idx) => (
+                                                    <Col lg={4} md={6} key={story._id || idx}>
+                                                        <div className="vl-single-blg-item mb-30" data-aos="fade-up" data-aos-duration={1000 + idx * 200} data-aos-delay={300}>
+                                                            <div className="vl-blg-thumb">
+                                                                {story.image ? (
+                                                                    <Link to={`/blog-single/${story._id}`}><img className="w-100" src={story.image} alt={story.title || 'Story'} /></Link>
+                                                                ) : null}
+                                                            </div>
+                                                            <div className="vl-meta">
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">
+                                                                            <span className="top-minus">
+                                                                                <img src={calenderImg} alt='calenderImg' />
+                                                                            </span> 
+                                                                            {formatDate(story.date)}
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#">
+                                                                            <span className="top-minus">
+                                                                                <img src={userImg} alt='userImg' />
+                                                                            </span>
+                                                                            {story.author || 'Anonymous'}
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div className="vl-blg-content">
+                                                                <h3 className="title">
+                                                                    <Link to={`/blog-single/${story._id}`}>{story.title || 'Untitled Story'}</Link>
+                                                                </h3>
+                                                                <p dangerouslySetInnerHTML={{ __html: (story.description || story.content || '').length > 120 
+                                                                    ? (story.description || story.content || '').substring(0, 120) + '...'
+                                                                    : (story.description || story.content || '')
+                                                                }} />
+                                                                <Link to={`/blog-single/${story._id}`} className="read-more">Read More <span><FaArrowRight /></span></Link>
+                                                            </div>
+                                                        </div>
+                                                    </Col>
+                                                ))
                     )}
                 </Row>
             </Container>
