@@ -21,6 +21,27 @@ const Blog = () => {
         });
     };
 
+    // Clean and truncate text content
+    const cleanAndTruncateText = (htmlContent, maxLength = 120) => {
+        if (!htmlContent) return '';
+        
+        // Remove HTML tags
+        const textContent = htmlContent.replace(/<[^>]*>/g, '');
+        
+        // Split by paragraphs (double line breaks or paragraph indicators)
+        const paragraphs = textContent.split(/\n\s*\n|\r\n\s*\r\n/).filter(p => p.trim());
+        
+        // Get the first paragraph only
+        const firstParagraph = paragraphs[0] || textContent;
+        
+        // Truncate if longer than maxLength
+        if (firstParagraph.length > maxLength) {
+            return firstParagraph.substring(0, maxLength).trim() + '...';
+        }
+        
+        return firstParagraph.trim();
+    };
+
     useEffect(() => {
         const fetchStories = async () => {
             setLoading(true);
@@ -72,8 +93,8 @@ const Blog = () => {
                         </Col>
                     ) : (
                                                 sortedStories.map((story, idx) => (
-                                                    <Col lg={4} md={6} key={story._id || idx}>
-                                                        <div className="vl-single-blg-item mb-30" data-aos="fade-up" data-aos-duration={1000 + idx * 200} data-aos-delay={300}>
+                                                    <Col lg={4} md={6} key={story._id || idx} className="d-flex">
+                                                        <div className="vl-single-blg-item mb-30 d-flex flex-column h-100 w-100" data-aos="fade-up" data-aos-duration={1000 + idx * 200} data-aos-delay={300}>
                                                             <div className="vl-blg-thumb">
                                                                 {story.image ? (
                                                                     <Link to={`/blog-single/${story._id}`}><img className="w-100" src={story.image} alt={story.title || 'Story'} /></Link>
@@ -99,15 +120,12 @@ const Blog = () => {
                                                                     </li>
                                                                 </ul>
                                                             </div>
-                                                            <div className="vl-blg-content">
+                                                            <div className="vl-blg-content d-flex flex-column flex-grow-1">
                                                                 <h3 className="title">
                                                                     <Link to={`/blog-single/${story._id}`}>{story.title || 'Untitled Story'}</Link>
                                                                 </h3>
-                                                                <p dangerouslySetInnerHTML={{ __html: (story.description || story.content || '').length > 120 
-                                                                    ? (story.description || story.content || '').substring(0, 120) + '...'
-                                                                    : (story.description || story.content || '')
-                                                                }} />
-                                                                <Link to={`/blog-single/${story._id}`} className="read-more">Read More <span><FaArrowRight /></span></Link>
+                                                                <p className="flex-grow-1">{cleanAndTruncateText(story.description || story.content || '', 120)}</p>
+                                                                <Link to={`/blog-single/${story._id}`} className="read-more mt-auto">Read More <span><FaArrowRight /></span></Link>
                                                             </div>
                                                         </div>
                                                     </Col>

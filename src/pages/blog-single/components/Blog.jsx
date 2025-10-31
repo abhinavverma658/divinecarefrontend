@@ -21,19 +21,30 @@ const Blog = () => {
     });
   };
 
-  // Create excerpt from content (handle HTML content)
-  const createExcerpt = (content, maxLength = 120) => {
-    if (!content) return 'No content available';
+  // Clean and truncate text content
+  const cleanAndTruncateText = (htmlContent, maxLength = 120) => {
+    if (!htmlContent) return 'No content available';
     
-    // Strip HTML tags for length calculation and excerpt creation
-    const textContent = content.replace(/<[^>]*>/g, '');
+    // Remove HTML tags
+    const textContent = htmlContent.replace(/<[^>]*>/g, '');
     
-    if (textContent.length > maxLength) {
-      const truncatedText = textContent.substring(0, maxLength) + '...';
-      return `<p>${truncatedText}</p>`;
+    // Split by paragraphs (double line breaks or paragraph indicators)
+    const paragraphs = textContent.split(/\n\s*\n|\r\n\s*\r\n/).filter(p => p.trim());
+    
+    // Get the first paragraph only
+    const firstParagraph = paragraphs[0] || textContent;
+    
+    // Truncate if longer than maxLength
+    if (firstParagraph.length > maxLength) {
+      return firstParagraph.substring(0, maxLength).trim() + '...';
     }
     
-    return content;
+    return firstParagraph.trim();
+  };
+
+  // Create excerpt from content (handle HTML content)
+  const createExcerpt = (content, maxLength = 120) => {
+    return cleanAndTruncateText(content, maxLength);
   };
 
   useEffect(() => {
@@ -99,9 +110,9 @@ const Blog = () => {
                     </Row>
                 ) : null}
 
-                <Row>
-                    {stories.map((item, idx) => <Col lg={4} md={6} key={item._id || idx}>
-                                <div className="vl-single-blg-item mb-30">
+                <Row className="g-4">
+                    {stories.map((item, idx) => <Col lg={4} md={6} key={item._id || idx} className="d-flex mb-4">
+                                <div className="vl-single-blg-item d-flex flex-column h-100 w-100">
                                     <div className="vl-blg-thumb">
                                         <Link to={`/blog-single/${item._id}`}><img className="w-100" src={item.image} alt={item.title || 'Story'} /></Link>
                                     </div>
@@ -121,10 +132,10 @@ const Blog = () => {
                                             </a></li>
                                         </ul>
                                     </div>
-                                    <div className="vl-blg-content">
+                                    <div className="vl-blg-content d-flex flex-column flex-grow-1">
                                         <h3 className="title"><Link to={`/blog-single/${item._id}`}>{item.title}</Link></h3>
-                                        <div dangerouslySetInnerHTML={{ __html: item.excerpt }} />
-                                        <Link to={`/blog-single/${item._id}`} className="read-more">Read
+                                        <div className="flex-grow-1" dangerouslySetInnerHTML={{ __html: `<p>${item.excerpt}</p>` }} />
+                                        <Link to={`/blog-single/${item._id}`} className="read-more mt-auto">Read
                                             More <span><FaArrowRight /></span></Link>
                                     </div>
                                 </div>
