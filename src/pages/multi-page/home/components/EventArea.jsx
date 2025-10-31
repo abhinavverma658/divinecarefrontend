@@ -18,7 +18,7 @@ const EventArea = () => {
     isActive: true
   });
   
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([]); 
   const [loading, setLoading] = useState(true);
   const [sectionLoading, setSectionLoading] = useState(true);
   const [eventsByDate, setEventsByDate] = useState({});
@@ -70,10 +70,13 @@ const EventArea = () => {
       if (response.success && response.events && response.events.length > 0) {
         // Filter for upcoming events and sort by date
         const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0); // Reset time to start of day
+
         const upcomingEvents = response.events
           .filter(event => {
             if (event.startDate) {
               const eventDate = new Date(event.startDate);
+              eventDate.setHours(0, 0, 0, 0);
               return eventDate >= currentDate;
             }
             return true; // Include events without dates
@@ -83,7 +86,8 @@ const EventArea = () => {
             if (!a.startDate) return 1;
             if (!b.startDate) return -1;
             return new Date(a.startDate) - new Date(b.startDate);
-          });
+          })
+          .slice(0, 3); // Limit to 3 latest events
 
         setEvents(upcomingEvents);
         

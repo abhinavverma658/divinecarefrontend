@@ -43,6 +43,14 @@ const Blog = () => {
         fetchStories();
     }, []);
 
+    const sortedStories = stories
+        .sort((a, b) => {
+            const dateA = new Date(a.date || a.createdAt || 0);
+            const dateB = new Date(b.date || b.createdAt || 0);
+            return dateB - dateA; // Newest first
+        })
+        .slice(0, 3); // Limit to 3 stories
+
     return (
         <section className="vl-blg sp2">
             <Container>
@@ -63,7 +71,7 @@ const Blog = () => {
                             <div>No stories found.</div>
                         </Col>
                     ) : (
-                                                stories.map((story, idx) => (
+                                                sortedStories.map((story, idx) => (
                                                     <Col lg={4} md={6} key={story._id || idx}>
                                                         <div className="vl-single-blg-item mb-30" data-aos="fade-up" data-aos-duration={1000 + idx * 200} data-aos-delay={300}>
                                                             <div className="vl-blg-thumb">
