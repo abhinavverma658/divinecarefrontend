@@ -4003,9 +4003,27 @@ span.tooltipp-2 {
   font-weight: var(--ztc-weight-bold);
   display: inline-block;
 }
+.vl-blg-icon-box .single-blog-box1:hover .title {
+  color: white;
+  transition: 0.3s;
+  font-size: var(--ztc-font-size-font-s18);
+  line-height: var(--ztc-specing-height18);
+  font-family: var(--ztc-family-font2);
+  font-weight: var(--ztc-weight-bold);
+  display: inline-block;
+}
 .vl-blg-icon-box .single-blog-box1 .para {
   padding-top: 10px;
   color: var(--ztc-text-text-2);
+  transition: 0.3s;
+  font-size: var(--ztc-font-size-font-s18);
+  line-height: var(--ztc-specing-height28);
+  font-family: var(--ztc-family-font1);
+  font-weight: var(--ztc-weight-semibold);
+}
+.vl-blg-icon-box .single-blog-box1:hover .para {
+  padding-top: 10px;
+  color: white;
   transition: 0.3s;
   font-size: var(--ztc-font-size-font-s18);
   line-height: var(--ztc-specing-height28);
