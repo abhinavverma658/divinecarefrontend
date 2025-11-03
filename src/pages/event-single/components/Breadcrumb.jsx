@@ -15,6 +15,16 @@ const Breadcrumb = () => {
   const [eventDetail, setEventDetail] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+  // Registration form state
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [registrationError, setRegistrationError] = useState(null);
 
   // Format date utility function
   const formatEventDate = (dateString) => {
@@ -59,6 +69,62 @@ const Breadcrumb = () => {
 
     fetchEventDetail();
   }, [eventId]); // Re-run effect when eventId changes
+  
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+  
+  // Handle form submission
+  const handleRegisterSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Validate form
+    if (!formData.firstName || !formData.lastName || !formData.email) {
+      setRegistrationError('Please fill in all fields');
+      return;
+    }
+    
+    try {
+      setIsSubmitting(true);
+      setRegistrationError(null);
+      
+      const response = await fetch(`https://divinecare-backend.onrender.com/api/events/${eventId}/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok && data.success) {
+        setRegistrationSuccess(true);
+        // Reset form
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: ''
+        });
+      } else {
+        throw new Error(data.message || 'Registration failed');
+      }
+    } catch (err) {
+      console.error('Registration error:', err);
+      setRegistrationError(err.message || 'Failed to register. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return <div className="vl-sidebar-area sp2">
             <Container>
                 <Row>
@@ -128,9 +194,83 @@ const Breadcrumb = () => {
                                                     {eventDetail?.venueDetails || 'North Reese Avenue'}
                                                 </p>
                                             </div>
-                                        </div>
+                                  </div>
+                                  
                                     </Col>
-                                </Row>
+                          </Row>
+                            </div>
+                            
+                            {/* Registration Form Section */}
+                            <div className="donate-form mt-5">
+                                <form onSubmit={handleRegisterSubmit}>
+                                    <div className="row">
+                                        <div className="mb-20 col-md-6">
+                                            <input 
+                                                placeholder="First Name" 
+                                                type="text" 
+                                                name="firstName"
+                                                value={formData.firstName}
+                                                onChange={handleInputChange}
+                                                className="form-control"
+                                                disabled={isSubmitting}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="mb-20 col-md-6">
+                                            <input 
+                                                placeholder="Last Name" 
+                                                type="text"
+                                                name="lastName"
+                                                value={formData.lastName}
+                                                onChange={handleInputChange}
+                                                className="form-control"
+                                                disabled={isSubmitting}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="mb-20 col-md-6">
+                                            <input 
+                                                placeholder="Email Address" 
+                                                type="email"
+                                                name="email"
+                                                value={formData.email}
+                                                onChange={handleInputChange}
+                                                className="form-control"
+                                                disabled={isSubmitting}
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Success Message */}
+                                    {registrationSuccess && (
+                                        <div className="alert alert-success mb-4" role="alert">
+                                            <strong>Thank you!</strong> Registered successfully.
+                                        </div>
+                                    )}
+                                    
+                                    {/* Error Message */}
+                                    {registrationError && (
+                                        <div className="alert alert-danger mb-4" role="alert">
+                                            {registrationError}
+                                        </div>
+                                    )}
+                                    
+                                    <div className="total-anoumt">
+                                        <div className="toal">
+                                            <div className="btn-area">
+                                                <button 
+                                                    type="submit" 
+                                                    className="header-btn1"
+                                                    disabled={isSubmitting}
+                                                >
+                                                    {isSubmitting ? 'Registering...' : 'Register Now '} 
+                                                    <span><FaArrowRight /></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                             
                         </div>

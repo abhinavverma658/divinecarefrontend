@@ -1,3 +1,5 @@
+import '../../assets/scss/layout/pages/_service-single.scss';
+
 import Hero from './components/Hero';
 import ServiceDetail from './components/ServiceDetail';
 import WhyDivine from './components/WhyDivine';

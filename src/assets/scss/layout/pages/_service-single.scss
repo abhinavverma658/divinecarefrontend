@@ -1,177 +1,341 @@
 @use '../../utils/' as *;
 
-// Service Single Page Styles - Override existing sidebar styles with high specificity
-body .vl-service-single.vl-sidebar-area {
-  .vl-widget-area {
+// Service Single Page - Why Divine Section Styles
+.vl-sidebar-area {
+  
+  // Left Sidebar Styling
+  .vl-sidebar {
     
-    // Services Widget with Orange Background - Override default styles
-    .vl-search-widget {
-      background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%) !important;
-      border-radius: 12px !important;
-      padding: 30px !important;
-      box-shadow: 0 4px 20px rgba(243, 156, 18, 0.2) !important;
+    // Services Widget with Orange Gradient
+    .vl-widget {
+      background:#FFBE2C;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 20px rgba(243, 156, 18, 0.2);
       
-      .title {
-        color: #2c3e50 !important;
-        font-size: 20px !important;
-        font-weight: 600 !important;
-        margin-bottom: 25px !important;
-        text-align: center !important;
-        padding-bottom: 0 !important;
+      .vl-widget-title {
+        margin-bottom: 25px;
+        
+        .widget-title {
+          color: #2c3e50;
+          font-size: 20px;
+          font-weight: 600;
+          text-align: center;
+          margin: 0;
+          padding: 0;
+        }
       }
       
-      .vl-single-service {
-        position: relative !important;
-        margin-bottom: 12px !important;
-        transition: all 0.3s ease !important;
-        
-        &:last-child {
-          margin-bottom: 0 !important;
-        }
-        
-        &:hover {
-          transform: translateX(5px);
-        }
-        
-        a {
-          background: rgba(255, 255, 255, 0.9) !important;
-          display: block !important;
-          padding: 15px 25px !important;
-          color: #2c3e50 !important;
-          font-weight: 500 !important;
-          text-decoration: none !important;
-          font-size: 16px !important;
-          border-radius: 50px !important;
-          transition: all 0.3s ease !important;
+      .vl-widget-content {
+        .vl-service-category {
+          list-style: none;
+          padding: 0;
+          margin: 0;
           
-          &:hover {
-            background: rgba(255, 255, 255, 1) !important;
-            color: #e67e22 !important;
-          }
-          
-          &.active {
-            background: #2c5aa0 !important;
-            color: white !important;
-          }
-        }
-        
-        span {
-          position: absolute !important;
-          right: 20px !important;
-          top: 50% !important;
-          transform: translateY(-50%) !important;
-          color: #7f8c8d !important;
-          
-          i {
-            font-size: 12px !important;
+          li {
+            margin-bottom: 12px;
+            position: relative;
+            transition: transform 0.3s ease;
+            
+            &:last-child {
+              margin-bottom: 0;
+            }
+            
+            &:hover {
+              transform: translateX(5px);
+            }
+            
+            a {
+              display: block;
+              background: rgba(255, 255, 255, 0.9);
+              padding: 15px 50px 15px 25px;
+              color: #2c3e50;
+              font-weight: 500;
+              text-decoration: none;
+              font-size: 16px;
+              border-radius: 50px;
+              transition: all 0.3s ease;
+              position: relative;
+              
+              &::after {
+                content: '';
+                background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15.3434 9.59233C13.6742 9.59233 12.1528 8.00833 12.1528 6.26886V5.55566H10.7835V6.26886C10.7835 7.53406 11.3162 8.72078 12.1522 9.59233H3.7041V11.0187H12.1522C11.3162 11.8903 10.7835 13.077 10.7835 14.3422V15.0554H12.1528V14.3422C12.1528 12.6027 13.6742 11.0187 15.3434 11.0187H16.028V9.59233H15.3434Z' fill='%237f8c8d'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: contain;
+                width: 20px;
+                height: 20px;
+                position: absolute;
+                right: 25px;
+                top: 50%;
+                transform: translateY(-50%);
+                opacity: 0.7;
+              }
+              
+              &:hover {
+                background: rgba(255, 255, 255, 1);
+                color: #FFBE2C;
+                
+                &::after {
+                  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15.3434 9.59233C13.6742 9.59233 12.1528 8.00833 12.1528 6.26886V5.55566H10.7835V6.26886C10.7835 7.53406 11.3162 8.72078 12.1522 9.59233H3.7041V11.0187H12.1522C11.3162 11.8903 10.7835 13.077 10.7835 14.3422V15.0554H12.1528V14.3422C12.1528 12.6027 13.6742 11.0187 15.3434 11.0187H16.028V9.59233H15.3434Z' fill='%23FFBE2C'/%3E%3C/svg%3E");
+                  opacity: 1;
+                }
+              }
+            }
+            
+            &.active a {
+              background: #012372;
+              color: white;
+              
+              &::after {
+                background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15.3434 9.59233C13.6742 9.59233 12.1528 8.00833 12.1528 6.26886V5.55566H10.7835V6.26886C10.7835 7.53406 11.3162 8.72078 12.1522 9.59233H3.7041V11.0187H12.1522C11.3162 11.8903 10.7835 13.077 10.7835 14.3422V15.0554H12.1528V14.3422C12.1528 12.6027 13.6742 11.0187 15.3434 11.0187H16.028V9.59233H15.3434Z' fill='white'/%3E%3C/svg%3E");
+                opacity: 1;
+              }
+            }
           }
         }
       }
     }
     
-    // Contact Widget with Blue Background - Override default styles
-    .vl-phone-widget {
-      background: linear-gradient(135deg, #2c5aa0 0%, #1e3a8a 100%) !important;
-      border-radius: 12px !important;
-      padding: 30px !important;
-      text-align: center !important;
-      box-shadow: 0 4px 20px rgba(44, 90, 160, 0.2) !important;
+    // Contact Widget with Blue Gradient
+    .vl-contact-widget {
+      background: #012372;
       
-      .title {
-        color: white !important;
-        font-size: 16px !important;
-        font-weight: 500 !important;
-        margin-bottom: 15px !important;
-        line-height: 1.4 !important;
-      }
-      
-      .phone {
-        background: transparent !important;
-        color: white !important;
-        text-decoration: none !important;
-        font-size: 18px !important;
-        font-weight: 600 !important;
-        display: block !important;
-        padding: 0 !important;
-        border-radius: 0 !important;
+      .vl-contact-info {
+        text-align: center;
         
-        span {
-          display: block !important;
-          margin-bottom: 10px !important;
+        .icon {
+          margin-bottom: 15px;
           
-          i {
-            font-size: 24px !important;
+          svg {
+            font-size: 32px;
+            color: white;
             animation: pulse 2s infinite;
           }
         }
         
-        &:hover {
-          color: #f39c12 !important;
+        .content {
+          h4 {
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            line-height: 1.4;
+          }
+          
+          h3 {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+          }
+          
+          p {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+            transition: color 0.3s ease;
+            
+            &:hover {
+              color: #f39c12;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // Right Content Area
+  .vl-service-details {
+    padding-left: 30px;
+    
+    @media (max-width: 991px) {
+      padding-left: 0;
+      margin-top: 30px;
+    }
+    
+    .vl-service-content {
+      
+      // Main Title
+      .title {
+        font-size: 28px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 20px;
+        line-height: 1.3;
+      }
+      
+      // Paragraph Text
+      .para {
+        font-size: 15px;
+        color: #555;
+        line-height: 1.7;
+        margin-bottom: 30px;
+      }
+      
+      // What We Offer Section
+      .vl-service-offering {
+        margin-bottom: 40px;
+        
+        .sub-title {
+          font-size: 24px;
+          font-weight: 700;
+          color: #1a1a1a;
+          margin-bottom: 25px;
+        }
+        
+        .vl-offering-list {
+          .vl-single-offering {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            
+            &:last-child {
+              margin-bottom: 0;
+            }
+            
+            .icon {
+              flex-shrink: 0;
+              margin-right: 15px;
+              margin-top: 4px;
+              
+              svg {
+                font-size: 20px;
+                color: #2c5aa0;
+              }
+            }
+            
+            .content {
+              flex: 1;
+              
+              .title {
+                font-size: 16px;
+                font-weight: 600;
+                color: #1a1a1a;
+                margin-bottom: 5px;
+                line-height: 1.4;
+              }
+              
+              .para {
+                font-size: 14px;
+                color: #666;
+                line-height: 1.6;
+                margin-bottom: 0;
+              }
+            }
+          }
+        }
+      }
+      
+      // Benefits Section
+      .vl-service-benefits {
+        margin-bottom: 40px;
+        
+        .sub-title {
+          font-size: 24px;
+          font-weight: 700;
+          color: #1a1a1a;
+          margin-bottom: 25px;
+        }
+        
+        .vl-benefits-list {
+          .vl-single-benefit {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            
+            &:last-child {
+              margin-bottom: 0;
+            }
+            
+            .icon {
+              flex-shrink: 0;
+              margin-right: 15px;
+              margin-top: 4px;
+              
+              svg {
+                font-size: 20px;
+                color: #2c5aa0;
+              }
+            }
+            
+            .content {
+              flex: 1;
+              
+              .title {
+                font-size: 17px;
+                font-weight: 600;
+                color: #1a1a1a;
+                margin-bottom: 8px;
+                line-height: 1.4;
+              }
+              
+              .para {
+                font-size: 14px;
+                color: #666;
+                line-height: 1.7;
+                margin-bottom: 0;
+              }
+            }
+          }
         }
       }
     }
   }
 }
 
-// Service Content Area Styles
-.vl-service-details {
-  padding-left: 30px;
+// Stories Section
+.vl-stories {
+  background: #f8f9fa;
   
-  @media (max-width: 991px) {
-    padding-left: 0;
-    margin-top: 30px;
+  .title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 30px;
   }
   
-  .vl-service-content {
-    
-    .vl-service-image {
+  .vl-stories-list {
+    .vl-single-story {
+      background: white;
+      border: 1px solid #e9ecef;
       border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
       
-      img {
-        transition: transform 0.3s ease;
-        
-        &:hover {
-          transform: scale(1.05);
-        }
-      }
-    }
-    
-    .service-detailed-description {
-      h4 {
-        color: #2c3e50;
-        font-size: 20px;
-        font-weight: 600;
-        margin: 25px 0 15px 0;
+      &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
       }
       
-      ul {
-        margin: 20px 0;
-        padding-left: 0;
-        
-        li {
-          list-style: none;
-          padding: 8px 0;
-          padding-left: 25px;
-          position: relative;
-          color: #6c757d;
-          
-          &:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #28a745;
-            font-weight: bold;
-            font-size: 14px;
-          }
+      .story-avatar {
+        img {
+          border: 3px solid #f0f0f0;
         }
       }
       
-      p {
-        color: #6c757d;
-        line-height: 1.7;
-        margin-bottom: 15px;
+      .story-content {
+        .title {
+          font-size: 18px;
+          font-weight: 600;
+          color: #1a1a1a;
+          margin-bottom: 15px;
+        }
+        
+        .para {
+          font-size: 14px;
+          color: #555;
+          line-height: 1.7;
+          font-style: italic;
+          margin-bottom: 15px;
+        }
+        
+        .story-author {
+          font-size: 13px;
+          font-weight: 500;
+          color: #888;
+        }
       }
     }
   }
@@ -192,21 +356,70 @@ body .vl-service-single.vl-sidebar-area {
 
 // Responsive Design
 @media (max-width: 991px) {
-  body .vl-service-single.vl-sidebar-area .vl-widget-area {
-    margin-bottom: 40px;
+  .vl-sidebar-area {
+    .vl-sidebar {
+      margin-bottom: 40px;
+    }
+    
+    .vl-service-details {
+      .vl-service-content {
+        .title {
+          font-size: 24px;
+        }
+        
+        .vl-service-offering,
+        .vl-service-benefits {
+          .sub-title {
+            font-size: 22px;
+          }
+        }
+      }
+    }
+  }
+  
+  .vl-stories {
+    .title {
+      font-size: 24px;
+    }
   }
 }
 
 @media (max-width: 767px) {
-  body .vl-service-single.vl-sidebar-area .vl-widget-area {
-    .vl-search-widget, 
-    .vl-phone-widget {
-      padding: 20px !important;
+  .vl-sidebar-area {
+    .vl-sidebar {
+      .vl-widget {
+        padding: 20px;
+        
+        .vl-widget-title .widget-title {
+          font-size: 18px;
+        }
+      }
     }
     
-    .vl-search-widget .title,
-    .vl-phone-widget .title {
-      font-size: 18px !important;
+    .vl-service-details {
+      .vl-service-content {
+        .title {
+          font-size: 22px;
+        }
+      }
+    }
+  }
+  
+  .vl-stories {
+    .vl-single-story {
+      .d-flex {
+        flex-direction: column;
+        
+        .story-avatar {
+          margin-bottom: 20px;
+          margin-right: 0 !important;
+          
+          img {
+            width: 60px !important;
+            height: 60px !important;
+          }
+        }
+      }
     }
   }
 }

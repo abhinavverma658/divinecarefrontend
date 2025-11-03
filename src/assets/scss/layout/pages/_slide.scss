@@ -3192,12 +3192,27 @@ span.tooltipp-2 {
   display: block;
   transition: 0.3s;
 }
+.vl-single-blg-item:hover .vl-meta ul li a {
+  font-size: var(--ztc-font-size-font-s16);
+  line-height: var(--ztc-specing-height16);
+  font-family: var(--ztc-family-font1);
+  font-weight: var(--ztc-weight-semibold);
+  color: white !important;
+  margin-right: 16px;
+  display: block;
+  transition: 0.3s;
+}
 @media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
   .vl-single-blg-item .vl-meta ul li a {
     font-size: var(--ztc-font-size-font-s14);
   }
 }
 .vl-single-blg-item .vl-meta ul li a span.top-minus img {
+  display: inline-block;
+  margin-top: -4px;
+}
+.vl-single-blg-item:hover .vl-meta ul li a span.top-minus img {
+  color: white !important;
   display: inline-block;
   margin-top: -4px;
 }
@@ -10505,17 +10520,33 @@ section.vl-testimonial4.vl-testimonial-inner.testimonial2.sp2 .smarrow.abarow.ar
   color: var(--ztc-text-text-3);
   transition: 0.3s;
 }
+.vl-services2.service-inner-page .vl-single-service-box:hover .vl-service-box-content .title a {
+  color: white;
+  transition: 0.3s;
+}
 .vl-services2.service-inner-page .vl-single-service-box .vl-service-box-content p {
   color: var(--ztc-text-text-2);
+  transition: 0.3s;
+}
+.vl-services2.service-inner-page .vl-single-service-box:hover .vl-service-box-content p {
+  color: white;
   transition: 0.3s;
 }
 .vl-services2.service-inner-page .vl-single-service-box .vl-service-box-content .read-more {
   color: var(--ztc-text-text-3);
 }
+.vl-services2.service-inner-page .vl-single-service-box:hover .vl-service-box-content .read-more {
+  color: white;
+}
 .vl-services2.service-inner-page .vl-single-service-box .vl-service-box-content .read-more span {
   transition: 0.3s;
   display: inline-block;
   color: var(--ztc-text-text-3);
+}
+.vl-services2.service-inner-page .vl-single-service-box .vl-service-box-content .read-more span {
+  transition: 0.3s;
+  display: inline-block;
+  color: white;
 }
 
 .vl-service-iner-bg .single-service-box .btniner .readmore span {
@@ -11019,8 +11050,17 @@ section.vl-testimonial4.vl-testimonial-inner.testimonial2.sp2 .smarrow.abarow.ar
   padding-bottom: 16px;
   display: block;
 }
+
 .event-bg-flex .event-date .year {
   color: var(--ztc-text-text-2);
+  font-size: var(--ztc-font-size-font-s20);
+  line-height: var(--ztc-specing-height30);
+  font-family: var(--ztc-family-font1);
+  font-weight: var(--ztc-weight-semibold);
+  display: block;
+}
+.event-bg-flex:hover .event-date .year {
+  color: white; ;
   font-size: var(--ztc-font-size-font-s20);
   line-height: var(--ztc-specing-height30);
   font-family: var(--ztc-family-font1);
@@ -11069,8 +11109,26 @@ section.vl-testimonial4.vl-testimonial-inner.testimonial2.sp2 .smarrow.abarow.ar
   padding-bottom: 15px;
   padding-top: 15px;
 }
+.event-bg-flex:hover .event-content .para {
+  color: white;
+  font-size: var(--ztc-font-size-font-s18);
+  line-height: var(--ztc-specing-height28);
+  font-family: var(--ztc-family-font1);
+  font-weight: var(--ztc-weight-semibold);
+  display: block;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
 .event-bg-flex .event-content .details {
   color: var(--ztc-text-text-3);
+  font-size: var(--ztc-font-size-font-s18);
+  line-height: var(--ztc-specing-height18);
+  font-family: var(--ztc-family-font2);
+  font-weight: var(--ztc-weight-bold);
+  display: inline-block;
+}
+.event-bg-flex:hover .event-content .details {
+  color: white;
   font-size: var(--ztc-font-size-font-s18);
   line-height: var(--ztc-specing-height18);
   font-family: var(--ztc-family-font2);
@@ -11093,6 +11151,9 @@ section.vl-testimonial4.vl-testimonial-inner.testimonial2.sp2 .smarrow.abarow.ar
   background: var(--ztc-text-text-4);
   transition: 0.3s;
 }
+.event-bg-flex.active:hover .title,.year p,.event-content, .event-meta .para {
+color: white;
+}
 .event-bg-flex.active .event-date:after {
   background: #E3C059;
 }
@@ -11103,6 +11164,14 @@ section.vl-testimonial4.vl-testimonial-inner.testimonial2.sp2 .smarrow.abarow.ar
 .event-bg-flex.active .event-content .event-meta .para {
   display: inline-block;
   color: var(--ztc-text-text-2);
+  padding: 8px 12px;
+  background: #E4C152;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+.event-bg-flex.active:hover .event-content .event-meta .para {
+  display: inline-block;
+  color: white;
   padding: 8px 12px;
   background: #E4C152;
   border-radius: 8px;

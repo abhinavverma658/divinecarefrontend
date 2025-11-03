@@ -108,11 +108,15 @@ const Event = () => {
                                             </Link>
                                         </div>
                                         <div className="event-thumb">
-                                            <img className="w-100" 
-                                                 src={item.image || '/src/assets/img/event/default-event.png'} 
-                                                 alt={item.title || 'Event Image'} />
+                                            <img
+                                                className="w-100"
+                                                style={{ height: '200px', objectFit: 'cover' }}
+                                                src={item.image || '/src/assets/img/event/default-event.png'}
+                                                alt={item.title || 'Event Image'}
+                                            />
                                         </div>
                                     </div>
+                                    
                                 </Col>
                             );
                         })

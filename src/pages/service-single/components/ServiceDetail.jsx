@@ -97,9 +97,9 @@ const ServiceDetail = () => {
               
               <div className="vl-phone-widget mb-30">
                 <h3 className="title">Always Here for Your Safety<br />24/7 Contact Us</h3>
-                <a href="tel:+12344685" className="phone">
+                <a href="tel:3012812285" className="phone">
                   <span><i className="fa fa-phone"></i></span>
-                  +1 234 468 85
+                  301-281-2285
                 </a>
               </div>
             </div>

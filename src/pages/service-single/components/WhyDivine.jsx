@@ -91,7 +91,7 @@ const WhyDivine = () => {
                   <div className="content">
                     <h4>About Here Or Questions?</h4>
                     <h3>24/7 Contact Us</h3>
-                    <p>+1 718 999 3939</p>
+                    <p>301-281-2285</p>
                   </div>
                 </div>
               </div>
