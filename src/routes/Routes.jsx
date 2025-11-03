@@ -27,6 +27,7 @@ const Contact = lazy(() => import('@/pages/other-pages/contact'));
 const Error404 = lazy(() => import('@/pages/other-pages/error-404'));
 const Faq = lazy(() => import('@/pages/other-pages/faq'));
 const Service = lazy(() => import('@/pages/other-pages/service'));
+const ServiceSingle = lazy(() => import('@/pages/service-single'));
 const Team = lazy(() => import('@/pages/other-pages/team'));
 const multiPageRoutes = [{
     path: '/', name: 'multi-page-home', element: <Home/>
@@ -87,6 +88,8 @@ const otherRoutes = [{
     path: '/pages/faq', name: 'pages-faq', element: <Faq/>
 }, {
     path: '/pages/service', name: 'pages-service', element: <Service/>
+}, {
+    path: '/service-single/:serviceId', name: 'service-single', element: <ServiceSingle/>
 }, {
     path: '/pages/team', name: 'pages-team', element: <Team/>
 }, {

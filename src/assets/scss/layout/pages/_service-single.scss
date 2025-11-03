@@ -1,0 +1,212 @@
+@use '../../utils/' as *;
+
+// Service Single Page Styles - Override existing sidebar styles with high specificity
+body .vl-service-single.vl-sidebar-area {
+  .vl-widget-area {
+    
+    // Services Widget with Orange Background - Override default styles
+    .vl-search-widget {
+      background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%) !important;
+      border-radius: 12px !important;
+      padding: 30px !important;
+      box-shadow: 0 4px 20px rgba(243, 156, 18, 0.2) !important;
+      
+      .title {
+        color: #2c3e50 !important;
+        font-size: 20px !important;
+        font-weight: 600 !important;
+        margin-bottom: 25px !important;
+        text-align: center !important;
+        padding-bottom: 0 !important;
+      }
+      
+      .vl-single-service {
+        position: relative !important;
+        margin-bottom: 12px !important;
+        transition: all 0.3s ease !important;
+        
+        &:last-child {
+          margin-bottom: 0 !important;
+        }
+        
+        &:hover {
+          transform: translateX(5px);
+        }
+        
+        a {
+          background: rgba(255, 255, 255, 0.9) !important;
+          display: block !important;
+          padding: 15px 25px !important;
+          color: #2c3e50 !important;
+          font-weight: 500 !important;
+          text-decoration: none !important;
+          font-size: 16px !important;
+          border-radius: 50px !important;
+          transition: all 0.3s ease !important;
+          
+          &:hover {
+            background: rgba(255, 255, 255, 1) !important;
+            color: #e67e22 !important;
+          }
+          
+          &.active {
+            background: #2c5aa0 !important;
+            color: white !important;
+          }
+        }
+        
+        span {
+          position: absolute !important;
+          right: 20px !important;
+          top: 50% !important;
+          transform: translateY(-50%) !important;
+          color: #7f8c8d !important;
+          
+          i {
+            font-size: 12px !important;
+          }
+        }
+      }
+    }
+    
+    // Contact Widget with Blue Background - Override default styles
+    .vl-phone-widget {
+      background: linear-gradient(135deg, #2c5aa0 0%, #1e3a8a 100%) !important;
+      border-radius: 12px !important;
+      padding: 30px !important;
+      text-align: center !important;
+      box-shadow: 0 4px 20px rgba(44, 90, 160, 0.2) !important;
+      
+      .title {
+        color: white !important;
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        margin-bottom: 15px !important;
+        line-height: 1.4 !important;
+      }
+      
+      .phone {
+        background: transparent !important;
+        color: white !important;
+        text-decoration: none !important;
+        font-size: 18px !important;
+        font-weight: 600 !important;
+        display: block !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        
+        span {
+          display: block !important;
+          margin-bottom: 10px !important;
+          
+          i {
+            font-size: 24px !important;
+            animation: pulse 2s infinite;
+          }
+        }
+        
+        &:hover {
+          color: #f39c12 !important;
+        }
+      }
+    }
+  }
+}
+
+// Service Content Area Styles
+.vl-service-details {
+  padding-left: 30px;
+  
+  @media (max-width: 991px) {
+    padding-left: 0;
+    margin-top: 30px;
+  }
+  
+  .vl-service-content {
+    
+    .vl-service-image {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      
+      img {
+        transition: transform 0.3s ease;
+        
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+    }
+    
+    .service-detailed-description {
+      h4 {
+        color: #2c3e50;
+        font-size: 20px;
+        font-weight: 600;
+        margin: 25px 0 15px 0;
+      }
+      
+      ul {
+        margin: 20px 0;
+        padding-left: 0;
+        
+        li {
+          list-style: none;
+          padding: 8px 0;
+          padding-left: 25px;
+          position: relative;
+          color: #6c757d;
+          
+          &:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+            font-size: 14px;
+          }
+        }
+      }
+      
+      p {
+        color: #6c757d;
+        line-height: 1.7;
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+
+// Animation for phone icon
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Responsive Design
+@media (max-width: 991px) {
+  body .vl-service-single.vl-sidebar-area .vl-widget-area {
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 767px) {
+  body .vl-service-single.vl-sidebar-area .vl-widget-area {
+    .vl-search-widget, 
+    .vl-phone-widget {
+      padding: 20px !important;
+    }
+    
+    .vl-search-widget .title,
+    .vl-phone-widget .title {
+      font-size: 18px !important;
+    }
+  }
+}

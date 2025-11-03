@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { serviceData } from '../data';
 import { FaArrowRight } from 'react-icons/fa6';
 import { Col, Container, Row } from 'react-bootstrap';
+import { Link } from 'react-router';
 import { servicesAPI } from '@/utils/servicesApi';
 const Service = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -96,7 +97,7 @@ const Service = () => {
                                     <div className="vl-service-box-content">
                                         <h4 className="title"><a href="#">{item.title}</a></h4>
                                         <p>{item.description}</p>
-                                        <a href="#" className="read-more">Read More <span><FaArrowRight /></span></a>
+                                        <Link to={`/service-single/${item._id}`} className="read-more">Read More <span><FaArrowRight /></span></Link>
                                     </div>
                                 </div>
                             </Col>)}
