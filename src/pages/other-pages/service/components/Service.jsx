@@ -60,10 +60,8 @@ const Service = () => {
                     <Row>
                         <Col lg={12}>
                             <div className="text-center py-5">
-                                <div className="spinner-border" role="status">
-                                    <span className="visually-hidden">Loading...</span>
+                                <div role="status">
                                 </div>
-                                <p className="mt-3">Loading services...</p>
                             </div>
                         </Col>
                     </Row>

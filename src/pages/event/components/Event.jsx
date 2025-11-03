@@ -49,8 +49,7 @@ const Event = () => {
       <section className="vl-singlevent-iner sp1">
         <Container>
           <div className="text-center py-5">
-            <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
+            <div role="status">
             </div>
           </div>
         </Container>
