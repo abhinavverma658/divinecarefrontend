@@ -196,26 +196,24 @@ const Breadcrumb = () => {
                                             </div>
                                   </div>
                                   
-                                    </Col>
-                          </Row>
-                            </div>
-                            
-                            {/* Registration Form Section */}
-                            <div className="donate-form mt-5">
-                                <form onSubmit={handleRegisterSubmit}>
-                                    <div className="row">
-                                        <div className="mb-20 col-md-6">
-                                            <input 
-                                                placeholder="First Name" 
-                                                type="text" 
-                                                name="firstName"
-                                                value={formData.firstName}
-                                                onChange={handleInputChange}
-                                                className="form-control"
-                                                disabled={isSubmitting}
-                                                required
-                                            />
-                                        </div>
+                </Col>
+                <Col lg={12} md={12}>
+                  <div className="donate-form mt-5">
+                    <h3 style={{ textAlign: 'center', color: 'black', marginBottom: '20px' }}>Register For This Event</h3>
+                                  <form onSubmit={handleRegisterSubmit}>
+                                      <div className="row">
+                                          <div className="mb-20 col-md-6">
+                                              <input 
+                                                  placeholder="First Name" 
+                                                  type="text" 
+                                                  name="firstName"
+                                                  value={formData.firstName}
+                                                  onChange={handleInputChange}
+                                                  className="form-control"
+                                                  disabled={isSubmitting}
+                                                  required
+                                              />
+                                          </div>
                                         <div className="mb-20 col-md-6">
                                             <input 
                                                 placeholder="Last Name" 
@@ -271,7 +269,13 @@ const Breadcrumb = () => {
                                         </div>
                                     </div>
                                 </form>
+                  </div>
+                </Col>
+                          </Row>
                             </div>
+                            
+                            {/* Registration Form Section */}
+                         
                             
                         </div>
                     </Col>
