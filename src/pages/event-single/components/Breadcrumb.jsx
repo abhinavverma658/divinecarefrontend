@@ -29,19 +29,11 @@ const Breadcrumb = () => {
   // Format date utility function
   const formatEventDate = (dateString) => {
     const date = new Date(dateString);
-    return {
-      full: date.toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      }),
-      time: date.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit'
-      })
-    };
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric'
+    });
   };
 
   useEffect(() => {
@@ -170,14 +162,17 @@ const Breadcrumb = () => {
                                             <div className="content flex-grow-1">
                                                 <h4 className="title text-white">Events Date</h4>
                                                 <p className="para text-white">
-                                                    {eventDetail?.startDate 
-                                                        ? `${formatEventDate(eventDetail.startDate).full}` 
-                                                        : ''
-                                                    } <br /> 
-                                                    {eventDetail?.startDate 
-                                                        ? formatEventDate(eventDetail.startDate).time 
-                                                        : ''
-                                                    }
+                                                    {eventDetail?.startDate && (
+                                                        <>
+                                                             {formatEventDate(eventDetail.startDate)}
+                                                            <br />
+                                                        </>
+                                                    )}
+                                                    {eventDetail?.endDate && (
+                                                        <>
+                                                          {formatEventDate(eventDetail.endDate)}
+                                                        </>
+                                                    )}
                                                 </p>
                                             </div>
                                         </div>

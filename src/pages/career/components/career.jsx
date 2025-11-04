@@ -271,9 +271,21 @@ const ApplicationModal = ({ show, handleClose, jobTitle, jobDescription, jobId }
 
 const JobCard = ({ job }) => {
   const [showModal, setShowModal] = useState(false);
+  const [reviewCount, setReviewCount] = useState(() => {
+    // Initialize review count from localStorage or random value
+    const savedCount = localStorage.getItem(`job-reviews-${job._id}`);
+    return savedCount ? parseInt(savedCount) : Math.floor(Math.random() * 5000) + 1000;
+  });
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
+
+  // Increment review count on component mount
+  useEffect(() => {
+    const newCount = reviewCount + Math.floor(Math.random() * 3) + 1;
+    setReviewCount(newCount);
+    localStorage.setItem(`job-reviews-${job._id}`, newCount.toString());
+  }, []);
 
   // Calculate days ago
   const getDaysAgo = (dateString) => {
@@ -284,6 +296,26 @@ const JobCard = ({ job }) => {
     return diffDays;
   };
 
+  // Determine experience level label
+  const getExperienceLabel = (experience) => {
+    if (!experience) return 'Fresher Required';
+    
+    // Extract numeric value from experience string (e.g., "0-2 years" -> 2)
+    const match = experience.match(/(\d+)-(\d+)/);
+    if (match) {
+      const maxYears = parseInt(match[2]);
+      return maxYears <= 2 ? 'Fresher Required' : 'Senior Required';
+    }
+    
+    // If just a number
+    const years = parseInt(experience);
+    if (!isNaN(years)) {
+      return years <= 2 ? 'Fresher Required' : 'Senior Required';
+    }
+    
+    return 'Fresher Required';
+  };
+
   return (
     <>
       <div className="card border-0 mb-4" style={{ borderRadius: '30px', boxShadow: '0 2px 10px rgba(0,0,0,0.08)' }}>
@@ -292,9 +324,14 @@ const JobCard = ({ job }) => {
           <div>
             <h5 className="card-title fw-bold mb-2">{job.title}</h5>
             <div className="d-flex align-items-center gap-3 mb-2">
-              <span className="badge bg-light text-dark border">
-                {job.experience || 'Fresher Required'}
+              <span className="text-dark">
+                {getExperienceLabel(job.experience)}
               </span>
+              <div className="d-flex align-items-center gap-1">
+                <span style={{color: '#ffbe2c', fontSize: '1.5rem'}}>★</span>
+                <span className="fw-semibold" style={{fontSize: '0.95rem'}}>3.5</span>
+                <span className="text-muted " style={{fontSize: '0.9rem', marginLeft: '5px'}}>{reviewCount.toLocaleString()} Reviews</span>
+              </div>
             </div>
           </div>
           <img 
@@ -346,6 +383,8 @@ const JobCard = ({ job }) => {
             <span>{job.location}</span>
           </div>
         </div>
+
+        <hr style={{ border: 'none', borderTop: '1px solid #000', margin: '16px 0' }} />
 
         <div className="d-flex justify-content-between align-items-center mb-4">
           <div className="small text-muted">
@@ -467,10 +506,8 @@ const JobOpportunitiesPage = () => {
         
         {loading ? (
           <div className="text-center py-5">
-            <div className="spinner-border" role="status" style={{ color: '#003d82' }}>
-              <span className="visually-hidden">Loading...</span>
+            <div role="status" style={{ color: '#003d82' }}>
             </div>
-            <p className="mt-3 text-muted">Loading job opportunities...</p>
           </div>
         ) : error ? (
           <div className="alert alert-danger text-center" role="alert">

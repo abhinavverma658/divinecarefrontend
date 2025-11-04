@@ -19,9 +19,7 @@ const Event = () => {
       fullDate: date.toLocaleDateString('en-US', { 
         year: 'numeric', 
         month: 'long', 
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
+        day: 'numeric'
       })
     };
   };
@@ -86,6 +84,7 @@ const Event = () => {
                     ) : (
                         events.map((item, idx) => {
                             const eventDate = formatEventDate(item.startDate);
+                            const endDate = item.endDate ? formatEventDate(item.endDate) : null;
                             return (
                                 <Col lg={12} className="mb-50" key={item._id || idx}>
                                     <div className={`event-bg-flex ${hoveredIndex === idx ? 'active' : ''}`} 
@@ -97,7 +96,12 @@ const Event = () => {
                                         </div>
                                         <div className="event-content">
                                             <div className="event-meta">
-                                                <p className="para">{eventDate.fullDate}</p>
+                                                <p className="para">{eventDate.fullDate}
+                                                    {endDate && (
+                                                        <> - {endDate.fullDate}
+                                                        </>
+                                                    )}
+                                                </p>
                                             </div>
                                             <Link to={`/event-single/${item._id}`} className="title">
                                                 {item.title || 'Upcoming Event'}
