@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { serviceData } from '../data';
-import { FaArrowRight } from 'react-icons/fa6';
+import { FaArrowRight } from 'react-icons/fa';
 import { Col, Container, Row } from 'react-bootstrap';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { servicesAPI } from '@/utils/servicesApi';
 const Service = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -84,10 +84,23 @@ const Service = () => {
                                             <span><img src={item.icon} alt='icons' /></span>
                                         </div>
                                         <div className="thumb">
-                                            <div className="sm-thumb">
+                                            <div className="sm-thumb" style={{
+                                                width: '100%',
+                                                height: '100px',
+                                                overflow: 'hidden',
+                                                borderRadius: '8px'
+                                            }}>
                                                 <img 
                                                     src={item.image || item.thumbnail} 
                                                     alt={item.title || 'Service'} 
+                                                    style={{
+                                                        width: '100%',
+                                                        height: '100%',
+                                                        objectFit: 'cover',
+                                                      display: 'block',
+                                                        borderBottomLeftRadius: '8px',
+                                                        borderBottomRightRadius: '8px'
+                                                    }}
                                                 />
                                             </div>
                                         </div>

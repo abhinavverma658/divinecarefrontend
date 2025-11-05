@@ -136,13 +136,15 @@ const Breadcrumb = () => {
                                 </div>
                             ) : (
                                 <>
-                                    <div className="vl-large-thumb">
-                                        <img 
-                                            className="w-100 img-fluid" 
-                                            src={eventDetail?.image || thumbImg} 
-                                            alt={eventDetail?.title || 'Event Image'} 
-                                        />
-                                    </div>
+                                    {eventDetail?.image && (
+                                        <div className="vl-large-thumb">
+                                            <img 
+                                                className="w-100 img-fluid" 
+                                                src={eventDetail.image} 
+                                                alt={eventDetail?.title || 'Event Image'} 
+                                            />
+                                        </div>
+                                    )}
                                     <div className="vl-event-content">
                                         <h2 className="title">{eventDetail?.title || 'Unity Giving Community Charity Event'}</h2>
                                         <p className="para pb-16">

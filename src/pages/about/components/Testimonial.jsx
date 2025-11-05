@@ -123,7 +123,7 @@ const Testimonial = () => {
                     <Col lg={6}>
                         <div className="vl-testimonial-content">
                             <div className="vl-section-title4">
-                                <h5 className="subtitle">{'Testimonials'}</h5>
+                                <h5 className="subtitle"  style={{ fontSize: '21px' }}>{'Testimonials'}</h5>
                                 <h2 className="title">{about.sectionHeading || 'Hear from our volunteers and clients.'}</h2>
                                 <p className="para pb-32">{about.sectionDescription || 'We value the feedback from our community.'}</p>
                                 <div className="btn-area pb-48">

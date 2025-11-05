@@ -39,7 +39,7 @@ const Counter = () => {
                 <Col lg={6}>
                     <div className="vl-counter-content mb-30">
                         <div className="vl-section-title-1">
-                            <h5 className="subtitle">Company Statistics</h5>
+                            <h5 className="subtitle"  style={{ fontSize: '21px' }}>Company Statistics</h5>
                             <h2 className="title">{company.heading || 'Highest Ambition is to Help People'}</h2>
                             <p className="para pb-32">{company.description}</p>
                             <div className="btn-area">

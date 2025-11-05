@@ -107,7 +107,7 @@ const Testimonial = () => {
   return <section className="vl-testimonial vl-testimonial-bg sp1">
             <Container>
                 <div className="vl-section-title-1 white mb-60 text-center">
-                    <h5 className="subtitle" data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>Community Testimonials</h5>
+                    <h5 className="subtitle" data-aos="fade-up" style={{ fontSize: '21px' }} data-aos-duration={800} data-aos-delay={300}>Community Testimonials</h5>
                     <h2 className="title text-anime-style-3">{testimonialsData.sectionHeading}</h2>
                     <p data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>
                       {testimonialsData.sectionDescription}

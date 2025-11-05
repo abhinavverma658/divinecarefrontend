@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Form, Button, Row, Col } from 'react-bootstrap';
 import logo from '@/assets/img/logo/16.png';
+import notFoundImg from '@/assets/img/career/notFound.svg';
 
 const ApplicationModal = ({ show, handleClose, jobTitle, jobDescription, jobId }) => {
   const [formData, setFormData] = useState({
@@ -399,15 +400,9 @@ const JobCard = ({ job }) => {
           >
             Apply
           </button>
-        </div>
-
-        
-      </div>
-      </div>
-      <div className="card border-0 mb-4" style={{ borderRadius: '30px', boxShadow: '0 2px 10px rgba(0,0,0,0.08)' }}>
-        <div className="card-body p-4">
-          <div className="mb-4">
-          <h6 className="fw-bold mb-3">Role & responsibilities</h6>
+          </div>
+            <div className="mb-4" style={{ minHeight: '150px' }}>
+          <h6 className="fw-bold mb-3">Role & Responsibilities</h6>
           <ul className="small text-muted" style={{lineHeight: '1.8', listStyleType: 'none', paddingLeft: 0}}>
             {job.responsibilities && job.responsibilities.length > 0 ? (
               job.responsibilities.map((responsibility, idx) => (
@@ -439,17 +434,21 @@ const JobCard = ({ job }) => {
               </li>
             )}
           </ul>
-        </div>
-        </div>
-      </div>
-       <div className="card border-0 mb-4" style={{ borderRadius: '30px', boxShadow: '0 2px 10px rgba(0,0,0,0.08)' }}>
-        <div className="card-body p-4">
-          <div>
+          </div>
+             <div>
           <h6 className="fw-bold mb-3">Key Skills</h6>
           <div className="d-flex flex-wrap gap-2">
             {job.keySkills && job.keySkills.length > 0 ? (
-              job.keySkills.map((skill, idx) => (
-                <span key={idx} className="badge bg-light border text-dark px-3 py-2" style={{borderRadius: '30px'}}>
+              job.keySkills.slice(0, 10).map((skill, idx) => (
+                <span 
+                  key={idx} 
+                  className="badge bg-light border text-dark px-3 py-2" 
+                  style={{
+                    borderRadius: '30px',
+                    flex: idx < 5 ? '0 1 calc(20% - 8px)' : '0 1 calc(20% - 8px)',
+                    minWidth: 'fit-content'
+                  }}
+                >
                   {skill}
                 </span>
               ))
@@ -458,9 +457,10 @@ const JobCard = ({ job }) => {
             )}
           </div>
         </div>
-        </div>
-      </div>
 
+        
+      </div>
+      </div>
     <ApplicationModal 
       show={showModal} 
       handleClose={handleClose}
@@ -515,10 +515,25 @@ const JobOpportunitiesPage = () => {
             <p>{error}</p>
           </div>
         ) : jobs.length === 0 ? (
-          <div className="text-center py-5">
-            <h4 className="text-muted">No job opportunities available at the moment</h4>
-            <p className="text-muted">Please check back later</p>
-          </div>
+          <Row className="justify-content-center">
+            <Col xs={12} className="text-center">
+              <img 
+                src={notFoundImg} 
+                alt="No Jobs Available" 
+                style={{ 
+                  width: '300px', 
+                  height: '300px', 
+                  marginBottom: '20px' 
+                }} 
+              />
+              <h3 style={{ fontSize: '28px', fontWeight: '800', color: '#000', marginBottom: '10px' }}>
+                No Jobs Available right Now
+              </h3>
+              <p style={{ fontSize: '16px', color: '#666', marginBottom: '40px' }}>
+                Stay tuned for further updates.
+              </p>
+            </Col>
+          </Row>
         ) : (
           <div className="row row-cols-1 row-cols-lg-2 g-4">
             {jobs.map((job) => (

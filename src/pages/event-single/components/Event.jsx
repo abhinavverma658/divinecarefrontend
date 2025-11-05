@@ -33,12 +33,20 @@ const Event = () => {
         const response = await eventsAPI.getEvents();
         
         if (response.success && response.events) {
-          // Sort events by startDate (newest first) and take only the latest 2
-          const sortedEvents = response.events
-            .sort((a, b) => new Date(b.startDate) - new Date(a.startDate))
-            .slice(0, 2);
+          // Filter future events and sort in ascending order (earliest first)
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
           
-          setEvents(sortedEvents);
+          const upcomingEvents = response.events
+            .filter(event => {
+              const eventDate = new Date(event.startDate);
+              eventDate.setHours(0, 0, 0, 0);
+              return eventDate > today; // Only future events
+            })
+            .sort((a, b) => new Date(a.startDate) - new Date(b.startDate)) // Ascending order
+            .slice(0, 2); // Take first 2 upcoming events
+          
+          setEvents(upcomingEvents);
         } else {
           throw new Error('Failed to load events');
         }
@@ -111,14 +119,16 @@ const Event = () => {
                                                 Event Details <span><FaArrowRight /></span>
                                             </Link>
                                         </div>
-                                        <div className="event-thumb">
-                                            <img
-                                                className="w-100"
-                                                style={{ height: '200px', objectFit: 'cover' }}
-                                                src={item.image || '/src/assets/img/event/default-event.png'}
-                                                alt={item.title || 'Event Image'}
-                                            />
-                                        </div>
+                                        {item.image && (
+                                            <div className="event-thumb">
+                                                <img
+                                                    className="w-100"
+                                                    style={{ height: '200px', objectFit: 'cover' }}
+                                                    src={item.image}
+                                                    alt={item.title || 'Event Image'}
+                                                />
+                                            </div>
+                                        )}
                                     </div>
                                     
                                 </Col>

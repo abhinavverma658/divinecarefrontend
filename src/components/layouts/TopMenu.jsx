@@ -15,6 +15,10 @@ const TopMenu = () => {
                     color: #ffbe2c !important;
                     font-weight: 600;
                 }
+                /* Ensure active menu stays highlighted when header is sticky */
+                .header-area.homepage1.sticky .header-elements .main-menu ul li a.active-menu {
+                    color: #ffbe2c !important;
+                }
             `}</style>
             <ul>
             <li>

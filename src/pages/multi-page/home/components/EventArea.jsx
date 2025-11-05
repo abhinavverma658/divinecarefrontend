@@ -68,23 +68,21 @@ const EventArea = () => {
       const response = await eventsAPI.getEvents();
       
       if (response.success && response.events && response.events.length > 0) {
-        // Filter for upcoming events and sort by date
-        const currentDate = new Date();
-        currentDate.setHours(0, 0, 0, 0); // Reset time to start of day
+        // Filter for upcoming events only (exclude today and past events)
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Reset time to start of today
 
         const upcomingEvents = response.events
           .filter(event => {
             if (event.startDate) {
               const eventDate = new Date(event.startDate);
               eventDate.setHours(0, 0, 0, 0);
-              return eventDate >= currentDate;
+              return eventDate > today; // Only future events (exclude today)
             }
-            return true; // Include events without dates
+            return false; // Exclude events without dates
           })
           .sort((a, b) => {
-            if (!a.startDate && !b.startDate) return 0;
-            if (!a.startDate) return 1;
-            if (!b.startDate) return -1;
+            // Sort in ascending order (earliest first)
             return new Date(a.startDate) - new Date(b.startDate);
           })
           .slice(0, 3); // Limit to 3 latest events
@@ -113,27 +111,17 @@ const EventArea = () => {
   const groupEventsByDate = (events) => {
     const grouped = {};
     const maxTabs = 4;
-    let tabIndex = 0;
 
-    events.forEach(event => {
-      if (tabIndex >= maxTabs) return;
+    events.forEach((event, index) => {
+      if (index >= maxTabs) return;
 
       const eventDate = event.startDate ? new Date(event.startDate) : new Date();
-      const dateKey = `tab${tabIndex + 1}`;
+      const dateKey = `tab${index + 1}`;
       
-      if (!grouped[dateKey]) {
-        grouped[dateKey] = {
-          date: eventDate,
-          events: []
-        };
-      }
-
-      grouped[dateKey].events.push(event);
-      
-      // Move to next tab if this one has 3 events or more
-      if (grouped[dateKey].events.length >= 3) {
-        tabIndex++;
-      }
+      grouped[dateKey] = {
+        date: eventDate,
+        events: [event] // Each tab gets only one event
+      };
     });
 
     return grouped;
@@ -191,7 +179,7 @@ const EventArea = () => {
                             }} />
                             <div className="vl-section-title-1">
                                 <div style={{ position: 'relative', zIndex: 2 }}>
-                                  <h5 className="subtitle" data-aos="fade-right" data-aos-duration={800} data-aos-delay={300}>Events &amp; Programs</h5>
+                                  <h5 className="subtitle" data-aos="fade-right" style={{fontSize:'21px'}} data-aos-duration={800} data-aos-delay={300}>Events &amp; Programs</h5>
                                   {sectionLoading ? (
                                     <div style={{ minHeight: '1px' }}></div>
                                   ) : (

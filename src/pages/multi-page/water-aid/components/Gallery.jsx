@@ -27,7 +27,7 @@ const Gallery = () => {
                         <Col lg={6} className="order-lg-2">
                             <div className="vl-gallery-content">
                                 <div className="vl-section-title3 text-center">
-                                    <h4 className="subtitle" data-aos="fade-up" data-aos-duration={1000} data-aos-delay={300}>Our Gallery</h4>
+                                    <h4 className="subtitle" data-aos="fade-up" style={{ fontSize: '21px' }} data-aos-duration={1000} data-aos-delay={300}>Our Gallery</h4>
                                     <h2 className="title text-anime-style-3">Every Drop Counts Our Impact in
                                         Pictures</h2>
                                     <div className="vl-gallery-large-thumb reveal mb-30">

@@ -94,7 +94,7 @@ const Team = () => {
         <Container>
           <div className="vl-team-section-title mb-60 text-center">
             <div className="vl-section-title-1">
-              <h5 className="subtitle" data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>Meet our Volunteer</h5>
+              <h5 className="subtitle" data-aos="fade-up" style={{ fontSize: '21px' }} data-aos-duration={800} data-aos-delay={300}>Meet our Volunteer</h5>
               <h2 className="title text-anime-style-3">{teamData.heading}</h2>
               <p data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>
                 {teamData.description}
@@ -118,7 +118,7 @@ const Team = () => {
             <Container>
                 <div className="vl-team-section-title mb-60 text-center">
                     <div className="vl-section-title-1">
-                        <h5 className="subtitle" data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>Meet our Volunteer</h5>
+                        <h5 className="subtitle" style={{fontSize:'21px'}} data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>Meet our Volunteer</h5>
                         <h2 className="title text-anime-style-3">{teamData.heading}</h2>
                         <p data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>
                           {teamData.description}

@@ -43,7 +43,7 @@ const Vision = () => {
                 <Col lg={6}>
                     <div className="vl-vission-content ml-50 mb-30">
                         <div className="vl-section-title-1">
-                            <h5 className="subtitle">{'Our Mission & Vision'}</h5>
+                            <h5 className="subtitle" style={{ fontSize: '21px' }}>{'Our Mission & Vision'}</h5>
                             <h2 className="title pb-10">{vision.heading }</h2>
                             <div>
                                 {vision.description && vision.description.split('\n').filter(para => para.trim()).map((paragraph, index) => (

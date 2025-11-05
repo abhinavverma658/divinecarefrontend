@@ -32,7 +32,11 @@ const MobileMenu = () => {
                             <div className="mobile-logo">
                                 <Link to="/"><img src={logo1} alt='logo1' /></Link>
                             </div>
-                            <div onClick={toggle} className="mobile-nav-icon dots-menu">
+                            <div onClick={(e) => {
+                                e.stopPropagation();
+                                console.log('Mobile menu icon clicked');
+                                toggle();
+                            }} className="mobile-nav-icon dots-menu" style={{ cursor: 'pointer' }}>
                                 <FaBars className="fa-solid fa-bars" />
                             </div>
                         </div>
@@ -44,7 +48,11 @@ const MobileMenu = () => {
                     <div className="logos">
                         <img src={footerLogo} alt='footerLogo' />
                     </div>
-                    <div className="menu-close" onClick={toggle}>
+                    <div className="menu-close" onClick={(e) => {
+                        e.stopPropagation();
+                        console.log('Close menu clicked');
+                        toggle();
+                    }} style={{ cursor: 'pointer' }}>
                         <FaXmark className="fa-solid fa-xmark" />
                     </div>
                 </div>
@@ -81,7 +89,7 @@ const MobileMenu = () => {
                                             11201,United States</a>
                                     </div>
                                 </div>
-                                <div className="vl-mobile-contact1">
+                                {/* <div className="vl-mobile-contact1">
                                     <h3 className="title">Social Links</h3>
                                     <div className="social-links-mobile-menu">
                                         <ul>
@@ -91,7 +99,7 @@ const MobileMenu = () => {
                                             <li><a href="#" className='d-flex align-items-center justify-content-center'><FaYoutube className="fa-brands fa-youtube" /></a></li>
                                         </ul>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

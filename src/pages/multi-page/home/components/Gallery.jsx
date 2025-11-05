@@ -70,10 +70,18 @@ const Gallery = () => {
   if (!galleryData.images || galleryData.images.length === 0) {
     return (
       <section id='gallery' className="vl-gallery sp2">
+        <style>{`.gallery-subtitle--important{font-size:21px !important;}`}</style>
         <Container>
           <div className="vl-gallery-content mb-60">
             <div className="vl-section-title-1">
-              <h5 className="subtitle" data-aos="fade-right" data-aos-duration={800} data-aos-delay={300}>Our Gallery</h5>
+              <h5
+                className="subtitle gallery-subtitle--important"
+                data-aos="fade-right"
+                data-aos-duration={800}
+                data-aos-delay={300}
+              >
+                Our Gallery
+              </h5>
               <h2 className="title text-anime-style-3">{galleryData.heading}</h2>
               <p data-aos="fade-right" data-aos-duration={800} data-aos-delay={300}>
                 {galleryData.description}

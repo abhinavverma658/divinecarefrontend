@@ -95,7 +95,7 @@ const About = () => {
           <Col lg={6}>
             <div className="vl-about-content">
               <div className="vl-section-title-1">
-                <h5 className="subtitle" data-aos="fade-right" data-aos-duration={800} data-aos-delay={300}>
+                <h5 className="subtitle"  style={{ fontSize: '21px' }} data-aos="fade-right" data-aos-duration={800} data-aos-delay={300}>
                   About Us
                 </h5>
                 <h2 className="title text-anime-style-3">

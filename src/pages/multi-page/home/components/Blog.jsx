@@ -76,7 +76,7 @@ const Blog = () => {
         <section className="vl-blg sp2">
             <Container>
                 <div className="vl-section-title-1 mb-60 text-center">
-                    <h5 className="subtitle" data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>Stories</h5>
+                    <h5 className="subtitle" data-aos="fade-up" style={{fontSize:'21px'}} data-aos-duration={800} data-aos-delay={300}>Stories</h5>
                     <h2 className="title text-anime-style-3">Stories of Relief and Recovery</h2>
                     <p data-aos="fade-up" data-aos-duration={800} data-aos-delay={300}>
                         Ever wondered how your contributions make an impact? This blog dives into <br /> the tangible ways that donations big or small help provide food.

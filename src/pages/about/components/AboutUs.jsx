@@ -98,7 +98,7 @@ const AboutUsContent = () => {
                     <Col lg={6}>
                         <div className="vl-about-content">
                             <div className="vl-section-title-1 mb-50">
-                                <h5 className="subtitle">About Us</h5>
+                                <h5 className="subtitle" style={{fontSize:'21px'}}>About Us</h5>
                                 <h2 className="title">{aboutData?.heading || 'About DivineCare'}</h2>
                                 <p>{aboutData?.smallDescription || 'Empowering lives through compassion and support.'}</p>
                             </div>

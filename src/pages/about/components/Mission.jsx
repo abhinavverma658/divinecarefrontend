@@ -40,7 +40,7 @@ const Mission = () => {
                     <Row className="align-items-center">
                         <Col lg={6}>
                             <div className="mision-thumb mb-30">
-                                <img className="w-100" src={missionImage} alt='missionThumbImg' />
+                                <img className="w-100" style={{height:'500px', objectFit:'cover', borderRadius:'10px'}} src={missionImage} alt='missionThumbImg' />
                             </div>
                         </Col>
                         <Col lg={6}>
