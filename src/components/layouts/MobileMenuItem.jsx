@@ -23,10 +23,10 @@ const menuItems = [{
   path: '/pages/contact'
 }];
 
-const MobileMenuItem = () => {
+const MobileMenuItem = ({ onMenuClick }) => {
   return <ul className="mobile-nav-list nav-list1">
             {menuItems.map((item, index) => <li key={index}>
-                    <Link to={item.path}>{item.title}</Link>
+                    <Link to={item.path} onClick={onMenuClick}>{item.title}</Link>
                 </li>)}
         </ul>;
 };

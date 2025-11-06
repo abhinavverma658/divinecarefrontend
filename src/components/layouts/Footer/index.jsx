@@ -37,7 +37,7 @@ const Footer = () => {
                   <li><Link to="/">Home Page</Link></li>
                   <li><Link to="/about">About Us</Link></li>
                   <li><Link to="/event">Events</Link></li>
-                <li><Link to="/career">Career</Link></li>
+                <li><Link to="/career">Careers</Link></li>
                 <li><Link to="/blog">Stories</Link></li>
                   <li><Link to="/pages/contact">Contact Us</Link></li>
                 </ul>
@@ -74,7 +74,7 @@ const Footer = () => {
                   <span><img src={footerIc2} alt='footerIc2' /></span>
                 </div>
                 <div className="vl-footer-text">
-                  <a href="#">19733 Executive Park Circle.<br/>
+                  <a href="https://maps.app.goo.gl/vqXXVx3BxKkHhnBd6">19733 Executive Park Circle.<br/>
 Germantown, Maryland 20874</a>
                 </div>
               </div>

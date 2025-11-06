@@ -45,8 +45,8 @@ const SingleMobileMenu = () => {
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                     <div className="allmobilesection">
-                        <Link to="/pages/contact" className="header-mobile-btn1">Get
-                            Started1 <span><FaArrowRight /></span></Link>
+                        {/* <Link to="/pages/contact" className="header-mobile-btn1">Get
+                            Started1 <span><FaArrowRight /></span></Link> */}
                         <div className="vl-mobile-contact1">
                             <h3 className="title">Contact Info</h3>
                             <div className="footer1-contact-info">

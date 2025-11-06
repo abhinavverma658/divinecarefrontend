@@ -57,19 +57,19 @@ const MobileMenu = () => {
                     </div>
                 </div>
                 <div className="mobile-nav mobile-nav1">
-                    <MobileMenuItem />
+                    <MobileMenuItem onMenuClick={toggle} />
                     <div className="allmobilesection">
-                        <Link to="/pages/contact" className="header-mobile-btn1">Get
-                            Started <span><FaArrowRight /></span></Link>
+                        {/* <Link to="/pages/contact" className="header-mobile-btn1">Get
+                            Started <span><FaArrowRight /></span></Link> */}
                         <div className="vl-mobile-contact1">
-                            <h3 className="title">Contact Info</h3>
+                            <h3 className="title" style={{marginTop:'10px'}}>Contact Info</h3>
                             <div className="footer1-contact-info">
                                 <div className="contact-info-single">
                                     <div className="contact-info-icon">
                                         <FaPhoneVolume size={16} className="fa-solid fa-phone-volume" />
                                     </div>
                                     <div className="contact-info-text">
-                                        <a href="tel:+3(924)4596512">+3(924)4596512</a>
+                                        <a href="tel:301-281-2285">301-281-2285</a>
                                     </div>
                                 </div>
                                 <div className="contact-info-single">
@@ -77,7 +77,7 @@ const MobileMenu = () => {
                                         <FaEnvelope size={16} className="fa-solid fa-envelope" />
                                     </div>
                                     <div className="contact-info-text">
-                                        <a href="mailto:info@example.com">info@example.com</a>
+                                        <a href="mailto:hello@divinecareinc.com">hello@divinecareinc.com</a>
                                     </div>
                                 </div>
                                 <div className="contact-info-single">
@@ -85,8 +85,7 @@ const MobileMenu = () => {
                                         <FaLocationDot size={16} width={16} height={16} className="fa-solid fa-location-dot" />
                                     </div>
                                     <div className="contact-info-text">
-                                        <a href="mailto:info@example.com">55 East Birchwood Ave.Brooklyn, <br /> New York
-                                            11201,United States</a>
+                                        <a href="https://maps.app.goo.gl/vqXXVx3BxKkHhnBd6">19733 Executive Park Circle. <br/>Germantown, Maryland 20874</a>
                                     </div>
                                 </div>
                                 {/* <div className="vl-mobile-contact1">
