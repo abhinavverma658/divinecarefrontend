@@ -27,13 +27,13 @@ const Service = () => {
         const response = await servicesAPI.getServices();
         
         if (response.success && response.services) {
-          // Map API data to include fallback assets since API doesn't provide icons/thumbnails
+          // Map API data without fallback assets
           const mappedServices = response.services.map((service, index) => {
             const fallbackAssets = getFallbackAssets(index);
             return {
               ...service,
-              icon: fallbackAssets.icon,
-              thumbnail: fallbackAssets.thumbnail,
+              icon: fallbackAssets.icon, // Keep fallback icon
+              thumbnail: null, // No fallback thumbnail
               description: service.shortDescription || service.detailedDescription || 'Service description not available'
             };
           });
@@ -81,27 +81,51 @@ const Service = () => {
                                 <div className={`vl-single-service-box mb-30 ${hoveredIndex === idx ? 'active' : ''}`} onMouseEnter={() => setHoveredIndex(idx)} onMouseLeave={() => setHoveredIndex(null)}>
                                     <div className="vl-service-box-flex">
                                         <div className="icon">
-                                            <span><img src={item.icon} alt='icons' /></span>
+                                            {item.icon ? (
+                                                <span><img src={item.icon} alt='icons' /></span>
+                                            ) : (
+                                                <span style={{
+                                                    display: 'block',
+                                                    width: '60px',
+                                                    height: '60px',
+                                                    background: '#f0f0f0',
+                                                    borderRadius: '50%'
+                                                }}></span>
+                                            )}
                                         </div>
                                         <div className="thumb">
                                             <div className="sm-thumb" style={{
                                                 width: '100%',
                                                 height: '100px',
                                                 overflow: 'hidden',
-                                                borderRadius: '8px'
+                                                borderRadius: '8px',
+                                                background: '#f5f5f5'
                                             }}>
-                                                <img 
-                                                    src={item.image || item.thumbnail} 
-                                                    alt={item.title || 'Service'} 
-                                                    style={{
+                                                {(item.image1 || item.image || item.thumbnail) ? (
+                                                    <img 
+                                                        src={item.image1 || item.image || item.thumbnail} 
+                                                        alt={item.title || 'Service'} 
+                                                        style={{
+                                                            width: '100%',
+                                                            height: '100%',
+                                                            objectFit: 'cover',
+                                                            display: 'block',
+                                                            borderBottomLeftRadius: '8px',
+                                                            borderBottomRightRadius: '8px'
+                                                        }}
+                                                    />
+                                                ) : (
+                                                    <div style={{
                                                         width: '100%',
                                                         height: '100%',
-                                                        objectFit: 'cover',
-                                                      display: 'block',
-                                                        borderBottomLeftRadius: '8px',
-                                                        borderBottomRightRadius: '8px'
-                                                    }}
-                                                />
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        color: '#999',
+                                                        fontSize: '14px'
+                                                    }}>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     </div>

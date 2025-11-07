@@ -26,7 +26,7 @@ const TopBanner = () => {
                                     <span><img src={topImg2} alt='topImg2' /></span>
                                 </div>
                                 <div className="top-content">
-                                    <a href="/pages/contact">301-281-2285</a>
+                                    <a href="tel:301-281-2285">301-281-2285</a>
                                 </div>
                             </div>
                         </div>

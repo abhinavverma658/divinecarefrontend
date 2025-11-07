@@ -214,7 +214,7 @@ const EventArea = () => {
                                       return (
                                         <NavItem className="mb-30" role="presentation" key={tabKey}>
                                             <NavLink eventKey={tabKey}>
-                                                <div className="event-tab-content">
+                                                <div className="event-tab-content" >
                                                     <div className="subheading">{index + 1}{index === 0 ? 'st' : index === 1 ? 'nd' : index === 2 ? 'rd' : 'th'} Day</div>
                                                     <div className="date-event1">
                                                         <ul>
@@ -256,7 +256,7 @@ const EventArea = () => {
                                                             <Link to={`/event-single/${event._id}`}>
                                                               <img 
                                                                 className="w-100" 
-                                                                src={event.image || event.featuredImage || blogThmb} 
+                                                                src={event.image || event.featuredImage} 
                                                                 alt={event.title || 'Event'} 
                                                                 onError={(e) => {
                                                                   e.target.src = blogThmb;

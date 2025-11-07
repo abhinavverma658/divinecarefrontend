@@ -183,7 +183,7 @@ const Hero = ({ setHeroLoading }) => {
               <h1 className="vl-title text-anime-style-3 text-white mb-4">
                 {heroData?.title || 'Disaster Relief Funding'}
               </h1>
-              <p className="text-white mb-4" style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>
+              <p className="text-white mb-4" style={{ fontSize: '1.2rem', lineHeight: '1.6' }}>
                 {heroData?.description || 'In times of crisis, when disaster strikes and hope seems lost, there emerge unsung heroes who rise to the occasion.'}
               </p>
               <div className="vl-hero-btn">

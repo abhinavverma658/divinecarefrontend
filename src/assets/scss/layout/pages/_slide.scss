@@ -1449,7 +1449,7 @@ a, button {
 }
 .btn-area.vl-cta-btn1 {
   position: absolute;
-  right: 6px;
+  right: -20px;
   top: 6px;
 }
 
@@ -2203,7 +2203,11 @@ span.tooltipp-2 {
 @media (max-width: 767px) {
   .event-tabs .nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+  }
+  .event-tab-content {
+    width: 100%;
+    max-width: 100%;
   }
 }
 .event-tabs .nav .event-date {
@@ -5612,7 +5616,7 @@ span.tooltipp-2 {
   padding-bottom: 12px;
 }
 .vl-team-content .title:hover {
-  color: var(--ztc-text-text-6);
+  color: #ffbe2c;
   transition: 0.3s;
 }
 .vl-team-content span {
@@ -6770,10 +6774,22 @@ span.tooltipp-2 {
   .vl-cta-form {
     width: 100%;
   }
+    .vl-cta-form input[type=email] {
+      border-radius: 50px;
+      height: 64px;
+      width: 320px !important;
+    }
+       
+        .btn-area.vl-cta-btn1 {
+          position: absolute;
+          right: 5px;
+          top: 6px;
+        }
 }
 .vl-cta-form input[type=email] {
   border-radius: 50px;
   height: 64px;
+  width: 400px;
 }
 .vl-cta-form input[type=email]::placeholder {
   color: var(--ztc-text-text-2);

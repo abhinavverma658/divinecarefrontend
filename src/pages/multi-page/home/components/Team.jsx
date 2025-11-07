@@ -136,54 +136,75 @@ const Team = () => {
                     </div>
                 </div>
                 <Row id='team1'>
-                    <Swiper modules={[Autoplay, Navigation]} autoplay={{
-          delay: 2500,
-          disableOnInteraction: false
-        }} slidesPerView={4} navigation={{
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev"
-        }} loop breakpoints={{
-          320: {
-            slidesPerView: 1,
-            spaceBetween: 10
-          },
-          // Small screens
-          768: {
-            slidesPerView: 2,
-            spaceBetween: 20
-          },
-          // Tablets
-          1024: {
-            slidesPerView: 4,
-            spaceBetween: 30
-          } // Desktops
-        }} spaceBetween={30}>
-                        {teamData.members?.map((item, idx) => <SwiperSlide className="vl-team-parent" key={item._id || idx}>
-                                <div className="vl-team-thumb">
-                                    <img 
-                                      width={301} 
-                                      height={287} 
-                                      src={item.image} 
-                                      alt={`${item.name} - ${item.role}`}
-                                      onError={(e) => {
-                                        console.log('Image load error for:', item.image);
-                                        // Set a placeholder image on error
-                                        e.target.src = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face';
-                                      }}
-                                    />
-                                    <div className="vl-team-content">
-                                        <h4 className="title">
-                                            <Link to="/page/team">{item.name}</Link>
-                                        </h4>
-                                        <p>{item.role}</p>
+                    <div style={teamData.members.length <= 3 ? { 
+                        display: 'flex', 
+                        justifyContent: 'center', 
+                        width: '100%' 
+                    } : {}}>
+                        <Swiper 
+                            modules={[Autoplay, Navigation]} 
+                            autoplay={{
+                              delay: 2500,
+                              disableOnInteraction: false
+                            }} 
+                            slidesPerView={Math.min(4, teamData.members.length)} 
+                            navigation={{
+                              nextEl: ".swiper-button-next",
+                              prevEl: ".swiper-button-prev"
+                            }} 
+                            loop={teamData.members.length > 3}
+                            breakpoints={{
+                              320: {
+                                slidesPerView: 1,
+                                spaceBetween: 10
+                              },
+                              // Small screens
+                              768: {
+                                slidesPerView: Math.min(2, teamData.members.length),
+                                spaceBetween: 20
+                              },
+                              // Tablets
+                              1024: {
+                                slidesPerView: Math.min(4, teamData.members.length),
+                                spaceBetween: 30
+                              } // Desktops
+                            }} 
+                            spaceBetween={30}
+                            style={teamData.members.length <= 3 ? { 
+                                maxWidth: `${teamData.members.length * 350}px`,
+                                width: '100%'
+                            } : { width: '100%' }}
+                        >
+                            {teamData.members?.map((item, idx) => <SwiperSlide className="vl-team-parent" key={item._id || idx}>
+                                    <div className="vl-team-thumb" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                        <img 
+                                          width={301} 
+                                          height={287} 
+                                          src={item.image} 
+                                          alt={`${item.name} - ${item.role}`}
+                                          style={{ display: 'block', margin: '0 auto', maxWidth: '100%', height: 'auto' }}
+                                          onError={(e) => {
+                                            console.log('Image load error for:', item.image);
+                                            // Set a placeholder image on error
+                                            e.target.src = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face';
+                                          }}
+                                        />
+                                        <div className="vl-team-content">
+                                            <h4 className="title">
+                                                <Link to="/page/team">{item.name}</Link>
+                                            </h4>
+                                            <p>{item.role}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </SwiperSlide>)}
-                    </Swiper>
-                    <div className="vl-swiper-button">
-                        <div className="swiper-button-next" />
-                        <div className="swiper-button-prev" />
+                                </SwiperSlide>)}
+                        </Swiper>
                     </div>
+                    {teamData.members.length > 3 && (
+                        <div className="vl-swiper-button">
+                            <div className="swiper-button-next" />
+                            <div className="swiper-button-prev" />
+                        </div>
+                    )}
                 </Row>
             </Container>
         </section>;

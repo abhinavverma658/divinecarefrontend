@@ -95,7 +95,14 @@ const IconArea = () => {
                                     </div>
                                     <div className="contact-number">
                                         {item?.contacts && item?.contacts?.map((contact, contactIdx) => <Fragment key={contactIdx}>
-                                                    <Link to={idx === 0 ? `tel:${contact}` : idx === 1 ? `mailto:${contact}` : "#"} className="para">{contact}</Link> <br />
+                                                    <Link 
+                                                        to={idx === 0 ? `tel:${contact}` : idx === 1 ? `mailto:${contact}` : "https://maps.app.goo.gl/vqXXVx3BxKkHhnBd6"} 
+                                                        className="para"
+                                                        target={idx === 2 ? "_blank" : undefined}
+                                                        rel={idx === 2 ? "noopener noreferrer" : undefined}
+                                                    >
+                                                        {contact}
+                                                    </Link> <br />
                                                 </Fragment>)}
                                     </div>
                                 </div>

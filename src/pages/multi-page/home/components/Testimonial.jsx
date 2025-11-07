@@ -181,15 +181,14 @@ const Testimonial = () => {
                                         </SwiperSlide>)}
                             </div>
                         </Swiper>
-                        <div className='owl-nav'>
-                            <button className="owl-prev swiper-button-prev">
-                                <img src={arrowLeft} alt="arrowLeft" />
-                            </button>
-
-                            <button className="owl-next swiper-button-next">
-                                <img src={angleRight} alt="angleRight" />
-                            </button>
-                        </div>
+            <div className='owl-nav' style={{ display: 'flex', flexDirection: 'row', gap: '16px', justifyContent: 'center', alignItems: 'center' }}>
+              <button className="owl-prev swiper-button-prev">
+                <img src={arrowLeft} alt="arrowLeft" />
+              </button>
+              <button className="owl-next swiper-button-next">
+                <img src={angleRight} alt="angleRight" />
+              </button>
+            </div>
                     </div>
                 </Row>
             </Container>
