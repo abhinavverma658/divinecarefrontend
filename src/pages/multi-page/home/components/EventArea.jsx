@@ -254,14 +254,26 @@ const EventArea = () => {
                                                     <Col lg={4} md={4}>
                                                         <div className="sm-thumb">
                                                             <Link to={`/event-single/${event._id}`}>
-                                                              <img 
-                                                                className="w-100" 
-                                                                src={event.image || event.featuredImage} 
-                                                                alt={event.title || 'Event'} 
-                                                                onError={(e) => {
-                                                                  e.target.src = blogThmb;
-                                                                }}
-                                                              />
+                                                              {(event.image || event.featuredImage) ? (
+                                                                <img 
+                                                                  className="w-100" 
+                                                                  src={event.image || event.featuredImage} 
+                                                                  alt={event.title || 'Event'} 
+                                                                  onError={(e) => {
+                                                                    e.target.style.display = 'none';
+                                                                  }}
+                                                                />
+                                                              ) : (
+                                                                <div style={{ 
+                                                                  width: '100%', 
+                                                                  height: '120px', 
+                                                                  backgroundColor: '#f5f5f5',
+                                                                  display: 'flex',
+                                                                  alignItems: 'center',
+                                                                  justifyContent: 'center'
+                                                                }}>
+                                                                </div>
+                                                              )}
                                                             </Link>
                                                         </div>
                                                     </Col>
