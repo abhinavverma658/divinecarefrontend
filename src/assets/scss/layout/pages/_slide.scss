@@ -1447,11 +1447,11 @@ a, button {
   padding: 8px 23px 8px 8px;
   position: relative;
 }
-.btn-area.vl-cta-btn1 {
-  position: absolute;
-  right: -20px;
-  top: 6px;
-}
+// .btn-area.vl-cta-btn1 {
+//   position: absolute;
+//   right: -20px;
+//   top: 6px;
+// }
 
 .vl-hero-btn .header-btn1 {
   background: var(--ztc-text-text-4);
@@ -6774,22 +6774,16 @@ span.tooltipp-2 {
   .vl-cta-form {
     width: 100%;
   }
-    .vl-cta-form input[type=email] {
-      border-radius: 50px;
-      height: 64px;
-      width: 320px !important;
-    }
        
-        .btn-area.vl-cta-btn1 {
-          position: absolute;
-          right: 5px;
-          top: 6px;
-        }
+        // .btn-area.vl-cta-btn1 {
+        //   position: absolute;
+        //   right: 5px;
+        //   top: 6px;
+        // }
 }
 .vl-cta-form input[type=email] {
   border-radius: 50px;
   height: 64px;
-  width: 400px;
 }
 .vl-cta-form input[type=email]::placeholder {
   color: var(--ztc-text-text-2);

@@ -132,9 +132,8 @@ const CtaArea = () => {
                                                 >
                                                     {emailError}
                                                 </div>
-                                            )}
-                                        </div>
-                                        <div className="btn-area vl-cta-btn1">
+                                      )}
+                                      <div className="btn-area vl-cta-btn1">
                                             <button 
                                                 type="submit" 
                                                 className="header-btn1"
@@ -144,6 +143,8 @@ const CtaArea = () => {
                                                 {isSubmitting ? 'Subscribing...' : 'Subscribe'} <span><FaArrowRight /></span>
                                             </button>
                                         </div>
+                                        </div>
+                                        
                                     </form>
                                 </div>
                             </div>
