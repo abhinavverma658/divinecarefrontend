@@ -97,13 +97,13 @@ const WhyDivine = () => {
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = html;
     
-    // Extract bullet points (li elements)
-    const bullets = Array.from(tempDiv.querySelectorAll('li')).map(li => li.textContent.trim());
+    // Extract bullet points (li elements) with HTML formatting preserved
+    const bullets = Array.from(tempDiv.querySelectorAll('li')).map(li => li.innerHTML.trim());
     
-    // Get text without bullet points
+    // Get text without bullet points but preserve HTML formatting
     const listElements = tempDiv.querySelectorAll('ul, ol');
     listElements.forEach(list => list.remove());
-    const text = tempDiv.textContent.trim();
+    const text = tempDiv.innerHTML.trim();
     
     return { text, bullets };
   };
@@ -216,7 +216,7 @@ const WhyDivine = () => {
                               <CheckIcon />
                             </div>
                             <div className="content">
-                              <p className="para mb-0">{bullet}</p>
+                              <p className="para mb-0" dangerouslySetInnerHTML={{ __html: bullet }} />
                             </div>
                           </div>
                         ))}
