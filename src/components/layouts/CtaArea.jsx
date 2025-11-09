@@ -114,7 +114,7 @@ const CtaArea = () => {
                                         <div>
                                             <input 
                                                 type="email" 
-                                                placeholder="Enter Your Email.." 
+                                                placeholder="Enter Email" 
                                                 value={email}
                                                 onChange={handleEmailChange}
                                                 disabled={isSubmitting}

@@ -305,10 +305,10 @@ const EventArea = () => {
                               <p className="text-muted mb-0" style={{ fontSize: '28px', fontWeight: '800' }}>
                                 No upcoming events.
                                 <br/>
-                                <span className='fs-6'>
+                      </p>
+                      <span className='fs-6'>
                                   Stay tuned for further updates.
                                 </span>
-                              </p>
                             </div>
                           </div>
                         </Col>

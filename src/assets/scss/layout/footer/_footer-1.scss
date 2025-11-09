@@ -272,7 +272,7 @@
 .vl-footer-bg-3{
     & .vl-footer-widget-1 .vl-footer-social-1 ul li a:hover {
         background: var(--ztc-text-text-12);
-        color: white;
+        color: white !important;
     }
     & .vl-footer-widget-2{
         & .title{

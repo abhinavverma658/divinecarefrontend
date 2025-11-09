@@ -120,7 +120,7 @@ const Blog = () => {
                                                                     </li>
                                                                 </ul>
                                                             </div>
-                                                            <div className="vl-blg-content d-flex flex-column flex-grow-1">
+                                                            <div className="vl-blg-content d-flex flex-column flex-grow-1 mb-4" >
                                                                 <h3 className="title">
                                                                     <Link to={`/blog-single/${story._id}`}>{story.title || 'Untitled Story'}</Link>
                                                                 </h3>
