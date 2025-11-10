@@ -7,7 +7,6 @@ import userImg from '@/assets/img/icons/vl-user-1.1.svg';
 import { Col, Container, Row } from 'react-bootstrap';
 import { storiesAPI } from '@/utils/storiesApi';
 import { getImageUrl } from '@/utils/imageUtils';
-import { getImageUrl } from '@/utils/imageUtils';
 const Blog = () => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
