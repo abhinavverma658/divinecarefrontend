@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import gallerySearch from '@/assets/img/icons/vl-gallery-search-1.1.svg';
 import { homeAPI } from '../../../../utils/api';
+import { getImageUrl } from '@/utils/imageUtils';
 import { Col, Container, Row } from 'react-bootstrap';
 import GlightBox from "@/components/GlightBox";
 const Gallery = () => {
@@ -128,7 +129,7 @@ const Gallery = () => {
                               <div className="vl-single-box" data-aos="zoom-in-up" data-aos-duration={800 + (index * 100)} data-aos-delay={300}>
                                   <img 
                                     className="w-100" 
-                                    src={image.url} 
+                                    src={getImageUrl(image.url)} 
                                     alt={`Gallery image ${index + 1}`}
                                     onError={(e) => {
                                       console.log('Image load error for:', image.url);
@@ -136,7 +137,7 @@ const Gallery = () => {
                                       e.target.src = 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80';
                                     }}
                                   />
-                                  {/* <a href={image.url} className="glightbox search-ic">
+                                  {/* <a href={getImageUrl(image.url)} className="glightbox search-ic">
                                       <span><img src={gallerySearch} alt='gallerySearch' /></span>
                                   </a> */}
                               </div>

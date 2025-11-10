@@ -8,6 +8,7 @@ import { FaArrowRight } from 'react-icons/fa6';
 import { FaHandsHelping, FaHeart, FaUsers, FaShieldAlt, FaHome, FaBullseye, FaStar, FaLeaf, FaHandHoldingHeart, FaGlobeAmericas, FaLightbulb, FaRocket } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import { homeAPI } from '@/utils/api';
+import { getImageUrl } from '@/utils/imageUtils';
 const About = () => {
   const [aboutData, setAboutData] = useState({
     mainHeading: 'Committed to Relief, Our Work Dedicated to Hope',
@@ -131,7 +132,7 @@ const About = () => {
             <div className="vl-about-large-thumb reveal">
               <img 
                 className="w-100"
-                src={aboutData.centerImage}
+                src={getImageUrl(aboutData.centerImage)}
                 alt="About us center image"
                 style={{ height: '560px', objectFit: 'cover' }}
                 onError={(e) => {
@@ -152,7 +153,7 @@ const About = () => {
               <div className="vl-about-sm-thumb d-none d-md-block">
                 <img 
                   className="w-100" 
-                  src={aboutData.rightImage} 
+                  src={getImageUrl(aboutData.rightImage)} 
                   alt="About us right image"
                   style={{ height: '290px', objectFit: 'cover' }}
                   onError={(e) => {

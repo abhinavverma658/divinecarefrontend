@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaGithub } from "react-icons/fa";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa6";
 import { homeAPI } from '../../../../utils/api';
+import { getImageUrl } from '@/utils/imageUtils';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 import { Container, Row } from 'react-bootstrap';
@@ -180,7 +181,7 @@ const Team = () => {
                                         <img 
                                           width={301} 
                                           height={287} 
-                                          src={item.image} 
+                                          src={getImageUrl(item.image)} 
                                           alt={`${item.name} - ${item.role}`}
                                           style={{ display: 'block', margin: '0 auto', maxWidth: '100%', height: 'auto' }}
                                           onError={(e) => {

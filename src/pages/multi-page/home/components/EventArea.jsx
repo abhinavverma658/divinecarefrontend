@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import blogThmb from '@/assets/img/blog/vl-blog-larg-thmb.png';
 import { homeAPI, eventsAPI } from '../../../../utils/api';
+import { getImageUrl } from '@/utils/imageUtils';
 import calendarImg from '@/assets/img/icons/calender.svg';
 import { Col, Container, Nav, NavItem, NavLink, Row, TabContainer, TabContent, TabPane } from 'react-bootstrap';
 import { Link } from "react-router";
@@ -38,10 +39,17 @@ const EventArea = () => {
       console.log('Event section API response:', response);
       
       if (response.success && response.event) {
+        console.log('🎪 Event section image data:', {
+          rawImage: response.event.image,
+          convertedImage: getImageUrl(response.event.image)
+        });
+        
+        const imageUrl = response.event.image ? getImageUrl(response.event.image) : blogThmb;
+        
         setEventData({
           heading: response.event.heading || '',
           description: response.event.description || '',
-          backgroundImage: response.event.image || blogThmb,
+          backgroundImage: imageUrl,
           ctaButton: {
             text: 'Vineyard Venues',
             link: '/event-single'
@@ -49,6 +57,7 @@ const EventArea = () => {
           isActive: true
         });
         console.log('Event section data loaded successfully:', response.event);
+        console.log('🎪 Final background image URL:', imageUrl);
       } else {
         console.error('Invalid API response format:', response);
       }
@@ -159,13 +168,17 @@ const EventArea = () => {
   // Check if we have any events to display
   const hasEvents = events.length > 0;
   const tabKeys = Object.keys(eventsByDate);
+  
+  // Debug: Log the background image URL being used in render
+  console.log('🖼️ Rendering with background image:', eventData.backgroundImage);
+  
   return <section className="vl-blog sp2">
             <Container>
                 <Row>
                     <Col lg={5}>
                         <div className="vl-blog-lar-thumb-bg mb-30" style={{
             position: 'relative',
-            backgroundImage: `url(${eventData.backgroundImage})`
+            backgroundImage: `url("${eventData.backgroundImage}")`
           }}>
                             {/* Overlay */}
                             <div style={{
@@ -257,7 +270,7 @@ const EventArea = () => {
                                                               {(event.image || event.featuredImage) ? (
                                                                 <img 
                                                                   className="w-100" 
-                                                                  src={event.image || event.featuredImage} 
+                                                                  src={getImageUrl(event.image || event.featuredImage)} 
                                                                   alt={event.title || 'Event'} 
                                                                   onError={(e) => {
                                                                     e.target.style.display = 'none';

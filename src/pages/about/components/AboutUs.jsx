@@ -6,6 +6,7 @@ import aboutThum3 from '@/assets/img/about/vl-about-thum-inner-large-1.3.png';
 import { FaCheck } from "react-icons/fa6";
 import { Col, Container, Row } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
+import { getImageUrl } from '@/utils/imageUtils';
 
 // Simple error boundary for debugging
 class ErrorBoundary extends React.Component {
@@ -88,9 +89,9 @@ const AboutUsContent = () => {
   }
 
   // Use API data or fallback to default images
-  const leftImage1 = aboutData && aboutData.images && aboutData.images[0] ? aboutData.images[0] : aboutThum1;
-  const leftImage2 = aboutData && aboutData.images && aboutData.images[1] ? aboutData.images[1] : aboutThum2;
-  const rightImage = aboutData && aboutData.images && aboutData.images[2] ? aboutData.images[2] : aboutThum3;
+  const leftImage1 = aboutData && aboutData.images && aboutData.images[0] ? getImageUrl(aboutData.images[0]) : aboutThum1;
+  const leftImage2 = aboutData && aboutData.images && aboutData.images[1] ? getImageUrl(aboutData.images[1]) : aboutThum2;
+  const rightImage = aboutData && aboutData.images && aboutData.images[2] ? getImageUrl(aboutData.images[2]) : aboutThum3;
 
   return <section className="vl-about5 sp2">
             <Container>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { storiesAPI } from '@/utils/storiesApi';
+import { getImageUrl } from '@/utils/imageUtils';
 
 const Stories = () => {
   const [stories, setStories] = useState([]);
@@ -120,7 +121,7 @@ const Stories = () => {
                   <div className="d-flex align-items-start">
                     <div className="story-avatar me-4">
                       <img 
-                        src={story.image || 'https://via.placeholder.com/80'} 
+                        src={getImageUrl(story.image) || 'https://via.placeholder.com/80'} 
                         alt={story.title || story.name}
                         className="rounded-circle"
                         style={{ 

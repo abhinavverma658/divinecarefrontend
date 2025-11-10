@@ -6,6 +6,7 @@ import calenderImg from '@/assets/img/icons/vl-calender-1.1.svg';
 import userImg from '@/assets/img/icons/vl-user-1.1.svg';
 import { Col, Container, Row } from 'react-bootstrap';
 import { storiesAPI } from '@/utils/storiesApi';
+import { getImageUrl } from '@/utils/imageUtils';
 const Blog = () => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -98,7 +99,7 @@ const Blog = () => {
                                         <Link to="/blog-single">
                                             <img 
                                                 className="w-100" 
-                                                src={item.image} 
+                                                src={getImageUrl(item.image)} 
                                                 alt={item.title || 'Story'} 
                                             />
                                         </Link>

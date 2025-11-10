@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 import { aboutTestimonialsAPI } from '@/utils/About/aboutTestimonialsApi';
+import { getImageUrl } from '@/utils/imageUtils';
 import thumbImg from '@/assets/img/testimonial/vl-testimonial-large-thumb-4.1.png';
 import reviewIcon from '@/assets/img/icons/vl-review-icon-4.1.svg';
 import thumbSmImg from '@/assets/img/testimonial/vl-sm-thumb-4.1.png';
@@ -78,7 +79,7 @@ const Testimonial = () => {
                             <Slider asNavFor={nav2} ref={sliderRef1} slidesToShow={1} slidesToScroll={1} arrows={false} fade={true} className="slider-thumb slider-for1">
                                 {testimonials.map((testimonial, index) => (
                                     <div className="single-thumb" key={index}>
-                                        <img className="w-100" src={about.sectionImage || thumbImg} alt={`testimonial-${index}`} />
+                                        <img className="w-100" src={about.sectionImage ? getImageUrl(about.sectionImage) : thumbImg} alt={`testimonial-${index}`} />
                                     </div>
                                 ))}
                             </Slider>
@@ -97,7 +98,7 @@ const Testimonial = () => {
                                             <p className="para">"{testimonial.content || 'No testimonial content available.'}"</p>
                                             <div className="slider-flex">
                                                 <div className="user">
-                                                    <img src={testimonial.image || thumbSmImg} alt={testimonial.name || 'User'} />
+                                                    <img src={testimonial.image ? getImageUrl(testimonial.image) : thumbSmImg} alt={testimonial.name || 'User'} />
                                                 </div>
                                                 <div className="content">
                                                     <a href="#" className="title">{testimonial.name || 'Anonymous'}</a>

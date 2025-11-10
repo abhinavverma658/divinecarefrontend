@@ -6,6 +6,7 @@ import userImg from '@/assets/img/icons/vl-user-1.1.svg';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { storiesAPI } from '@/utils/storiesApi';
+import { getImageUrl } from '@/utils/imageUtils';
 const Blog = () => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -114,7 +115,7 @@ const Blog = () => {
                     {stories.map((item, idx) => <Col lg={4} md={6} key={item._id || idx} className="d-flex mb-4">
                                 <div className="vl-single-blg-item d-flex flex-column h-100 w-100">
                                     <div className="vl-blg-thumb">
-                                        <Link to={`/blog-single/${item._id}`}><img className="w-100" src={item.image} alt={item.title || 'Story'} /></Link>
+                                        <Link to={`/blog-single/${item._id}`}><img className="w-100" src={getImageUrl(item.image)} alt={item.title || 'Story'} /></Link>
                                     </div>
                                     <div className="vl-meta">
                                         <ul>

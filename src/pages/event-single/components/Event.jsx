@@ -3,6 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from "react-router";
 import { FaArrowRight } from 'react-icons/fa6';
 import { eventsAPI } from '@/utils/eventsApi';
+import { getImageUrl } from '@/utils/imageUtils';
 const Event = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [events, setEvents] = useState([]);
@@ -124,7 +125,7 @@ const Event = () => {
                                                 <img
                                                     className="w-100"
                                                     style={{ height: '200px', objectFit: 'cover' }}
-                                                    src={item.image}
+                                                    src={getImageUrl(item.image)}
                                                     alt={item.title || 'Event Image'}
                                                 />
                                             </div>

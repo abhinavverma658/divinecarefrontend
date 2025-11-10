@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { testimonialsAPI } from '../../../../utils/api';
+import { getImageUrl } from '@/utils/imageUtils';
 import qutImg from '@/assets/img/icons/vl-qut-1.1.svg';
 import { FaStar } from "react-icons/fa6";
 import arrowLeft from "@/assets/img/icons/vl-arrow-left-1.1.svg";
@@ -159,7 +160,7 @@ const Testimonial = () => {
                                                         <div className="auth-img">
                                                             <img
                                                               style={{ width: "50px", height: "50px", borderRadius: "100%", objectFit: "cover" }}
-                                                              src={item.image}
+                                                              src={getImageUrl(item.image)}
                                                               alt={`${item.name} testimonial`}
                                                               onError={(e) => {
                                                                 console.log('Image load error for:', item.image);

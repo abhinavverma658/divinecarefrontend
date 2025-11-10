@@ -4,6 +4,7 @@ import { FaArrowRight } from 'react-icons/fa';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { servicesAPI } from '@/utils/servicesApi';
+import { getImageUrl } from '@/utils/imageUtils';
 const Service = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [services, setServices] = useState([]);
@@ -103,7 +104,7 @@ const Service = () => {
                                             }}>
                                                 {(item.image1 || item.image || item.thumbnail) ? (
                                                     <img 
-                                                        src={item.image1 || item.image || item.thumbnail} 
+                                                        src={getImageUrl(item.image1 || item.image || item.thumbnail)} 
                                                         alt={item.title || 'Service'} 
                                                         style={{
                                                             width: '100%',

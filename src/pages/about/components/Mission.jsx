@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import missionThumbImg from '@/assets/img/about/vl-about-mission-thumb.png';
 import { missionAPI } from '@/utils/About/missionApi';
+import { getImageUrl } from '@/utils/imageUtils';
 import { FaCheck } from "react-icons/fa6";
 import { Col, Container, Row } from 'react-bootstrap';
 const Mission = () => {
@@ -31,7 +32,7 @@ const Mission = () => {
         return <section className="vl-about-mission-bg sp2"><Container><div className="alert alert-warning" role="alert">Unable to load mission section.<br/>{error}</div></Container></section>;
     }
 
-    const missionImage = mission.image || missionThumbImg;
+    const missionImage = mission.image ? getImageUrl(mission.image) : missionThumbImg;
 
     return <section className="vl-about-mission-bg sp2">
         <Container>

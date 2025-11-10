@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Col, Container, Row } from 'react-bootstrap';
 import { servicesAPI } from '@/utils/servicesApi';
+import { getImageUrl } from '@/utils/imageUtils';
 
 const ServiceDetail = () => {
   const { serviceId } = useParams();
@@ -111,7 +112,7 @@ const ServiceDetail = () => {
                 {service.image && (
                   <div className="vl-service-image mb-4">
                     <img 
-                      src={service.image} 
+                      src={getImageUrl(service.image)} 
                       alt={service.title} 
                       className="w-100 img-fluid"
                     />

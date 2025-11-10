@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { Col, Container, Row } from 'react-bootstrap';
 import { FaArrowRight } from 'react-icons/fa6';
 import { apiRequest } from '@/utils/api';
+import { getImageUrl } from '@/utils/imageUtils';
 import calenderImg from '@/assets/img/icons/vl-calender-1.1.svg';
 import userImg from '@/assets/img/icons/vl-user-1.1.svg';
 
@@ -97,8 +98,10 @@ const Blog = () => {
                                                         <div className="vl-single-blg-item mb-30 d-flex flex-column h-100 w-100" data-aos="fade-up" data-aos-duration={1000 + idx * 200} data-aos-delay={300}>
                                                             <div className="vl-blg-thumb">
                                                                 {story.image ? (
-                                                                    <Link to={`/blog-single/${story._id}`}><img className="w-100" src={story.image} alt={story.title || 'Story'} /></Link>
-                                                                ) : null}
+                                                                    <Link to={`/blog-single/${story._id}`}><img className="w-100" src={getImageUrl(story.image)} alt={story.title || 'Story'} /></Link>
+                                                                ) : (
+                                                                    <div className="no-thumb w-100" />
+                                                                )}
                                                             </div>
                                                             <div className="vl-meta">
                                                                 <ul>

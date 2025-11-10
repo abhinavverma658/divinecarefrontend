@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import vision2 from '@/assets/img/about/vl-vission2.png';
 import { visionAPI } from '@/utils/About/visionApi';
+import { getImageUrl } from '@/utils/imageUtils';
 import { Col, Container, Nav, NavItem, NavLink, Row, TabContainer, TabContent, TabPane } from 'react-bootstrap';
 const Vision = () => {
     const [vision, setVision] = useState(null);
@@ -30,7 +31,7 @@ const Vision = () => {
         return <section className="vl-about-vission-bg sp2"><Container><div className="alert alert-warning" role="alert">Unable to load vision section.<br/>{error}</div></Container></section>;
     }
 
-    const visionImage = vision.image || vision2;
+    const visionImage = vision.image ? getImageUrl(vision.image) : vision2;
 
     return <section className="vl-about-vission-bg sp2">
         <Container>

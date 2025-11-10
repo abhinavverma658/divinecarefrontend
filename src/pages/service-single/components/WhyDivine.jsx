@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
+import { getImageUrl } from '@/utils/imageUtils';
 
 const WhyDivine = () => {
   const { serviceId } = useParams();
@@ -172,7 +173,7 @@ const WhyDivine = () => {
                   {serviceDetail.image && (
                     <div className="vl-service-image mb-4">
                       <img 
-                        src={serviceDetail.image} 
+                        src={getImageUrl(serviceDetail.image)} 
                         alt={serviceDetail.title}
                         style={{
                           width: '100%',

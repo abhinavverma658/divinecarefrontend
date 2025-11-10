@@ -6,6 +6,7 @@ import { FaAngleLeft, FaAngleRight, FaArrowRight, FaFacebookF, FaInstagram, FaTw
 import { FaGithub } from "react-icons/fa";
 import { Col, Container, Row } from 'react-bootstrap';
 import { homeAPI } from '@/utils/api';
+import { getImageUrl } from '@/utils/imageUtils';
 import './HeroFix.css';
 
 const Hero = ({ setHeroLoading }) => {
@@ -123,7 +124,7 @@ const Hero = ({ setHeroLoading }) => {
     <div 
       className="vl-hero-slider"
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("${heroData?.heroImage || 'https://via.placeholder.com/1200x600/007bff/ffffff?text=DivineCare+Hero+Section'}")`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("${getImageUrl(heroData?.heroImage) || 'https://via.placeholder.com/1200x600/007bff/ffffff?text=DivineCare+Hero+Section'}")`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

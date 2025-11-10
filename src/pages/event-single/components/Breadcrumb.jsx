@@ -8,6 +8,7 @@ import { Link, useParams } from "react-router";
 import { Col, Container, Row } from 'react-bootstrap';
 import { FaArrowRight } from 'react-icons/fa6';
 import { eventsAPI } from '@/utils/eventsApi';
+import { getImageUrl } from '@/utils/imageUtils';
 const Breadcrumb = () => {
   const { eventId } = useParams(); // Get dynamic eventId from URL parameters
   const prices = [10, 20, 30, 40, 50];
@@ -140,7 +141,7 @@ const Breadcrumb = () => {
                                         <div className="vl-large-thumb">
                                             <img 
                                                 className="w-100 img-fluid" 
-                                                src={eventDetail.image} 
+                                                src={getImageUrl(eventDetail.image)} 
                                                 alt={eventDetail?.title || 'Event Image'} 
                                             />
                                         </div>

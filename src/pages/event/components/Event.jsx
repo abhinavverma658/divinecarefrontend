@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { eventData } from '../data';
 import { eventsAPI } from '@/utils/eventsApi';
+import { getImageUrl } from '@/utils/imageUtils';
 import { FaAngleLeft, FaAngleRight, FaArrowRight } from "react-icons/fa6";
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from "react-router";
@@ -192,7 +193,7 @@ const Event = () => {
                             {(item.image || item.images?.[0]) && (
                               <div className="event-thumb">
                                 <img 
-                                  src={item.image || item.images?.[0]} 
+                                  src={getImageUrl(item.image || item.images?.[0])} 
                                   alt='event'
                                   style={{
                                     width: '370px',

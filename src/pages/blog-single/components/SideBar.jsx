@@ -6,6 +6,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { Link, useParams } from "react-router";
 import { useState, useEffect } from 'react';
 import { storiesAPI } from '@/utils/storiesApi';
+import { getImageUrl } from '@/utils/imageUtils';
 const SideBar = () => {
   const { id } = useParams();
   const [story, setStory] = useState(null);
@@ -90,11 +91,11 @@ const SideBar = () => {
                     <Col lg={8} className="mx-auto">
                         <div className="vl-event-content-area">
                             <div className="vl-large-thumb">
-                                <img className="w-100 img-fluid" src={story.image || thumb1} alt={story.title || 'Story'} />
+                                <img className="w-100 img-fluid" src={story.image ? getImageUrl(story.image) : thumb1} alt={story.title || 'Story'} />
                             </div>
                             <div className="vl-blog-meta-box mt-32">
                                 <ul>
-                                    <li><a href="#"> <span><img src={story.image || thumb1} alt='author' /></span>{story.author || 'Anonymous'}</a></li>
+                                    <li><a href="#"> <span><img src={story.image ? getImageUrl(story.image) : thumb1} alt='author' /></span>{story.author || 'Anonymous'}</a></li>
                                     <li><a href="#"> <span className="icon"><img className="mt-4-" src={calenderImg} alt='calenderImg' /></span> {formatDate(story.date)}</a>
                                     </li>
                                     <li><a href="#"> <span className="icon"><img className="mt-4-" src={tags} alt='tags' /></span> Stories</a></li>
