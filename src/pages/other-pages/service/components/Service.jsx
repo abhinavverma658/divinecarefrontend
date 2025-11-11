@@ -78,8 +78,17 @@ const Service = () => {
                 ) : null}
                 
                 <Row>
-                    {services.map((item, idx) => <Col lg={4} md={6} key={item._id || idx}>
-                                <div className={`vl-single-service-box mb-30 ${hoveredIndex === idx ? 'active' : ''}`} onMouseEnter={() => setHoveredIndex(idx)} onMouseLeave={() => setHoveredIndex(null)}>
+                    {services.map((item, idx) => <Col lg={4} md={6} key={item._id || idx} className="mb-4">
+                                <div className={`vl-single-service-box ${hoveredIndex === idx ? 'active' : ''}`} 
+                                    onMouseEnter={() => setHoveredIndex(idx)} 
+                                    onMouseLeave={() => setHoveredIndex(null)}
+                                    style={{
+                                        height: '100%',
+                                        minHeight: '200px',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        marginTop: '20px'
+                                    }}>
                                     <div className="vl-service-box-flex">
                                         <div className="icon">
                                             {item.icon ? (
@@ -130,9 +139,21 @@ const Service = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="vl-service-box-content">
+                                    <div className="vl-service-box-content" style={{
+                                        flex: 1,
+                                        display: 'flex',
+                                        flexDirection: 'column'
+                                    }}>
                                         <h4 className="title"><a href="#">{item.title}</a></h4>
-                                        <p>{item.description}</p>
+                                        <p style={{
+                                            flex: 1,
+                                            overflow: 'hidden',
+                                            textOverflow: 'ellipsis',
+                                            display: '-webkit-box',
+                                            WebkitLineClamp: 3,
+                                            WebkitBoxOrient: 'vertical',
+                                            marginBottom: '1rem'
+                                        }}>{item.description}</p>
                                         <Link to={`/service-single/${item._id}`} className="read-more">Read More <span><FaArrowRight /></span></Link>
                                     </div>
                                 </div>

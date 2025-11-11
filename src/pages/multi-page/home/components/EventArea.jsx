@@ -94,7 +94,7 @@ const EventArea = () => {
             // Sort in ascending order (earliest first)
             return new Date(a.startDate) - new Date(b.startDate);
           })
-          .slice(0, 3); // Limit to 3 latest events
+          .slice(0, 10); // Limit to 10 upcoming events
 
         setEvents(upcomingEvents);
         
@@ -119,18 +119,33 @@ const EventArea = () => {
 
   const groupEventsByDate = (events) => {
     const grouped = {};
-    const maxTabs = 4;
+    const dateMap = new Map(); // Track unique dates
+    let tabIndex = 1;
 
-    events.forEach((event, index) => {
-      if (index >= maxTabs) return;
-
+    events.forEach((event) => {
       const eventDate = event.startDate ? new Date(event.startDate) : new Date();
-      const dateKey = `tab${index + 1}`;
+      eventDate.setHours(0, 0, 0, 0); // Normalize to start of day
       
-      grouped[dateKey] = {
-        date: eventDate,
-        events: [event] // Each tab gets only one event
-      };
+      const dateKey = eventDate.toISOString().split('T')[0]; // Use YYYY-MM-DD as key
+      
+      if (!dateMap.has(dateKey)) {
+        // New date - create a new tab
+        if (tabIndex > 4) return; // Limit to 4 tabs
+        
+        const tabKey = `tab${tabIndex}`;
+        dateMap.set(dateKey, tabKey);
+        
+        grouped[tabKey] = {
+          date: eventDate,
+          events: [event]
+        };
+        
+        tabIndex++;
+      } else {
+        // Same date - add to existing tab
+        const existingTabKey = dateMap.get(dateKey);
+        grouped[existingTabKey].events.push(event);
+      }
     });
 
     return grouped;

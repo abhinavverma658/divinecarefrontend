@@ -111,40 +111,52 @@ const CtaArea = () => {
 
                                 <div className="vl-cta-form text-center mx-auto">
                                     <form onSubmit={handleSubmit}>
-                                        <div>
-                                            <input 
-                                                type="email" 
-                                                placeholder="Enter Email" 
-                                                value={email}
-                                                onChange={handleEmailChange}
-                                                disabled={isSubmitting}
-                                                style={{ marginBottom: emailError ? '5px' : '0' }}
-                                            />
-                                            {emailError && (
-                                                <div 
-                                                    className="text-danger" 
-                                                    style={{ 
-                                                        fontSize: '13px', 
-                                                        marginTop: '5px', 
-                                                        marginBottom: '10px',
-                                                        textAlign: 'left'
-                                                    }}
-                                                >
-                                                    {emailError}
+                                        <div style={{ position: 'relative', maxWidth: '600px', margin: '0 auto' }}>
+                                            <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                                                <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                                                    <input 
+                                                        type="email" 
+                                                        placeholder="Enter Email" 
+                                                        value={email}
+                                                        onChange={handleEmailChange}
+                                                        disabled={isSubmitting}
+                                                        style={{ 
+                                                            marginBottom: emailError ? '5px' : '0',
+                                                            paddingRight: '15px',
+                                                            paddingLeft: '15px',
+                                                            width: '100%',
+                                                            boxSizing: 'border-box',
+                                                            fontSize: '14px'
+                                                        }}
+                                                    />
+                                                    {emailError && (
+                                                        <div 
+                                                            className="text-danger" 
+                                                            style={{ 
+                                                                fontSize: '13px', 
+                                                                marginTop: '5px',
+                                                                textAlign: 'left'
+                                                            }}
+                                                        >
+                                                            {emailError}
+                                                        </div>
+                                                    )}
                                                 </div>
-                                      )}
-                                      <div className="btn-area vl-cta-btn1">
-                                            <button 
-                                                type="submit" 
-                                                className="header-btn1"
-                                                disabled={isSubmitting || !!emailError}
-                                                style={{ opacity: (isSubmitting || !!emailError) ? 0.7 : 1 }}
-                                            >
-                                                {isSubmitting ? 'Subscribing...' : 'Subscribe'} <span><FaArrowRight /></span>
-                                            </button>
+                                                <div className="btn-area vl-cta-btn1" style={{ flexShrink: 0 }}>
+                                                    <button 
+                                                        type="submit" 
+                                                        className="header-btn1"
+                                                        disabled={isSubmitting || !!emailError}
+                                                        style={{ 
+                                                            opacity: (isSubmitting || !!emailError) ? 0.7 : 1,
+                                                            whiteSpace: 'nowrap'
+                                                        }}
+                                                    >
+                                                        {isSubmitting ? 'Subscribing...' : 'Subscribe'} <span><FaArrowRight /></span>
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
-                                        </div>
-                                        
                                     </form>
                                 </div>
                             </div>
