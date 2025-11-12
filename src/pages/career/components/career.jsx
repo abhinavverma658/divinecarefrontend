@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Form, Button, Row, Col } from 'react-bootstrap';
 import logo from '@/assets/img/logo/16.png';
 import notFoundImg from '@/assets/img/career/notFound.svg';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const ApplicationModal = ({ show, handleClose, jobTitle, jobDescription, jobId }) => {
   const [formData, setFormData] = useState({
@@ -505,9 +507,55 @@ const JobOpportunitiesPage = () => {
         <h1 className="text-center fw-bold mb-5" style={{fontSize: '2.5rem'}}>Jobs Opportunities</h1>
         
         {loading ? (
-          <div className="text-center py-5">
-            <div role="status" style={{ color: '#003d82' }}>
-            </div>
+          <div className="row row-cols-1 row-cols-lg-2 g-4">
+            {[...Array(4)].map((_, idx) => (
+              <div className="col" key={idx}>
+                <div className="card border-0 mb-4" style={{ borderRadius: '30px', boxShadow: '0 2px 10px rgba(0,0,0,0.08)' }}>
+                  <div className="card-body p-4">
+                    <div className="d-flex justify-content-between align-items-start mb-3">
+                      <div style={{ flex: 1 }}>
+                        <Skeleton height={30} width="70%" style={{ marginBottom: '10px' }} />
+                        <div className="d-flex align-items-center gap-3 mb-2">
+                          <Skeleton height={20} width={120} />
+                          <div className="d-flex align-items-center gap-1">
+                            <Skeleton circle width={24} height={24} />
+                            <Skeleton height={20} width={40} />
+                            <Skeleton height={18} width={100} />
+                          </div>
+                        </div>
+                      </div>
+                      <Skeleton height={40} width={40} />
+                    </div>
+                    
+                    <div className="mb-3">
+                      <Skeleton height={18} width="80%" style={{ marginBottom: '8px' }} />
+                      <Skeleton height={18} width="60%" />
+                    </div>
+
+                    <Skeleton height={1} style={{ margin: '16px 0' }} />
+
+                    <div className="d-flex justify-content-between align-items-center mb-4">
+                      <Skeleton height={18} width="70%" />
+                      <Skeleton height={40} width={100} style={{ borderRadius: '20px' }} />
+                    </div>
+
+                    <div className="mb-4">
+                      <Skeleton height={22} width={200} style={{ marginBottom: '15px' }} />
+                      <Skeleton count={3} style={{ marginBottom: '8px' }} />
+                    </div>
+
+                    <div>
+                      <Skeleton height={22} width={120} style={{ marginBottom: '15px' }} />
+                      <div className="d-flex flex-wrap gap-2">
+                        {[...Array(5)].map((_, skillIdx) => (
+                          <Skeleton key={skillIdx} height={32} width={80} style={{ borderRadius: '30px' }} />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         ) : error ? (
           <div className="alert alert-danger text-center" role="alert">

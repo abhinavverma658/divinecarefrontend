@@ -5,6 +5,8 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { servicesAPI } from '@/utils/servicesApi';
 import { getImageUrl } from '@/utils/imageUtils';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 const Service = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [services, setServices] = useState([]);
@@ -59,12 +61,19 @@ const Service = () => {
             <Container>
                 {loading ? (
                     <Row>
-                        <Col lg={12}>
-                            <div className="text-center py-5">
-                                <div role="status">
+                        {[...Array(6)].map((_, idx) => (
+                            <Col lg={4} md={6} key={idx} className="mb-4">
+                                <div style={{ minHeight: '450px', display: 'flex', flexDirection: 'column', padding: '30px', background: '#f8f9fa', borderRadius: '10px' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+                                        <Skeleton circle width={60} height={60} />
+                                        <Skeleton height={100} width={120} style={{ borderRadius: '8px' }} />
+                                    </div>
+                                    <Skeleton height={30} width="80%" style={{ marginBottom: '15px' }} />
+                                    <Skeleton count={3} style={{ marginBottom: '10px' }} />
+                                    <Skeleton height={20} width={120} style={{ marginTop: 'auto' }} />
                                 </div>
-                            </div>
-                        </Col>
+                            </Col>
+                        ))}
                     </Row>
                 ) : error ? (
                     <Row>

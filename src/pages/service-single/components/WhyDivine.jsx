@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
 import { getImageUrl } from '@/utils/imageUtils';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const WhyDivine = () => {
   const { serviceId } = useParams();
@@ -125,9 +127,10 @@ const WhyDivine = () => {
                 </div>
                 <div className="vl-widget-content">
                   {loadingServices ? (
-                    <div className="text-center py-3">
-                      <div  role="status">
-                      </div>
+                    <div className="py-3">
+                      {[...Array(5)].map((_, idx) => (
+                        <Skeleton key={idx} height={20} style={{ marginBottom: '15px' }} />
+                      ))}
                     </div>
                   ) : (
                     <ul className="vl-service-category">
@@ -163,9 +166,17 @@ const WhyDivine = () => {
           <Col lg={8}>
             <div className="vl-service-details">
               {loadingDetail ? (
-                <div className="text-center py-5">
-                  <div role="status">
-                  </div>
+                <div className="vl-service-content">
+                  <Skeleton height={400} style={{ marginBottom: '30px', borderRadius: '8px' }} />
+                  <Skeleton height={40} width="70%" style={{ marginBottom: '20px' }} />
+                  <Skeleton count={3} style={{ marginBottom: '10px' }} />
+                  <Skeleton height={30} width="40%" style={{ marginTop: '30px', marginBottom: '20px' }} />
+                  {[...Array(4)].map((_, idx) => (
+                    <div key={idx} style={{ display: 'flex', gap: '15px', marginBottom: '15px' }}>
+                      <Skeleton circle width={22} height={22} />
+                      <Skeleton height={20} style={{ flex: 1 }} />
+                    </div>
+                  ))}
                 </div>
               ) : serviceDetail ? (
                 <div className="vl-service-content">

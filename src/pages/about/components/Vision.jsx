@@ -4,6 +4,8 @@ import vision2 from '@/assets/img/about/vl-vission2.png';
 import { visionAPI } from '@/utils/About/visionApi';
 import { getImageUrl } from '@/utils/imageUtils';
 import { Col, Container, Nav, NavItem, NavLink, Row, TabContainer, TabContent, TabPane } from 'react-bootstrap';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 const Vision = () => {
     const [vision, setVision] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -25,7 +27,36 @@ const Vision = () => {
     }, []);
 
     if (loading) {
-        return <section className="vl-about-vission-bg sp2"><Container><div className="text-center py-5"><div className="spinner-border" role="status"><span className="visually-hidden">Loading...</span></div></div></Container></section>;
+        return (
+            <section className="vl-about-vission-bg sp2">
+                <Container>
+                    <Row>
+                        <Col lg={6}>
+                            <div className="vission-thumb mb-30">
+                                <Skeleton height={660} />
+                            </div>
+                        </Col>
+                        <Col lg={6}>
+                            <div className="vl-vission-content ml-50 mb-30">
+                                <div className="vl-section-title-1">
+                                    <Skeleton height={30} width={200} style={{ marginBottom: '20px' }} />
+                                    <Skeleton height={50} width="85%" style={{ marginBottom: '20px' }} />
+                                    <Skeleton count={4} style={{ marginBottom: '10px' }} />
+                                </div>
+                                <div className="vl-vission-tab2 mt-4">
+                                    <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+                                        <Skeleton height={40} width={120} />
+                                        <Skeleton height={40} width={120} />
+                                        <Skeleton height={40} width={120} />
+                                    </div>
+                                    <Skeleton count={5} style={{ marginBottom: '10px' }} />
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+            </section>
+        );
     }
     if (error || !vision) {
         return <section className="vl-about-vission-bg sp2"><Container><div className="alert alert-warning" role="alert">Unable to load vision section.<br/>{error}</div></Container></section>;

@@ -9,6 +9,8 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { FaArrowRight } from 'react-icons/fa6';
 import { eventsAPI } from '@/utils/eventsApi';
 import { getImageUrl } from '@/utils/imageUtils';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 const Breadcrumb = () => {
   const { eventId } = useParams(); // Get dynamic eventId from URL parameters
   const prices = [10, 20, 30, 40, 50];
@@ -124,12 +126,17 @@ const Breadcrumb = () => {
                     <Col lg={8} className="mx-auto">
                         <div className="vl-event-content-area">
                             {loading ? (
-                                <div className="text-center py-5">
-                                    <div className="spinner-border" role="status">
-                                        <span className="visually-hidden">Loading...</span>
+                                // Skeleton Loading
+                                <>
+                                    <div className="vl-large-thumb">
+                                        <Skeleton height={500} style={{ borderRadius: '10px' }} />
                                     </div>
-                                    <p>Loading event details...</p>
-                                </div>
+                                    <div className="vl-event-content mt-4">
+                                        <Skeleton height={40} width="80%" style={{ marginBottom: '20px' }} />
+                                        <Skeleton count={3} style={{ marginBottom: '10px' }} />
+                                        <Skeleton count={5} style={{ marginBottom: '10px', marginTop: '20px' }} />
+                                    </div>
+                                </>
                             ) : error ? (
                                 <div className="alert alert-warning text-center">
                                     <p>Unable to load event details. Please try again later.</p>
@@ -157,7 +164,52 @@ const Breadcrumb = () => {
                             )}
                             <div className="vl-event-box-bg">
                                 <Row className="g-4">
-                                    <Col lg={6} md={6}>
+                                    {loading ? (
+                                        // Skeleton for event info boxes
+                                        <>
+                                            <Col lg={6} md={6}>
+                                                <div style={{ padding: '30px', background: 'rgba(0,0,0,0.7)', borderRadius: '10px' }}>
+                                                    <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                                                        <Skeleton circle width={60} height={60} baseColor="#ffffff20" highlightColor="#ffffff40" />
+                                                        <div style={{ flex: 1 }}>
+                                                            <Skeleton height={25} width={150} baseColor="#ffffff20" highlightColor="#ffffff40" style={{ marginBottom: '10px' }} />
+                                                            <Skeleton height={20} width="80%" baseColor="#ffffff20" highlightColor="#ffffff40" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </Col>
+                                            <Col lg={6} md={6}>
+                                                <div style={{ padding: '30px', background: 'rgba(0,0,0,0.7)', borderRadius: '10px' }}>
+                                                    <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                                                        <Skeleton circle width={60} height={60} baseColor="#ffffff20" highlightColor="#ffffff40" />
+                                                        <div style={{ flex: 1 }}>
+                                                            <Skeleton height={25} width={150} baseColor="#ffffff20" highlightColor="#ffffff40" style={{ marginBottom: '10px' }} />
+                                                            <Skeleton height={20} width="80%" baseColor="#ffffff20" highlightColor="#ffffff40" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </Col>
+                                            <Col lg={12} md={12}>
+                                                <div className="donate-form mt-5">
+                                                    <Skeleton height={35} width={300} style={{ margin: '0 auto 30px', display: 'block' }} />
+                                                    <div className="row">
+                                                        <div className="mb-20 col-md-6">
+                                                            <Skeleton height={50} />
+                                                        </div>
+                                                        <div className="mb-20 col-md-6">
+                                                            <Skeleton height={50} />
+                                                        </div>
+                                                        <div className="mb-20 col-md-6">
+                                                            <Skeleton height={50} />
+                                                        </div>
+                                                    </div>
+                                                    <Skeleton height={50} width={200} style={{ marginTop: '20px' }} />
+                                                </div>
+                                            </Col>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Col lg={6} md={6}>
                                         <div className="icon-box mb-30 h-100 d-flex">
                                             <div className="icon">
                                                 <span><img src={eventDate1} alt='eventDate1' /></span>
@@ -266,13 +318,13 @@ const Breadcrumb = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </form>
-                  </div>
-                </Col>
-                          </Row>
-                            </div>
-                            
-                            {/* Registration Form Section */}
+                                                </form>
+                                            </div>
+                                        </Col>
+                                        </>
+                                    )}
+                                </Row>
+                            </div>                            {/* Registration Form Section */}
                          
                             
                         </div>

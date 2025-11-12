@@ -4,6 +4,8 @@ import { Link } from "react-router";
 import { FaArrowRight } from 'react-icons/fa6';
 import { eventsAPI } from '@/utils/eventsApi';
 import { getImageUrl } from '@/utils/imageUtils';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 const Event = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [events, setEvents] = useState([]);
@@ -73,12 +75,26 @@ const Event = () => {
                 </Row>
                 <Row>
                     {loading ? (
-                        <Col lg={12} className="text-center py-5">
-                            <div className="spinner-border" role="status">
-                                <span className="visually-hidden">Loading...</span>
-                            </div>
-                            <p className="mt-3">Loading latest events...</p>
-                        </Col>
+                        // Skeleton Loading
+                        [...Array(2)].map((_, idx) => (
+                            <Col lg={12} className="mb-50" key={idx}>
+                                <div className="event-bg-flex" style={{ display: 'flex', gap: '30px', alignItems: 'center', padding: '30px', background: '#f8f9fa', borderRadius: '10px' }}>
+                                    <div style={{ minWidth: '100px', textAlign: 'center' }}>
+                                        <Skeleton height={50} width={60} style={{ marginBottom: '10px' }} />
+                                        <Skeleton height={20} width={80} />
+                                    </div>
+                                    <div style={{ flex: 1 }}>
+                                        <Skeleton height={20} width={200} style={{ marginBottom: '15px' }} />
+                                        <Skeleton height={35} width="70%" style={{ marginBottom: '15px' }} />
+                                        <Skeleton height={20} width="50%" style={{ marginBottom: '15px' }} />
+                                        <Skeleton height={20} width={150} />
+                                    </div>
+                                    <div style={{ minWidth: '100%', maxWidth: '200px' }}>
+                                        <Skeleton height={200} style={{ borderRadius: '8px' }} />
+                                    </div>
+                                </div>
+                            </Col>
+                        ))
                     ) : error ? (
                         <Col lg={12} className="text-center">
                             <div className="alert alert-warning">

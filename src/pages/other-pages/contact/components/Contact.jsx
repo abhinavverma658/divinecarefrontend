@@ -2,6 +2,8 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { FaArrowRight } from 'react-icons/fa6';
 import { useState, useEffect } from 'react';
 import { contactPageAPI } from '@/utils/contactPageApi';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Contact = () => {
   const [contactPageData, setContactPageData] = useState(null);
@@ -160,7 +162,53 @@ const Contact = () => {
   };
   return <section className="vl-contact-section-inner sp2">
             <Container>
-                <Row className=" flex-lg-row flex-column-reverse">
+                {loading ? (
+                    <Row className="flex-lg-row flex-column-reverse">
+                        <Col lg={6} className="mb-30">
+                            <div className="vl-maps">
+                                <Skeleton height={800} style={{ borderRadius: '8px' }} />
+                            </div>
+                        </Col>
+                        <Col lg={6} className="mb-30">
+                            <div className="vl-section-content ml-50">
+                                <div className="section-title">
+                                    <Skeleton height={25} width={150} style={{ marginBottom: '15px' }} />
+                                    <Skeleton height={40} width="90%" style={{ marginBottom: '15px' }} />
+                                    <Skeleton count={3} style={{ marginBottom: '8px' }} />
+                                </div>
+                                <div className="vl-form-inner" style={{ marginTop: '30px' }}>
+                                    <Row>
+                                        <Col lg={6}>
+                                            <Skeleton height={50} style={{ marginBottom: '20px', borderRadius: '5px' }} />
+                                        </Col>
+                                        <Col lg={6}>
+                                            <Skeleton height={50} style={{ marginBottom: '20px', borderRadius: '5px' }} />
+                                        </Col>
+                                        <Col lg={12}>
+                                            <Skeleton height={50} style={{ marginBottom: '20px', borderRadius: '5px' }} />
+                                        </Col>
+                                        <Col lg={12}>
+                                            <Skeleton height={50} style={{ marginBottom: '20px', borderRadius: '5px' }} />
+                                        </Col>
+                                        <Col lg={12}>
+                                            <Skeleton height={50} style={{ marginBottom: '20px', borderRadius: '5px' }} />
+                                        </Col>
+                                        <Col lg={12}>
+                                            <Skeleton height={60} style={{ marginBottom: '20px', borderRadius: '5px' }} />
+                                        </Col>
+                                        <Col lg={12}>
+                                            <Skeleton height={120} style={{ marginBottom: '20px', borderRadius: '5px' }} />
+                                        </Col>
+                                        <Col lg={12}>
+                                            <Skeleton height={50} width={180} style={{ borderRadius: '5px' }} />
+                                        </Col>
+                                    </Row>
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
+                ) : (
+                    <Row className="flex-lg-row flex-column-reverse">
                     <Col lg={6} className="mb-30">
                         <div className="vl-maps">
                             <iframe src={contactPageData?.googleMapsEmbedLink} allowFullScreen className="vl-contact-maps" style={{ height: "800px" }} />
@@ -283,8 +331,9 @@ const Contact = () => {
                                 </form>
                             </div>
                         </div>
-                    </Col>
-                </Row>
+                        </Col>
+                    </Row>
+                )}
             </Container>
         </section>;
 };

@@ -8,6 +8,8 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { homeAPI } from '@/utils/api';
 import { getImageUrl } from '@/utils/imageUtils';
 import './HeroFix.css';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Hero = ({ setHeroLoading }) => {
   // State for hero data and loading
@@ -104,7 +106,21 @@ const Hero = ({ setHeroLoading }) => {
   // Loading state
   if (loading) {
     return (
-      <div className="vl-banner p-relative fix" style={{ minHeight: '600px', backgroundColor: '#f8f9fa' }}></div>
+      <div className="vl-banner p-relative fix" style={{ minHeight: '700px', backgroundColor: '#f8f9fa', display: 'flex', alignItems: 'center' }}>
+        <Container>
+          <Row>
+            <Col lg={7}>
+              <div style={{ padding: '40px 0' }}>
+                <Skeleton height={30} width={300} style={{ marginBottom: '20px' }} baseColor="#e0e0e0" highlightColor="#f5f5f5" />
+                <Skeleton height={60} width="90%" style={{ marginBottom: '15px' }} baseColor="#e0e0e0" highlightColor="#f5f5f5" />
+                <Skeleton height={60} width="70%" style={{ marginBottom: '25px' }} baseColor="#e0e0e0" highlightColor="#f5f5f5" />
+                <Skeleton count={3} style={{ marginBottom: '10px' }} baseColor="#e0e0e0" highlightColor="#f5f5f5" />
+                <Skeleton height={50} width={200} style={{ marginTop: '30px' }} baseColor="#e0e0e0" highlightColor="#f5f5f5" />
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
     );
   }
 

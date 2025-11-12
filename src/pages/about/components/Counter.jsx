@@ -5,6 +5,8 @@ import { companyAPI } from '@/utils/About/companyApi';
 import { Col, Container, Row } from 'react-bootstrap';
 import CountUp from 'react-countup';
 import { FaArrowRight } from 'react-icons/fa6';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 const Counter = () => {
     const [company, setCompany] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -27,7 +29,36 @@ const Counter = () => {
     }, []);
 
     if (loading) {
-        return <section className="vl-counter5 counter-iner sp2"><Container><div className="text-center py-5"><div className="spinner-border" role="status"><span className="visually-hidden">Loading...</span></div></div></Container></section>;
+        return (
+            <section className="vl-counter5 counter-iner sp2">
+                <Container>
+                    <Row>
+                        <Col lg={6}>
+                            <div className="vl-counter-content mb-30">
+                                <div className="vl-section-title-1">
+                                    <Skeleton height={30} width={200} style={{ marginBottom: '20px' }} />
+                                    <Skeleton height={50} width="90%" style={{ marginBottom: '20px' }} />
+                                    <Skeleton count={3} style={{ marginBottom: '10px' }} />
+                                    <Skeleton height={50} width={150} style={{ marginTop: '20px' }} />
+                                </div>
+                            </div>
+                        </Col>
+                        <Col lg={6} className="mb-10">
+                            <Row>
+                                {[1, 2, 3, 4].map((_, idx) => (
+                                    <Col lg={6} md={6} key={idx}>
+                                        <div className="single-counter-box counter-box-2 mb-30" style={{ padding: '30px' }}>
+                                            <Skeleton height={40} width={100} style={{ marginBottom: '15px' }} />
+                                            <Skeleton height={20} width="80%" />
+                                        </div>
+                                    </Col>
+                                ))}
+                            </Row>
+                        </Col>
+                    </Row>
+                </Container>
+            </section>
+        );
     }
     if (error || !company) {
         return <section className="vl-counter5 counter-iner sp2"><Container><div className="alert alert-warning" role="alert">Unable to load company stats section.<br/>{error}</div></Container></section>;

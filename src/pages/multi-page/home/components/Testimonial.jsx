@@ -8,6 +8,8 @@ import angleRight from "@/assets/img/icons/vl-angle-right-1.2.svg";
 import { Autoplay, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Container, Row } from 'react-bootstrap';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 const Testimonial = () => {
   const [testimonialsData, setTestimonialsData] = useState({
     sectionHeading: 'Stories from the Heart',
@@ -93,7 +95,25 @@ const Testimonial = () => {
               {testimonialsData.sectionDescription}
             </p>
             {loading && (
-              <div style={{ minHeight: '1px' }}></div>
+              <div className="mt-5">
+                <Row>
+                  {[...Array(3)].map((_, idx) => (
+                    <div key={idx} className="col-lg-4 col-md-6 mb-4">
+                      <div style={{ background: 'rgba(255,255,255,0.1)', padding: '30px', borderRadius: '10px' }}>
+                        <Skeleton height={25} width={150} baseColor="#ffffff20" highlightColor="#ffffff40" style={{ marginBottom: '20px' }} />
+                        <Skeleton count={4} baseColor="#ffffff20" highlightColor="#ffffff40" style={{ marginBottom: '10px' }} />
+                        <div style={{ display: 'flex', alignItems: 'center', marginTop: '20px', gap: '15px' }}>
+                          <Skeleton circle width={50} height={50} baseColor="#ffffff20" highlightColor="#ffffff40" />
+                          <div style={{ flex: 1 }}>
+                            <Skeleton height={20} width={120} baseColor="#ffffff20" highlightColor="#ffffff40" style={{ marginBottom: '5px' }} />
+                            <Skeleton height={15} width={80} baseColor="#ffffff20" highlightColor="#ffffff40" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </Row>
+              </div>
             )}
             {!loading && (
               <div className="text-center mt-3">
@@ -114,7 +134,9 @@ const Testimonial = () => {
                       {testimonialsData.sectionDescription}
                     </p>
                     {loading && (
-                      <div style={{ minHeight: '1px' }}></div>
+                      <div style={{ minHeight: '1px' }}>
+                        <Skeleton width={200} height={20} baseColor="#ffffff20" highlightColor="#ffffff40" style={{ margin: '0 auto' }} />
+                      </div>
                     )}
                     {error && (
                       <div className="text-center mt-3">

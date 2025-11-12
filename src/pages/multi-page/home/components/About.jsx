@@ -9,6 +9,8 @@ import { FaHandsHelping, FaHeart, FaUsers, FaShieldAlt, FaHome, FaBullseye, FaSt
 import { useState, useEffect } from 'react';
 import { homeAPI } from '@/utils/api';
 import { getImageUrl } from '@/utils/imageUtils';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 const About = () => {
   const [aboutData, setAboutData] = useState({
     mainHeading: 'Committed to Relief, Our Work Dedicated to Hope',
@@ -77,11 +79,42 @@ const About = () => {
 
   if (loading) {
     return (
-      <section className="vl-about-section sp2">
+      <section className="vl-about-section sp2" style={{ marginBottom: "0px" }}>
         <Container>
           <Row>
-            <Col lg={12} className="text-center py-5">
-              <div>Loading...</div>
+            <Col lg={6}>
+              <div className="vl-about-content">
+                <div className="vl-section-title-1">
+                  <Skeleton height={30} width={150} style={{ marginBottom: '20px' }} />
+                  <Skeleton height={50} width="90%" style={{ marginBottom: '20px' }} />
+                  <Skeleton count={3} style={{ marginBottom: '10px' }} />
+                </div>
+                <div className="vl-about-grid">
+                  {[1, 2].map((_, index) => (
+                    <div key={index} className="vl-about-icon-box mb-30">
+                      <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                        <Skeleton circle width={60} height={60} />
+                        <div style={{ flex: 1 }}>
+                          <Skeleton height={25} width="80%" style={{ marginBottom: '10px' }} />
+                          <Skeleton count={2} />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Col>
+            <Col lg={4} md={6} className="mb-0">
+              <Skeleton height={560} />
+            </Col>
+            <Col lg={2} md={6} className="mb-30">
+              <div className="vl-about-sm-content">
+                <Skeleton count={4} style={{ marginBottom: '10px' }} />
+                <Skeleton height={50} width={150} style={{ marginTop: '20px', marginBottom: '20px' }} />
+                <div className="d-none d-md-block">
+                  <Skeleton height={290} />
+                </div>
+              </div>
             </Col>
           </Row>
         </Container>

@@ -5,6 +5,8 @@ import { missionAPI } from '@/utils/About/missionApi';
 import { getImageUrl } from '@/utils/imageUtils';
 import { FaCheck } from "react-icons/fa6";
 import { Col, Container, Row } from 'react-bootstrap';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 const Mission = () => {
     const [mission, setMission] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -26,7 +28,37 @@ const Mission = () => {
     }, []);
 
     if (loading) {
-        return <section className="vl-about-mission-bg sp2"><Container><div className="text-center py-5"><div className="spinner-border" role="status"><span className="visually-hidden">Loading...</span></div></div></Container></section>;
+        return (
+            <section className="vl-about-mission-bg sp2">
+                <Container>
+                    <Row>
+                        <Col lg={10} className="mx-auto">
+                            <Row className="align-items-center">
+                                <Col lg={6}>
+                                    <div className="mision-thumb mb-30">
+                                        <Skeleton height={500} style={{ borderRadius: '10px' }} />
+                                    </div>
+                                </Col>
+                                <Col lg={6}>
+                                    <div className="mission-content ml-20 mb-30">
+                                        <Skeleton height={40} width="70%" style={{ marginBottom: '20px' }} />
+                                        <Skeleton count={3} style={{ marginBottom: '10px' }} />
+                                        <div className="pt-20">
+                                            {[1, 2, 3, 4].map((_, idx) => (
+                                                <div key={idx} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                                                    <Skeleton circle width={20} height={20} style={{ marginRight: '10px' }} />
+                                                    <Skeleton width="80%" />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                </Container>
+            </section>
+        );
     }
     if (error || !mission) {
         return <section className="vl-about-mission-bg sp2"><Container><div className="alert alert-warning" role="alert">Unable to load mission section.<br/>{error}</div></Container></section>;

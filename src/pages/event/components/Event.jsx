@@ -6,6 +6,8 @@ import { FaAngleLeft, FaAngleRight, FaArrowRight } from "react-icons/fa6";
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from "react-router";
 import calendarImg from '@/assets/img/icons/calender.svg';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Event = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -99,10 +101,27 @@ const Event = () => {
     return (
       <section className="vl-singlevent-iner sp1">
         <Container>
-          <div className="text-center py-5">
-            <div role="status">
-            </div>
-          </div>
+          <Row>
+            {[1, 2, 3, 4, 5].map((_, idx) => (
+              <Col lg={12} className="mb-50" key={idx}>
+                <div className="event-bg-flex" style={{ display: 'flex', gap: '30px', alignItems: 'center', padding: '30px', background: '#f8f9fa', borderRadius: '10px' }}>
+                  <div style={{ minWidth: '100px', textAlign: 'center' }}>
+                    <Skeleton height={50} width={60} style={{ marginBottom: '10px' }} />
+                    <Skeleton height={20} width={80} />
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <Skeleton height={20} width={200} style={{ marginBottom: '15px' }} />
+                    <Skeleton height={35} width="70%" style={{ marginBottom: '15px' }} />
+                    <Skeleton height={20} width="50%" style={{ marginBottom: '15px' }} />
+                    <Skeleton height={20} width={150} />
+                  </div>
+                  <div style={{ minWidth: '370px' }}>
+                    <Skeleton height={200} width={370} style={{ borderRadius: '8px' }} />
+                  </div>
+                </div>
+              </Col>
+            ))}
+          </Row>
         </Container>
       </section>
     );

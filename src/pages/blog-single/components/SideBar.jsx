@@ -7,6 +7,8 @@ import { Link, useParams } from "react-router";
 import { useState, useEffect } from 'react';
 import { storiesAPI } from '@/utils/storiesApi';
 import { getImageUrl } from '@/utils/imageUtils';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 const SideBar = () => {
   const { id } = useParams();
   const [story, setStory] = useState(null);
@@ -57,11 +59,47 @@ const SideBar = () => {
       <Container>
         <Row>
           <Col lg={8} className="mx-auto">
-            <div className="text-center py-5">
-              <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading...</span>
+            <div className="vl-event-content-area">
+              <div className="vl-large-thumb">
+                <Skeleton height={400} style={{ borderRadius: '8px' }} />
               </div>
-              <p className="mt-3">Loading story...</p>
+              <div className="vl-blog-meta-box mt-32">
+                <ul style={{ display: 'flex', gap: '20px', listStyle: 'none', padding: 0 }}>
+                  <li>
+                    <Skeleton circle width={40} height={40} style={{ marginRight: '8px', display: 'inline-block' }} />
+                    <Skeleton width={100} height={20} style={{ display: 'inline-block' }} />
+                  </li>
+                  <li>
+                    <Skeleton width={120} height={20} />
+                  </li>
+                  <li>
+                    <Skeleton width={80} height={20} />
+                  </li>
+                  <li>
+                    <Skeleton width={90} height={20} />
+                  </li>
+                </ul>
+              </div>
+              <div className="vl-event-content vl-blg-content">
+                <Skeleton height={40} width="80%" style={{ marginBottom: '20px' }} />
+                <Skeleton count={8} style={{ marginBottom: '10px' }} />
+              </div>
+              <div className="vl-blg-icon-box">
+                <Row>
+                  <Col lg={6} md={6}>
+                    <div className="single-blog-box1 mb-30">
+                      <Skeleton height={28} width="80%" style={{ marginBottom: '10px' }} />
+                      <Skeleton count={2} style={{ marginBottom: '8px' }} />
+                    </div>
+                  </Col>
+                  <Col lg={6} md={6}>
+                    <div className="single-blog-box1 mb-30">
+                      <Skeleton height={28} width="80%" style={{ marginBottom: '10px' }} />
+                      <Skeleton count={2} style={{ marginBottom: '8px' }} />
+                    </div>
+                  </Col>
+                </Row>
+              </div>
             </div>
           </Col>
         </Row>

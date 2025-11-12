@@ -3,6 +3,8 @@ import { useParams } from 'react-router';
 import { Col, Container, Row } from 'react-bootstrap';
 import { servicesAPI } from '@/utils/servicesApi';
 import { getImageUrl } from '@/utils/imageUtils';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const ServiceDetail = () => {
   const { serviceId } = useParams();
@@ -41,11 +43,30 @@ const ServiceDetail = () => {
       <section className="py-5">
         <Container>
           <Row>
-            <Col lg={12} className="text-center">
-              <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading...</span>
+            <Col lg={4}>
+              <div className="vl-widget-area">
+                <div className="vl-search-widget mb-30" style={{ padding: '30px', background: '#f8f9fa', borderRadius: '10px' }}>
+                  <Skeleton height={30} width="80%" style={{ marginBottom: '20px' }} />
+                  {[...Array(5)].map((_, idx) => (
+                    <div key={idx} style={{ marginBottom: '15px' }}>
+                      <Skeleton height={20} width="90%" />
+                    </div>
+                  ))}
+                </div>
+                <div style={{ padding: '40px', background: 'linear-gradient(135deg, #012372 0%, #315EA2 100%)', borderRadius: '10px' }}>
+                  <Skeleton height={25} width="80%" baseColor="#ffffff20" highlightColor="#ffffff40" style={{ marginBottom: '15px' }} />
+                  <Skeleton height={40} width="60%" baseColor="#ffffff20" highlightColor="#ffffff40" />
+                </div>
               </div>
-              <p className="mt-3">Loading service details...</p>
+            </Col>
+            <Col lg={8}>
+              <div className="vl-service-details">
+                <Skeleton height={400} style={{ marginBottom: '30px', borderRadius: '10px' }} />
+                <Skeleton height={40} width="70%" style={{ marginBottom: '20px' }} />
+                <Skeleton count={5} style={{ marginBottom: '10px' }} />
+                <Skeleton height={30} width="50%" style={{ marginTop: '30px', marginBottom: '20px' }} />
+                <Skeleton count={3} style={{ marginBottom: '10px' }} />
+              </div>
             </Col>
           </Row>
         </Container>

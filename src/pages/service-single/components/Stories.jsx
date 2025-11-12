@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { storiesAPI } from '@/utils/storiesApi';
 import { getImageUrl } from '@/utils/imageUtils';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Stories = () => {
   const [stories, setStories] = useState([]);
@@ -92,11 +94,26 @@ const Stories = () => {
         
         {loading ? (
           <Row>
-            <Col lg={12} className="text-center py-5">
-              <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
-              <p className="mt-3">Loading stories...</p>
+            <Col lg={12}>
+              {[...Array(4)].map((_, idx) => (
+                <div key={idx} className="vl-single-story mb-4 p-4" style={{
+                  backgroundColor: '#fff',
+                  border: '1px solid #e9ecef',
+                  borderRadius: '8px'
+                }}>
+                  <div className="d-flex align-items-start">
+                    <div className="story-avatar me-4">
+                      <Skeleton circle width={80} height={80} />
+                    </div>
+                    <div className="story-content flex-grow-1">
+                      <Skeleton height={30} width="60%" style={{ marginBottom: '15px' }} />
+                      <Skeleton count={3} style={{ marginBottom: '10px' }} />
+                      <Skeleton height={20} width={150} style={{ marginBottom: '15px' }} />
+                      <Skeleton height={40} width={120} style={{ borderRadius: '4px' }} />
+                    </div>
+                  </div>
+                </div>
+              ))}
             </Col>
           </Row>
         ) : error ? (

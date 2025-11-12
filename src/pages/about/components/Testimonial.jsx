@@ -9,6 +9,8 @@ import uparrow4 from '@/assets/img/icons/vl-uparrow4.svg';
 import { Col, Container, Row } from 'react-bootstrap';
 import { FaAngleLeft, FaAngleRight, FaArrowRight } from 'react-icons/fa6';
 import Slider from "react-slick";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Testimonial = () => {
     const [nav1, setNav1] = useState();
@@ -47,7 +49,50 @@ const Testimonial = () => {
     };
 
     if (loading) {
-        return <section className="vl-testimonial4 vl-testimonial-inner sp2"><Container><div className="text-center py-5"><div className="spinner-border" role="status"><span className="visually-hidden">Loading...</span></div></div></Container></section>;
+        return (
+            <section className="vl-testimonial4 vl-testimonial-inner sp2">
+                <Container>
+                    <Row className="align-items-center">
+                        <Col lg={6}>
+                            <div className="testimonial-slides-wrap">
+                                <Skeleton height={500} style={{ marginBottom: '20px' }} />
+                                <div style={{ padding: '30px', background: '#f8f9fa', borderRadius: '10px' }}>
+                                    <Skeleton height={25} width={150} style={{ marginBottom: '15px' }} />
+                                    <Skeleton count={4} style={{ marginBottom: '10px' }} />
+                                    <div style={{ display: 'flex', alignItems: 'center', marginTop: '20px', gap: '15px' }}>
+                                        <Skeleton circle width={50} height={50} />
+                                        <div style={{ flex: 1 }}>
+                                            <Skeleton height={20} width={150} style={{ marginBottom: '5px' }} />
+                                            <Skeleton height={15} width={100} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Col>
+                        <Col lg={6}>
+                            <div className="vl-testimonial-content">
+                                <div className="vl-section-title4">
+                                    <Skeleton height={30} width={150} style={{ marginBottom: '20px' }} />
+                                    <Skeleton height={50} width="80%" style={{ marginBottom: '20px' }} />
+                                    <Skeleton count={3} style={{ marginBottom: '10px' }} />
+                                    <Skeleton height={50} width={150} style={{ marginTop: '20px', marginBottom: '30px' }} />
+                                </div>
+                                <Row>
+                                    {[1, 2].map((_, idx) => (
+                                        <Col lg={6} md={6} className="mb-30" key={idx}>
+                                            <div style={{ padding: '30px', background: '#f8f9fa', borderRadius: '10px' }}>
+                                                <Skeleton height={40} width={80} style={{ marginBottom: '15px' }} />
+                                                <Skeleton height={20} width="70%" />
+                                            </div>
+                                        </Col>
+                                    ))}
+                                </Row>
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+            </section>
+        );
     }
     if (error || !about) {
         return <section className="vl-testimonial4 vl-testimonial-inner sp2"><Container><div className="alert alert-warning" role="alert">Unable to load testimonials section.<br/>{error}</div></Container></section>;

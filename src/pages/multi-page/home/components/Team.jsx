@@ -9,6 +9,8 @@ import { Container, Row } from 'react-bootstrap';
 import { Link } from "react-router";
 import arrowLeft from "@/assets/img/icons/vl-arrow-left-1.1.svg";
 import angleRight from "@/assets/img/icons/vl-angle-right-1.2.svg";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 const Team = () => {
   const [teamData, setTeamData] = useState({
     heading: 'Meet our Volunteer members',
@@ -101,7 +103,16 @@ const Team = () => {
                 {teamData.description}
               </p>
               {loading && (
-                <div className="text-center mt-3">
+                <div className="mt-5">
+                  <Row>
+                    {[...Array(4)].map((_, idx) => (
+                      <div key={idx} className="col-lg-3 col-md-6 mb-4">
+                        <Skeleton height={287} style={{ marginBottom: '15px' }} />
+                        <Skeleton height={25} width="60%" style={{ margin: '0 auto 10px' }} />
+                        <Skeleton height={20} width="40%" style={{ margin: '0 auto' }} />
+                      </div>
+                    ))}
+                  </Row>
                 </div>
               )}
               {!loading && (
@@ -126,7 +137,7 @@ const Team = () => {
                         </p>
                         {loading && (
                           <div className="text-center mt-3">
-                            <small className="text-muted">Loading team members...</small>
+                            <Skeleton width={200} height={20} style={{ margin: '0 auto' }} />
                           </div>
                         )}
                         {error && (

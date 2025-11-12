@@ -7,6 +7,8 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { storiesAPI } from '@/utils/storiesApi';
 import { getImageUrl } from '@/utils/imageUtils';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 const Blog = () => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -90,15 +92,31 @@ const Blog = () => {
                 </Row>
                 
                 {loading ? (
-                    <Row>
-                        <Col lg={12}>
-                            <div className="text-center py-5">
-                                <div className="spinner-border" role="status">
-                                    <span className="visually-hidden">Loading...</span>
+                    <Row className="g-4">
+                        {[...Array(3)].map((_, idx) => (
+                            <Col lg={4} md={6} key={idx} className="d-flex mb-4">
+                                <div className="vl-single-blg-item d-flex flex-column h-100 w-100">
+                                    <div className="vl-blg-thumb">
+                                        <Skeleton height={250} style={{ borderRadius: '8px' }} />
+                                    </div>
+                                    <div className="vl-meta">
+                                        <ul style={{ display: 'flex', gap: '20px', listStyle: 'none', padding: 0 }}>
+                                            <li>
+                                                <Skeleton width={120} height={18} />
+                                            </li>
+                                            <li>
+                                                <Skeleton width={100} height={18} />
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div className="vl-blg-content d-flex flex-column flex-grow-1">
+                                        <Skeleton height={28} width="85%" style={{ marginBottom: '15px' }} />
+                                        <Skeleton count={3} style={{ marginBottom: '8px' }} />
+                                        <Skeleton height={20} width={120} style={{ marginTop: '15px' }} />
+                                    </div>
                                 </div>
-                                <p className="mt-3">Loading more stories...</p>
-                            </div>
-                        </Col>
+                            </Col>
+                        ))}
                     </Row>
                 ) : error ? (
                     <Row>

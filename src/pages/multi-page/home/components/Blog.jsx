@@ -6,6 +6,8 @@ import { apiRequest } from '@/utils/api';
 import { getImageUrl } from '@/utils/imageUtils';
 import calenderImg from '@/assets/img/icons/vl-calender-1.1.svg';
 import userImg from '@/assets/img/icons/vl-user-1.1.svg';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Blog = () => {
     const [stories, setStories] = useState([]);
@@ -85,9 +87,24 @@ const Blog = () => {
                 </div>
                 <Row>
                     {loading ? (
-                        <Col lg={12} className="text-center">
-                            <div>Loading stories...</div>
-                        </Col>
+                        // Skeleton Loading
+                        [...Array(3)].map((_, idx) => (
+                            <Col lg={4} md={6} key={idx} className="d-flex">
+                                <div className="vl-single-blg-item mb-30 d-flex flex-column h-100 w-100">
+                                    <div className="vl-blg-thumb">
+                                        <Skeleton height={250} />
+                                    </div>
+                                    <div className="vl-meta" style={{ marginTop: '20px' }}>
+                                        <Skeleton width={150} height={20} style={{ marginBottom: '10px' }} />
+                                    </div>
+                                    <div className="vl-blg-content d-flex flex-column flex-grow-1 mb-4">
+                                        <Skeleton height={30} width="80%" style={{ marginBottom: '15px' }} />
+                                        <Skeleton count={3} style={{ marginBottom: '10px' }} />
+                                        <Skeleton width={120} height={20} style={{ marginTop: 'auto' }} />
+                                    </div>
+                                </div>
+                            </Col>
+                        ))
                     ) : stories.length === 0 ? (
                         <Col lg={12} className="text-center">
                             <div>No stories found.</div>

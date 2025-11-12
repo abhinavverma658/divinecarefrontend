@@ -7,6 +7,8 @@ import { FaCheck } from "react-icons/fa6";
 import { Col, Container, Row } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { getImageUrl } from '@/utils/imageUtils';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 // Simple error boundary for debugging
 class ErrorBoundary extends React.Component {
@@ -65,11 +67,47 @@ const AboutUsContent = () => {
     return (
       <section className="vl-about5 sp2">
         <Container>
-          <div className="text-center py-5">
-            <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
+          <Row>
+            <Col lg={6}>
+              <div className="vl-about-content">
+                <div className="vl-section-title-1 mb-50">
+                  <Skeleton height={30} width={150} style={{ marginBottom: '20px' }} />
+                  <Skeleton height={50} width="80%" style={{ marginBottom: '20px' }} />
+                  <Skeleton count={2} style={{ marginBottom: '10px' }} />
+                </div>
+                <Row>
+                  <Col lg={12} md={6}>
+                    <div className="vl-sm-thumb mb-30">
+                      <Skeleton height={250} />
+                    </div>
+                  </Col>
+                  <Col lg={12} md={6}>
+                    <div className="vl-sm-thumb2 mb-30">
+                      <Skeleton height={250} />
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+            </Col>
+            <Col lg={6}>
+              <div className="vl-about-content2 ml-20">
+                <div className="large-thumb mb-30">
+                  <Skeleton height={400} />
+                </div>
+                <div className="content mb-30">
+                  <Skeleton count={3} style={{ marginBottom: '10px' }} />
+                  <div className="mt-3">
+                    {[1, 2, 3].map((_, index) => (
+                      <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                        <Skeleton circle width={20} height={20} style={{ marginRight: '10px' }} />
+                        <Skeleton width="70%" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </Container>
       </section>
     );

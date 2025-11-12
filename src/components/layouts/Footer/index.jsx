@@ -48,7 +48,7 @@ const Footer = () => {
             <div className="vl-footer-widget-2 pl-30 mb-30">
               <h3 className="title">Our Services</h3>
               <div className="vl-footer-menu">
-                <ul>
+                <ul style={{ lineHeight: '2.5' }}>
                   <li><a href="#">Community Living</a></li>
                   <li><a href="#">Community Development Services</a></li>
                   <li><Link to="#">Personal Supports</Link></li>

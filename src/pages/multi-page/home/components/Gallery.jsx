@@ -4,6 +4,8 @@ import { homeAPI } from '../../../../utils/api';
 import { getImageUrl } from '@/utils/imageUtils';
 import { Col, Container, Row } from 'react-bootstrap';
 import GlightBox from "@/components/GlightBox";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 const Gallery = () => {
   const [galleryData, setGalleryData] = useState({
     heading: 'The Frontlines of Relief',
@@ -88,7 +90,15 @@ const Gallery = () => {
                 {galleryData.description}
               </p>
               {loading && (
-                <div style={{ minHeight: '1px' }}></div>
+                <div className="mt-5">
+                  <Row>
+                    {[...Array(4)].map((_, idx) => (
+                      <Col lg={6} md={6} className="mb-30" key={idx}>
+                        <Skeleton height={350} />
+                      </Col>
+                    ))}
+                  </Row>
+                </div>
               )}
               {!loading && (
                 <div className="text-center mt-3">
@@ -112,7 +122,9 @@ const Gallery = () => {
                             {galleryData.description}
                         </p>
                         {loading && (
-                          <div style={{ minHeight: '1px' }}></div>
+                          <div style={{ minHeight: '1px' }}>
+                            <Skeleton width={200} height={20} style={{ margin: '0 auto' }} />
+                          </div>
                         )}
                         {error && (
                           <div className="text-center mt-3">

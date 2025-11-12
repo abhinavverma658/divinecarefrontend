@@ -3,6 +3,8 @@ import { iconsBoxData } from '../data';
 import { contactPageAPI } from '@/utils/contactPageApi';
 import { Link } from "react-router";
 import { Col, Container, Row } from 'react-bootstrap';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const IconArea = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -30,11 +32,27 @@ const IconArea = () => {
     return (
       <section className="vl-icon-box-inner pb-70">
         <Container>
-          <div className="text-center py-5">
-            <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
+          <Row>
+            {[...Array(3)].map((_, idx) => (
+              <Col lg={4} md={6} className="mb-30" key={idx}>
+                <div className="iconbox" style={{ padding: '30px', border: '1px solid #e9ecef', borderRadius: '8px' }}>
+                  <div className="icon-box-flex" style={{ display: 'flex', gap: '15px', marginBottom: '20px' }}>
+                    <div className="icon">
+                      <Skeleton circle width={60} height={60} />
+                    </div>
+                    <div className="icon-content" style={{ flex: 1 }}>
+                      <Skeleton height={18} width="60%" style={{ marginBottom: '8px' }} />
+                      <Skeleton height={24} width="90%" />
+                    </div>
+                  </div>
+                  <div className="contact-number">
+                    <Skeleton height={20} width="80%" style={{ marginBottom: '8px' }} />
+                    <Skeleton height={20} width="70%" />
+                  </div>
+                </div>
+              </Col>
+            ))}
+          </Row>
         </Container>
       </section>
     );

@@ -6,6 +6,8 @@ import calendarImg from '@/assets/img/icons/calender.svg';
 import { Col, Container, Nav, NavItem, NavLink, Row, TabContainer, TabContent, TabPane } from 'react-bootstrap';
 import { Link } from "react-router";
 import { FaArrowRight } from 'react-icons/fa6';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const EventArea = () => {
   const [eventData, setEventData] = useState({
@@ -162,14 +164,26 @@ const EventArea = () => {
     return { day, month, year };
   };
 
-  // Show white area until event section data is fetched
+  // Show skeleton until event section data is fetched
   if (sectionLoading) {
     return (
       <section className="vl-blog sp2">
         <Container>
           <Row>
-            <Col lg={5} style={{ background: '#fff', minHeight: '400px' }}></Col>
-            <Col lg={7} style={{ background: '#fff', minHeight: '400px' }}></Col>
+            <Col lg={5}>
+              <div className="vl-blog-lar-thumb-bg mb-30" style={{ minHeight: '400px', padding: '40px' }}>
+                <Skeleton height={30} width={200} style={{ marginBottom: '20px' }} />
+                <Skeleton height={50} width="80%" style={{ marginBottom: '20px' }} />
+                <Skeleton count={3} style={{ marginBottom: '10px' }} />
+                <Skeleton height={50} width={180} style={{ marginTop: '20px' }} />
+              </div>
+            </Col>
+            <Col lg={2}>
+              <Skeleton height={120} count={3} style={{ marginBottom: '30px' }} />
+            </Col>
+            <Col lg={5}>
+              <Skeleton height={150} count={2} style={{ marginBottom: '20px' }} />
+            </Col>
           </Row>
         </Container>
       </section>
@@ -316,7 +330,16 @@ const EventArea = () => {
                       </TabContainer>
                     ) : (
                       loading ? (
-                        <Col lg={7} style={{ background: '#fff', minHeight: '400px' }}></Col>
+                        <Col lg={7}>
+                          <Row>
+                            <Col lg={4}>
+                              <Skeleton height={120} count={3} style={{ marginBottom: '30px' }} />
+                            </Col>
+                            <Col lg={8}>
+                              <Skeleton height={150} count={2} style={{ marginBottom: '20px' }} />
+                            </Col>
+                          </Row>
+                        </Col>
                       ) : (
                         <Col lg={7} className="d-flex align-items-center justify-content-center" style={{ minHeight: '400px' }}>
                           <div className="w-100 d-flex align-items-center justify-content-center" style={{ minHeight: '400px' }}>
