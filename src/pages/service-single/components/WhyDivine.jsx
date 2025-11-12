@@ -31,7 +31,8 @@ const WhyDivine = () => {
     const fetchServices = async () => {
       try {
         setLoadingServices(true);
-        const response = await fetch('https://divinecare-backend.onrender.com/api/services');
+        const API_BASE_URL = import.meta.env.VITE_API_URL;
+        const response = await fetch(`${API_BASE_URL}/services`);
         const data = await response.json();
         
         if (Array.isArray(data)) {
@@ -76,7 +77,8 @@ const WhyDivine = () => {
 
       try {
         setLoadingDetail(true);
-        const response = await fetch(`https://divinecare-backend.onrender.com/api/services/${serviceId}`);
+        const API_BASE_URL = import.meta.env.VITE_API_URL;
+        const response = await fetch(`${API_BASE_URL}/services/${serviceId}`);
         const data = await response.json();
         
         if (data) {

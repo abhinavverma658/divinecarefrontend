@@ -6,10 +6,6 @@ const getApiBaseUrl = () => {
   if (import.meta.env && import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL.replace(/\/$/, '');
   }
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    return 'http://localhost:5001/api';
-  }
-  return 'https://divinecare-backend.onrender.com/api';
 };
 
 const API_BASE_URL = getApiBaseUrl();

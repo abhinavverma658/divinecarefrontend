@@ -40,7 +40,8 @@ const ApplicationModal = ({ show, handleClose, jobTitle, jobDescription, jobId }
       formDataToSend.append('resume', formData.resume);
       formDataToSend.append('coverLetter', formData.coverLetter);
 
-      const response = await fetch(`https://divinecare-backend.onrender.com/api/careers/${jobId}/apply`, {
+      const API_BASE_URL = import.meta.env.VITE_API_URL;
+      const response = await fetch(`${API_BASE_URL}/careers/${jobId}/apply`, {
         method: 'POST',
         body: formDataToSend
       });
@@ -483,7 +484,8 @@ const JobOpportunitiesPage = () => {
     const fetchJobs = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://divinecare-backend.onrender.com/api/careers');
+        const API_BASE_URL = import.meta.env.VITE_API_URL;
+        const response = await fetch(`${API_BASE_URL}/careers`);
         const data = await response.json();
         
         if (data.success && data.jobs) {

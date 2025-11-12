@@ -88,7 +88,8 @@ const Breadcrumb = () => {
       setIsSubmitting(true);
       setRegistrationError(null);
       
-      const response = await fetch(`https://divinecare-backend.onrender.com/api/events/${eventId}/register`, {
+      const API_BASE_URL = import.meta.env.VITE_API_URL;
+      const response = await fetch(`${API_BASE_URL}/events/${eventId}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
