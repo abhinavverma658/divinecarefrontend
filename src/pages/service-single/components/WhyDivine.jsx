@@ -31,7 +31,8 @@ const WhyDivine = () => {
     const fetchServices = async () => {
       try {
         setLoadingServices(true);
-        const response = await fetch('https://divinecare-backend.onrender.com/api/services');
+        const API_BASE_URL = import.meta.env.VITE_API_URL;
+        const response = await fetch(`${API_BASE_URL}/services`);
         const data = await response.json();
         
         if (Array.isArray(data)) {
@@ -76,7 +77,8 @@ const WhyDivine = () => {
 
       try {
         setLoadingDetail(true);
-        const response = await fetch(`https://divinecare-backend.onrender.com/api/services/${serviceId}`);
+        const API_BASE_URL = import.meta.env.VITE_API_URL;
+        const response = await fetch(`${API_BASE_URL}/services/${serviceId}`);
         const data = await response.json();
         
         if (data) {
@@ -180,25 +182,6 @@ const WhyDivine = () => {
                 </div>
               ) : serviceDetail ? (
                 <div className="vl-service-content">
-                  {/* Service Image */}
-                  {serviceDetail.image && (
-                    <div className="vl-service-image mb-4">
-                      <img 
-                        src={getImageUrl(serviceDetail.image)} 
-                        alt={serviceDetail.title}
-                        style={{
-                          width: '100%',
-                          height: 'auto',
-                          borderRadius: '8px',
-                          objectFit: 'cover'
-                        }}
-                        onError={(e) => {
-                          e.target.style.display = 'none';
-                        }}
-                      />
-                    </div>
-                  )}
-
                   {/* Service Title */}
                   <h2 className="title">{serviceDetail.title}</h2>
                   
@@ -207,6 +190,29 @@ const WhyDivine = () => {
                     <p className="para mb-4">
                       {serviceDetail.shortDescription}
                     </p>
+                  )}
+
+                  {/* Service Image 2 */}
+                  {serviceDetail.image2 && (
+                    <div className="vl-service-image mb-4" style={{ overflow: 'hidden', borderRadius: '8px' }}>
+                      <img 
+                        src={getImageUrl(serviceDetail.image2)} 
+                        alt={`${serviceDetail.title} - Additional Image`}
+                        style={{
+                          width: '110%',
+                          height: 'auto',
+                          borderRadius: '8px',
+                          objectFit: 'cover',
+                          transform: 'scale(1.15)',
+                          WebkitBackfaceVisibility: 'hidden',
+                          backfaceVisibility: 'hidden',
+                          willChange: 'transform'
+                        }}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                    </div>
                   )}
 
                   {/* Detailed Description - Text Content */}

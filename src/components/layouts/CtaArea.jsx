@@ -42,7 +42,8 @@ const CtaArea = () => {
     setSubmitStatus(null);
 
     try {
-      const response = await fetch('https://divinecare-backend.onrender.com/api/subscribe', {
+      const API_BASE_URL = import.meta.env.VITE_API_URL;
+      const response = await fetch(`${API_BASE_URL}/subscribe`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

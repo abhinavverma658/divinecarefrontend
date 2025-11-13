@@ -2,6 +2,17 @@
 
 /*============= COMON CSS AREA ===============*/
 
+/* Image quality optimization */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: bicubic;
+  /* Prevent blurry scaling */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
    
 .vl-section-title{
     &-1{

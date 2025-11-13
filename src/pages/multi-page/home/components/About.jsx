@@ -162,12 +162,23 @@ const About = () => {
             </div>
           </Col>
           <Col lg={4} md={6} className="mb-0">
-            <div className="vl-about-large-thumb reveal">
+            <div className="vl-about-large-thumb reveal" style={{ overflow: 'hidden' }}>
               <img 
                 className="w-100"
                 src={getImageUrl(aboutData.centerImage)}
                 alt="About us center image"
-                style={{ height: '560px', objectFit: 'cover' }}
+                loading="lazy"
+                style={{ 
+                  minHeight: '560px',
+                  maxHeight: '700px',
+                  width: '110%',
+                  objectFit: 'cover',
+                  objectPosition: 'center',
+                  WebkitBackfaceVisibility: 'hidden',
+                  backfaceVisibility: 'hidden',
+                  transform: 'scale(1)',
+                  willChange: 'transform'
+                }}
                 onError={(e) => {
                   // Fallback to default image if API image fails to load
                   e.target.src = about1;
@@ -183,12 +194,23 @@ const About = () => {
                   About Us <span><FaArrowRight /></span>
                 </Link>
               </div>
-              <div className="vl-about-sm-thumb d-none d-md-block">
+              <div className="vl-about-sm-thumb d-none d-md-block" style={{ overflow: 'hidden' }}>
                 <img 
                   className="w-100" 
                   src={getImageUrl(aboutData.rightImage)} 
                   alt="About us right image"
-                  style={{ height: '290px', objectFit: 'cover' }}
+                  loading="lazy"
+                  style={{ 
+                    minHeight: '290px',
+                    maxHeight: '400px',
+                    width: '110%',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                    WebkitBackfaceVisibility: 'hidden',
+                    backfaceVisibility: 'hidden',
+                    transform: 'scale(1.15)',
+                    willChange: 'transform'
+                  }}
                   onError={(e) => {
                     // Fallback to default image if API image fails to load
                     e.target.src = about2;
