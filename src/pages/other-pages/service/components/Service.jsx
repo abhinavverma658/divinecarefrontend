@@ -7,11 +7,40 @@ import { servicesAPI } from '@/utils/servicesApi';
 import { getImageUrl } from '@/utils/imageUtils';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+
+// Import service icons
+import communityIcon from '@/assets/img/icons/community.svg';
+import communityDIcon from '@/assets/img/icons/communityD.svg';
+import personalIcon from '@/assets/img/icons/personal.svg';
+import supportedIcon from '@/assets/img/icons/supported.svg';
+import respiteIcon from '@/assets/img/icons/respite.svg';
+
 const Service = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Icon mapping based on service titles
+  const getServiceIcon = (title) => {
+    if (!title) return null;
+    
+    const titleLower = title.toLowerCase();
+    
+    if (titleLower.includes('community living')) {
+      return communityIcon;
+    } else if (titleLower.includes('community development')) {
+      return communityDIcon;
+    } else if (titleLower.includes('personal support')) {
+      return personalIcon;
+    } else if (titleLower.includes('supported living')) {
+      return supportedIcon;
+    } else if (titleLower.includes('respite')) {
+      return respiteIcon;
+    }
+    
+    return null;
+  };
 
   // Helper function to get fallback icon and thumbnail from static data
   const getFallbackAssets = (index) => {
@@ -100,17 +129,20 @@ const Service = () => {
                                     }}>
                                     <div className="vl-service-box-flex">
                                         <div className="icon">
-                                            {item.icon ? (
-                                                <span><img src={item.icon} alt='icons' /></span>
-                                            ) : (
-                                                <span style={{
-                                                    display: 'block',
-                                                    width: '60px',
-                                                    height: '60px',
-                                                    background: '#f0f0f0',
-                                                    borderRadius: '50%'
-                                                }}></span>
-                                            )}
+                                            {(() => {
+                                                const iconPath = getServiceIcon(item.title);
+                                                return iconPath ? (
+                                                    <span><img src={iconPath} alt={`${item.title} icon`} /></span>
+                                                ) : (
+                                                    <span style={{
+                                                        display: 'block',
+                                                        width: '60px',
+                                                        height: '60px',
+                                                        background: '#f0f0f0',
+                                                        borderRadius: '50%'
+                                                    }}></span>
+                                                );
+                                            })()}
                                         </div>
                                         <div className="thumb">
                                             <div className="sm-thumb" style={{
