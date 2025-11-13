@@ -92,7 +92,7 @@ Germantown, Maryland 20874</a>
         <div className="vl-copyright copyright-border-1">
           <Row>
             <Col md={6}>
-              <p className="vl-copyright-text underline">© 2025 Developed By <Link to="https://quantumitinnovation.com/" style={{ textDecoration: 'underline', fontWeight: 'bold', color: 'inherit' }}>Quantum IT Innovation</Link></p>
+              <p className="vl-copyright-text underline">All rights reserved 2025 by <Link to="https://divinecareinc.com/" style={{ textDecoration: 'underline', fontWeight: 'bold', color: 'inherit' }}>DivineCare Inc</Link></p>
             </Col>
             <Col md={6}>
               <div className="vl-copyright-menu">
