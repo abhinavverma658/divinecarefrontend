@@ -182,25 +182,6 @@ const WhyDivine = () => {
                 </div>
               ) : serviceDetail ? (
                 <div className="vl-service-content">
-                  {/* Service Image */}
-                  {serviceDetail.image && (
-                    <div className="vl-service-image mb-4">
-                      <img 
-                        src={getImageUrl(serviceDetail.image)} 
-                        alt={serviceDetail.title}
-                        style={{
-                          width: '100%',
-                          height: 'auto',
-                          borderRadius: '8px',
-                          objectFit: 'cover'
-                        }}
-                        onError={(e) => {
-                          e.target.style.display = 'none';
-                        }}
-                      />
-                    </div>
-                  )}
-
                   {/* Service Title */}
                   <h2 className="title">{serviceDetail.title}</h2>
                   
@@ -209,6 +190,29 @@ const WhyDivine = () => {
                     <p className="para mb-4">
                       {serviceDetail.shortDescription}
                     </p>
+                  )}
+
+                  {/* Service Image 2 */}
+                  {serviceDetail.image2 && (
+                    <div className="vl-service-image mb-4" style={{ overflow: 'hidden', borderRadius: '8px' }}>
+                      <img 
+                        src={getImageUrl(serviceDetail.image2)} 
+                        alt={`${serviceDetail.title} - Additional Image`}
+                        style={{
+                          width: '110%',
+                          height: 'auto',
+                          borderRadius: '8px',
+                          objectFit: 'cover',
+                          transform: 'scale(1.15)',
+                          WebkitBackfaceVisibility: 'hidden',
+                          backfaceVisibility: 'hidden',
+                          willChange: 'transform'
+                        }}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                    </div>
                   )}
 
                   {/* Detailed Description - Text Content */}

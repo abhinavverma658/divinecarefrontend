@@ -32,18 +32,79 @@ const ApplicationModal = ({ show, handleClose, jobTitle, jobDescription, jobId }
     setSubmitError(null);
 
     try {
-      const formDataToSend = new FormData();
-      formDataToSend.append('name', formData.fullName);
-      formDataToSend.append('email', formData.email);
-      formDataToSend.append('contactNumber', formData.contactNumber);
-      formDataToSend.append('address', formData.address);
-      formDataToSend.append('resume', formData.resume);
-      formDataToSend.append('coverLetter', formData.coverLetter);
-
       const API_BASE_URL = import.meta.env.VITE_API_URL;
+      
+      // Validate resume file exists
+      if (!formData.resume) {
+        setSubmitError('Please select a resume file');
+        setIsSubmitting(false);
+        return;
+      }
+
+      console.log('Resume file:', formData.resume);
+      console.log('File name:', formData.resume.name);
+      console.log('File type:', formData.resume.type);
+      console.log('File size:', formData.resume.size);
+      
+      // Step 1: Upload resume file to public endpoint
+      const uploadFormData = new FormData();
+      uploadFormData.append('file', formData.resume, formData.resume.name);
+
+      console.log('Uploading resume to /api/upload/public...');
+      console.log('FormData file:', formData.resume);
+      
+      const uploadResponse = await fetch(`${API_BASE_URL}/upload/public`, {
+        method: 'POST',
+        body: uploadFormData
+      });
+
+      console.log('Upload response status:', uploadResponse.status);
+
+      if (!uploadResponse.ok) {
+        let errorText;
+        try {
+          const errorJson = await uploadResponse.json();
+          errorText = errorJson.message || JSON.stringify(errorJson);
+        } catch {
+          errorText = await uploadResponse.text();
+        }
+        console.error('Upload failed with status:', uploadResponse.status, errorText);
+        throw new Error(`Resume upload failed: ${errorText}`);
+      }
+
+      const uploadData = await uploadResponse.json();
+      console.log('Upload response:', uploadData);
+
+      if (!uploadData.success) {
+        throw new Error(uploadData.message || 'Failed to upload resume');
+      }
+
+      // Get the uploaded resume URL from files array
+      const resumeUrl = uploadData.files?.[0]?.url || uploadData.url || uploadData.fileUrl || uploadData.data?.url;
+      console.log('Resume URL:', resumeUrl);
+
+      if (!resumeUrl) {
+        throw new Error('Resume upload succeeded but no URL was returned');
+      }
+
+      // Step 2: Submit application with resume URL
+      const applicationData = {
+        name: formData.fullName,
+        email: formData.email,
+        contactNumber: formData.contactNumber,
+        address: formData.address,
+        resume: resumeUrl,
+        coverLetter: formData.coverLetter || ''
+      };
+
+      console.log('Submitting application with data:', applicationData);
+
       const response = await fetch(`${API_BASE_URL}/careers/${jobId}/apply`, {
         method: 'POST',
-        body: formDataToSend
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(applicationData)
       });
 
       const data = await response.json();
@@ -58,6 +119,11 @@ const ApplicationModal = ({ show, handleClose, jobTitle, jobDescription, jobId }
           resume: null,
           coverLetter: ''
         });
+        
+        // Reset file input
+        const fileInput = document.querySelector('input[type="file"]');
+        if (fileInput) fileInput.value = '';
+        
         alert('Application submitted successfully!');
         handleClose();
       } else {
@@ -65,7 +131,7 @@ const ApplicationModal = ({ show, handleClose, jobTitle, jobDescription, jobId }
       }
     } catch (error) {
       console.error('Error submitting application:', error);
-      setSubmitError(error.message);
+      setSubmitError(error.message || 'Failed to submit application. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
