@@ -132,7 +132,16 @@ const Service = () => {
                                             {(() => {
                                                 const iconPath = getServiceIcon(item.title);
                                                 return iconPath ? (
-                                                    <span><img src={iconPath} alt={`${item.title} icon`} /></span>
+                                                    <span>
+                                                        <img 
+                                                            src={iconPath} 
+                                                            alt={`${item.title} icon`}
+                                                            style={{
+                                                                filter: hoveredIndex === idx ? 'brightness(0) invert(1)' : 'none',
+                                                                transition: 'filter 0.3s ease'
+                                                            }}
+                                                        />
+                                                    </span>
                                                 ) : (
                                                     <span style={{
                                                         display: 'block',
