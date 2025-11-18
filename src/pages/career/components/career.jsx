@@ -53,7 +53,7 @@ const ApplicationModal = ({ show, handleClose, jobTitle, jobDescription, jobId }
       console.log('Uploading resume to /api/upload/public...');
       console.log('FormData file:', formData.resume);
       
-      const uploadResponse = await fetch(`${API_BASE_URL}/upload/public`, {
+      const uploadResponse = await fetch(`${API_BASE_URL}/api/upload/public`, {
         method: 'POST',
         body: uploadFormData
       });
@@ -99,7 +99,7 @@ const ApplicationModal = ({ show, handleClose, jobTitle, jobDescription, jobId }
 
       console.log('Submitting application with data:', applicationData);
 
-      const response = await fetch(`${API_BASE_URL}/careers/${jobId}/apply`, {
+      const response = await fetch(`${API_BASE_URL}/api/careers/${jobId}/apply`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -551,7 +551,7 @@ const JobOpportunitiesPage = () => {
       try {
         setLoading(true);
         const API_BASE_URL = import.meta.env.VITE_API_URL;
-        const response = await fetch(`${API_BASE_URL}/careers`);
+        const response = await fetch(`${API_BASE_URL}/api/careers`);
         const data = await response.json();
         
         if (data.success && data.jobs) {

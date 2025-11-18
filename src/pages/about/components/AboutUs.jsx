@@ -161,7 +161,7 @@ const AboutUsContent = () => {
                                 <img className="w-100" src={rightImage} alt='About Main Image' />
                             </div>
                             <div className="content mb-30">
-                                <p className="para">{aboutData?.mainDescription || 'DivineCare is dedicated to providing relief and resources to those in need, fostering a community of care and hope.'}</p>
+                                <p className="para">{aboutData?.mainDescription}</p>
                                 <div className="icon-list-box box2">
                                     <ul>
                                         {aboutData?.keyPoints && aboutData.keyPoints.length > 0 ? (

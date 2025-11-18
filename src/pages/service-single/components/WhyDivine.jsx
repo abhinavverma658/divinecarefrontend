@@ -78,7 +78,7 @@ const WhyDivine = () => {
       try {
         setLoadingDetail(true);
         const API_BASE_URL = import.meta.env.VITE_API_URL;
-        const response = await fetch(`${API_BASE_URL}/services/${serviceId}`);
+        const response = await fetch(`${API_BASE_URL}/api/services/${serviceId}`);
         const data = await response.json();
         
         if (data) {
